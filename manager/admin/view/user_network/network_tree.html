@@ -1,0 +1,52 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>会员关系图</title>
+    <link rel="stylesheet" href="/Public/static/tree/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Public/static/tree/css/jquery.orgchart.css">
+    <link rel="stylesheet" href="/Public/static/tree/css/style.css">
+    <link rel="stylesheet" href="/Public/static/tree/css/style1.css">
+    <script type="text/javascript" src="/Public/static/admin/js/angular.min.js"></script>
+</head>
+<body ng-app="userApp" ng-controller="userCtrl" ng-cloak>
+<div align="center" style="margin-bottom: -20px;">
+    <table width="20%" align="center">
+        <tr>
+            <td align="center"  width="30" ng-repeat="vo in levelcolor" bgColor="{{vo.color}}"><font color="#FFFFFF">{{vo.name}}</font></td>
+        </tr>
+    </table>
+    <table width="100%" border="0" style="margin-left: 42%">
+        <tr style=" display:block">
+            <td height="30" align="center">
+                <form action="/admin.php/admin/network_tree/index.html" method="post">
+                    <span id="Label1">会员账号：</span>
+                    <input name="userid" type="text" style="width:100px;">
+                    <input type="submit" value="搜索" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="chart-container"></div>
+<script type="text/javascript" src="/Public/static/tree/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/Public/static/tree/js/jquery.orgchart.js"></script>
+</body>
+<script type="text/javascript">
+    var app = angular.module('userApp', []);
+    app.controller('userCtrl', function($scope, $http) {
+        $http.get("/api.php/user/get_sub{$param}")
+            .success(function (response) {
+                $scope.datascource = response.data;
+                $scope.levelcolor = response.levelcolor;
+                $('#chart-container').orgchart({
+                    'data' : $scope.datascource,
+                    'nodeContent': 'title'
+                });
+            });
+    });
+</script>
+</html>

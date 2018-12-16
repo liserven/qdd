@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>商家分类配置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家分类配置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" onClick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius"  href="{:url('supplier_type/supplierTypeAdd',['act'=>'show'])}"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a> </span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+    <form class="form form-horizontal" id="form-supplierType-list">
+        <table class="table table-border table-bordered table-hover table-bg mt-20">
+            <thead>
+            <tr>
+                <th scope="col" colspan="16">分类管理</th>
+            </tr>
+            <tr class="text-c">
+                <th><input type="checkbox" value="" name=""></th>
+                <th>ID</th>
+                <th>分类名称</th>
+                <th>分类图片</th>
+                <th width="70">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="supplierType" id="vo"}
+                <tr class="text-c">
+                    <td><input type="checkbox" value="{$vo.ID}" name="ID[]"></td>
+                    <td>{$vo.ID}</td>
+                    <td>{$vo.SupplierTypeName}</td>
+                    <td><img src="<?php echo config('IMAGE_DOMAIN_NAME');?>{$vo.SupplierTypeImg}" alt="{$vo.SupplierTypeImg}" width="80" height="80"></td>
+                    <td class="f-14"><a title="编辑" href="{:url('supplier_type/supplierTypeEdit',['id'=>$vo['ID'],'act'=>'show'])}"  style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onClick="_del(this,'{$vo.ID}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<include file="../../../public/Public/js_script" />
+<script type="text/javascript">
+    /*-添加*/
+    function _add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-编辑*/
+    function _edit(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*批量删除*/
+    function datadel(){
+        layer.confirm('确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("supplier_type/supplierTypeDel")}',
+                type:"POST",
+                dataType:"json",
+                data:$('#form-supplierType-list').serialize(),
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:2000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+    /*-单个删除*/
+    function _del(obj,id){
+        layer.confirm('分类删除须谨慎，确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("supplier_type/supplierTypeDel")}?ID='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:2000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

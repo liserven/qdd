@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="/public/qdd/css/grzx.css">
+</head>
+<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak>
+    <div class="top">
+        <div class="ewmAndSz">
+            <a href="/mobile.php/code/user_qrcode" id="ewm">
+                <img src="/public/qdd/img/ewm.png" alt="">
+            </a>
+            <!-- <a href="#" id="sz">
+                <img src="/public/qdd/img/sz.png" alt="">
+            </a> -->
+        </div>
+        <div class="grxq">
+            <a href="#">
+                <img src="/public/qdd/img/touxiang.png" alt="">
+            </a>
+            <div>
+                <p>{$userinfo.company_name}</p>
+                <div>
+                    {if condition="$userinfo.userType eq 4"}
+                        <img src="/public/qdd/img/yxzx.png" alt="">
+                    {elseif condition="$userinfo.userType eq 3"}
+                        <img src="/public/qdd/img/lms.png" alt="">
+                    {elseif condition="$userinfo.userType eq 2"}
+                        <img src="/public/qdd/img/zxqi.png" alt="">
+                    {elseif condition="$userinfo.userType eq 1"}
+                        <img src="/public/qdd/img/bzb.png" alt="">
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    <section>
+    {if condition="$userinfo.userType gt 2"}
+        {if condition="$userinfo.userType eq 4"}
+        <div class="lms gtsz">
+            <div>
+                <img src="/public/qdd/img/juxing5.png" alt="">
+                <p>联盟商：{$union_number}个</p>
+            </div>
+            <!-- <div>
+                <span>月增：11</span>
+                <img src="/public/qdd/img/shangsheng.png" alt="">
+            </div> -->
+        </div>
+        {/if}
+        <div class="qygl gtsz">
+            <div>
+                <img src="/public/qdd/img/juxing5.png" alt="">
+                <p>企业用户管理：{$company_number + $company_number2 }个</p>
+            </div>
+            <!-- <div>
+                <span>月增：11</span>
+                <img src="/public/qdd/img/shangsheng.png" alt="">
+            </div> -->
+        </div>
+        <div class="lmsyh">
+            {if condition="$userinfo.userType eq 4"}
+            <div class="lmsyhA lmsStyle">
+                <p>联盟商企业用户：</p>
+                <div>
+                    <img src="/public/qdd/img/zun2.png" alt="">
+                    <p>尊享版</p>
+                    <span>{$zhunxiang_company_number2}</span>
+                </div>
+                <div>
+                    <img src="/public/qdd/img/biao6.png" alt="">
+                    <p>标准版</p>
+                    <span>{$biaozhun_company_number2}</span>
+                </div>
+            </div>
+            {/if}
+            <div class="lmsyhB lmsStyle">
+                <p>直属企业用户：</p>
+                <div>
+                    <img src="/public/qdd/img/zun2.png" alt="">
+                    <p>尊享版</p>
+                    <span>{$zhunxiang_company_number}</span>
+                </div>
+                <div>
+                    <img src="/public/qdd/img/biao6.png" alt="">
+                    <p>标准版</p>
+                    <span>{$biaozhun_company_number}</span>
+                </div>
+            </div>
+        </div>
+    {/if} 
+        <div class="Mygl">
+            <div class="MyglBox">
+                <p>我的管理</p>
+                <div>
+                    
+                    <div class="Mydd">
+                        <a href="/mobile.php/order/list"><img src="/public/qdd/img/dingdan3.png" alt=""></a>
+                        <a href="/mobile.php/order/list"><p>我的订单</p> </a>
+                    </div>
+                    {if condition="$userinfo.userType gt 2"}
+                    <div class="Myqyyh">
+                        <img src="/public/qdd/img/qiye3.png" alt="">
+                        <a href="/mobile.php/member/user_subordinate"><p>联盟企业</p></a>
+                    </div>
+                    {/if}
+                    <!-- <div class="Mylms">
+                        <img src="/public/qdd/img/sfz.png" alt="">
+                        <a href="/mobile.php/member/user_subordinate"><p>联盟商信息</p></a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="qtsz">
+            <div>
+                <div>
+                    <a href="/mobile.php/member/address_list"><img src="/public/qdd/img/dz2.png" alt=""></a>
+                    <a href="/mobile.php/member/address_list"><p>地址</p></a>
+                </div>
+                
+                <div>
+                    <a href="/mobile.php/article/list"><img src="/public/qdd/img/bz.png" alt=""></a>
+                    <a href="/mobile.php/article/list"><p>帮助中心</p></a>
+                </div>
+                <div>
+                    <a href="javascript:void(0)" ng-click="loginExit()"><img src="/public/qdd/img/tk.png" alt=""></a>
+                    <a href="javascript:void(0)" ng-click="loginExit()"><p>退出登录</p></a>
+                </div>
+                 <div>
+                    <!--<img src="/public/qdd/img/kf.png" alt="">
+                    <p>云企客服</p>-->
+                </div> 
+                
+            </div>
+        </div>
+    </section>
+{:widget('Common/mobile_footer')}
+</body>
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+
+
+
+<!--&lt;!&ndash;请在下方写此页面业务相关的脚本&ndash;&gt;-->
+<script type="text/javascript">
+    var app = angular.module('memberApp', []);
+    app.controller('memberCtrl', function($scope, $http) {
+         //登录退出方法
+         $scope.loginExit=function(){
+            $http.get("/api.php/login/exit")
+                .success(function (response) {
+                    layer.msg(response.msg,{},function(){
+                        location.href='/mobile.php';
+                    });
+                });
+        };
+        $http.get("/api.php/member/userinfo?ishit=1")
+            .success(function (response) {
+                var img_url=response.data;
+                $scope.userinfo = img_url;
+            });
+    });
+    //所在地区选择
+    $(function(){
+        var proNum = $('.shangpin li').size();
+        var num = Math.ceil(proNum/2);
+        $('.shangpin').height(4.8*num+1.2+'rem');
+    })
+</script>
+</html>

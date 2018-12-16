@@ -1,0 +1,184 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>修改用户 - 会员管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">会员ID：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-red" id="lbuserID">
+                <input type="text" class="input-text" value="{$Request.param.UserId}" id="userid" name="UserId" readonly>
+            </div>
+        </div>
+       <!-- <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>会员类型：</label>
+            <div class="formControls col-xs-10 col-sm-9"> <span class="select-box">
+				<select name="usertypeid" class="select">
+                    <option value="{$userinfo.usertype}">{:getusertypebyid($userinfo.usertype)}</option>
+                    {volist name="usertypelist" id="voc"}
+                    <option value="{$voc.ID}">{$voc.Name}</option>
+                    {/volist}
+				</select>
+				</span> </div>
+        </div>-->
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>手机：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$userinfo.mobile}" placeholder="" id="mobile" name="mobile">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>姓名：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$userinfo.truename}" placeholder="" id="truename" name="truename">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>性别：</label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="sex" type="radio" id="sex-1" value="0" {if condition="$userinfo['sex'] eq 0"}checked{/if}>
+                    <label for="sex-1">男</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" name="sex" value="1" {if condition="$userinfo['sex'] eq 1"}checked{/if}>
+                    <label for="sex-2">女</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>身份证号：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$userinfo.idcardno}" placeholder="" id="idcardno" name="idcardno">
+            </div>
+        </div>
+
+         <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">会员等级：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <select  class="select select-box" name="userType" style="width:200px">
+                    <option value="{$userinfo['usertype']}">{:getusertypebyid($userinfo['usertype'])}</option>
+                    {foreach name="usertypelist" item="usertypelist"}
+                    <option value="{$usertypelist['ID']}">{$usertypelist['Name']}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">QQ：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="qq" id="qq" value="{$userinfo.qq}">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">所在地区：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <select id="cmbProvince" class="select select-box" name="province" style="width:150px"></select>
+                <select id="cmbCity" class="select select-box" name="city" style="width:200px"></select>
+                <select id="cmbArea" class="select select-box" name="county" style="width:120px"></select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">详细地址：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$userinfo.address}" placeholder="" id="address" name="address" style="width:478px">
+            </div>
+        </div>
+
+
+
+        </div>
+        </div>
+        </div>
+
+
+
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+<script  type="text/javascript" src="<?php echo CSS_PATH;?>static/js/provinces.Cxselect.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/provincesData.js"></script>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules:{
+                truename:{
+                    required:true,
+                    minlength:2,
+                    maxlength:16
+                },
+                sex:{
+                    required:true,
+                },
+                mobile:{
+                    required:true,
+                    isMobile:true,
+                },
+                idcardno:{
+                    minlength:18,
+                    maxlength:18,
+                },
+                qq:{
+                    digits:true,
+                },
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'/admin.php/admin/member/member_edit/action/edit',
+                    type:"POST",
+                    data:$('#form-member-add').serialize(),
+                    success: function(data) {
+                        var res = String($.trim(data));
+                        if(res=="mobileerror"){
+                            layer.msg("您准备修改的手机号已经存在，请换个手机号进行修改！");
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('恭喜您修改成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    //所在地区选择
+    cxSelect('cmbProvince', 'cmbCity', 'cmbArea', '{$userinfo.province}', '{$userinfo.city}', '{$userinfo.county}');
+    cxSelect('dshenfen', 'dchengshi', 'dquyu', '{$userinfo.province}', '{$userinfo.city}', '{$userinfo.county}');
+    cxSelect('shenfen', 'chengshi', 'quyu', '{$userinfo.province}', '{$userinfo.city}', '{$userinfo.county}');
+
+
+
+</script>
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7;IE=edge,chrome=1">
+    <meta name="viewport"  content="width=device-width,user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/sm.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/mlianmeng.css">
+    <title>联盟商家列表页</title>
+</head>
+
+<body>
+
+<header style="width: 100%; height: 50px; background-color: #D8320C;position:fixed;top: 0;z-index:9999;">
+    <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+        <a href="javascript:history.back(-1);">
+            <img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;"></a></div>
+    <div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;">
+    </div>
+    <div style="width:25%; margin-left: 30%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">联盟商家</div>
+</header>
+
+<div class="business-items-list" style="margin-top: 13%;">
+    <div class="business-items-mask"></div>
+    <ul style="list-style-type:none;margin-left: -7%;">
+        <foreach name="store_rows" item="store_row">
+        {volist name="unshop_list" id="vo"}
+            <li>
+                <a href="/mobile.php/index/unshop/unshop_show/shopid/{$vo.ID}" class="external clearfix">
+                    <div class="pull-left business-item-pic">
+                        <img onerror="this.src='/public/Public/static/images/Unshop/5-160914192R6-51.gif'" src="{$vo.SupplierBannerForApp}" />
+                    </div>
+                    <div class="pull-left business-item-text">
+                        <p class="name">{$vo.Name}</p>
+                        <p>地址：<span>{$vo.Province}{$vo.City}{$vo.Area}{$vo.Address}</span></p>
+                        <p>电话：<span>{$vo.Mobile}</span></p>
+                        <div class="praise-nearby">
+                            <span class="praise-icon"></span>
+                            <span>{:otherconfig()['companyName']}优质商家</span>
+                        </div>
+                    </div>
+                    <div class="pull-right distance">~~米</div>
+                </a>
+            </li>
+        {/volist}
+        </foreach>
+    </ul>
+</div>
+
+    <!--底部导航-->
+
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>系统基本配置</title>
+    <link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 系统基本配置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form  enctype="multipart/form-data" method="post" action="{:url('system_config/systemConfig',['act'=>'edit'])}" class="form form-horizontal" id="form_systemConfig_add">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>公司名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.companyName}"  placeholder="" id="companyName" name="companyName">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>系统状态：</label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="systemIsOn" type="radio" id="systemIsOn-1" value="2" {if condition="$list['systemIsOn'] eq 2"}checked{/if}>
+                    <label for="systemIsOn-1">关闭</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="systemIsOn-2" name="systemIsOn" value="1" {if condition="$list['systemIsOn'] eq 1"}checked{/if}>
+                    <label for="systemIsOn-2">打开</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>关闭时提示消息：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.offMessage}" placeholder="" id="offMessage" name="offMessage" style="width:80%">
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>LOGO：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <div class="maskWraper f-l" style="width:150px;  border:solid 1px #ddd; padding:2px"><img id="imgPre" src="<?php echo config('IMAGE_DOMAIN_NAME');?>/{$list.logo}" width="150"></div>
+                <div class="mt-50 ml-10 f-l">
+                    <span class="btn-upload form-group">
+                        <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                        <input type="file" multiple name="logo" id="proimg" class="input-file" onchange="preImg(this.id,'imgPre');">
+                    </span>
+                    <br><label class="c-999">图片大小200×80像素</label>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>是否开启七牛云图片连接：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-9 skin-minimal">-->
+                <!--<div class="radio-box">-->
+                    <!--<input name="img_on" type="radio" id="img_on-1" value="0" {if condition="$list['img_on'] eq 0"}checked{/if}>-->
+                    <!--<label for="img_on-1">关闭</label>-->
+                <!--</div>-->
+                <!--<div class="radio-box">-->
+                    <!--<input name="img_on" type="radio" id="img_on-2" value="1" {if condition="$list['img_on'] eq 1"}checked{/if}>-->
+                    <!--<label for="img_on-2">打开</label>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"></label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <span class="c-red">注：系统参数修改要谨慎</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="提交并发布" />
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+
+//从 file 域获取 本地图片 url
+        function getFileUrl(sourceId) {
+            var url;
+            if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+                url = document.getElementById(sourceId).value;
+            } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }
+            return url;
+        }
+
+    //将本地图片 显示到浏览器上
+    function preImg(sourceId, targetId) {
+        var url = getFileUrl(sourceId);
+        var imgPre = document.getElementById(targetId);
+        imgPre.src = url;
+    }
+
+</script>
+
+</body>
+</html>

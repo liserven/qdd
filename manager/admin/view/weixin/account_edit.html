@@ -1,0 +1,73 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>添加商品分类 - 商品管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-menu-add">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>公众号名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$config.name}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>APPID：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$config.appid}" placeholder="" id="appid" name="appid">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>APPSECRET：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$config.appsecret}" placeholder="" id="appsecret" name="appsecret">
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+
+<script type="text/javascript">
+    $(function(){
+        $("#form-menu-add").validate({
+            rules:{
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(data){
+                $.ajax({
+                    url:'{:url("Weixin/account_edit",["type"=>"edit","id"=>$config["id"]])}',
+                    type:"POST",
+                    dataType:"json",
+                    data:$('#form-menu-add').serialize(),
+                    success: function(rep) {
+                        if(rep.status=="0"){
+                            layer.msg(rep.msg);
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            layer.msg(rep.msg,{},function(){
+                                parent.location.reload(); //刷新父页面
+                                parent.layer.close(index); //关闭layer
+                            });
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

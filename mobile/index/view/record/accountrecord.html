@@ -1,0 +1,306 @@
+<!--
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <LINK rel="Bookmark" href="<?php echo CSS_PATH;?>favicon.ico" >
+    <LINK rel="Shortcut Icon" href="<?php echo CSS_PATH;?>favicon.ico" />
+    &lt;!&ndash;[if lt IE 9]>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>lib/html5.js"></script>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>lib/respond.min.js"></script>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>lib/PIE-2.0beta1/PIE_IE678.js"></script>
+    <![endif]&ndash;&gt;
+
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/He.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/He.admin.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/He-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/iconfont/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>/static/admin/css/app.css"/>
+    &lt;!&ndash;[if IE 6]>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]&ndash;&gt;
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>电子币记录 - 交易记录</title>
+<link type="text/css" href="<?php echo CSS_PATH;?>wap/css/xgmm.css" rel="stylesheet"/>
+</head>
+<body ng-app="scroll" ng-controller="Main" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+<div style="width: 100%; height: 50px; background-color: #ff0000;">
+    <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+        <a href="javascript:history.back(-1);">
+            <img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;">
+        </a>
+    </div>
+    <div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;">
+
+    </div>
+
+    <div style="width:50%; margin-left: 30%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">电子币记录</div>
+
+    <div style="padding-top: 9px; margin-right: 3%; float: right;">
+
+    </div>
+</div>
+<div style="clear: both;">
+</div>
+
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post"  action="/mobile.php/record/list">
+        <div class="bk-gray">
+            <div class="col-80" style="width:25%;">类型：</div>
+            <div class="col-200" style="width:65%;">
+        	<span class="select-box inline">
+                <select name="flowtype" class="select" >
+                    <option value="">请选择</option>
+                    <option value="充值">充值</option>
+                    <option value="返币">返币</option>
+                    <option value="转入">转入</option>
+                    <option value="转出">转出</option>
+                    <option value="扣币">扣币</option>
+                </select>
+            </span>
+            </div>
+            <div class="col-80" style="width:25%;">来源ID：</div>
+            <div class="col-200" style="width:65%;"><input type="text" class="input-text"placeholder="输入来源ID" id="UserFrom" name="UserFrom" value="{$Request.param.UserFrom}"></div>
+            <div class="col-80" style="width:25%;">日期：</div>
+            <div class="col-300" style="width:65%;">
+                <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:45%;">
+                -
+                <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:45%;">
+            </div>
+            <div class="f-r mt-5" style="width: 60%;"><button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+        </div>
+    </form>
+    <div style="margin-top: 45px;"></div>
+    <div  ng-if="vo.total=='0'" style="text-align:center"> 暂无记录
+    </div>
+
+    <div ng-repeat="vo in items">
+        <div style=" margin:10px 10px 10px 10px">
+            <div style=" float:left; color:#303030; font-weight:bold;">用户ID：<span style="color:#F00;">{{vo.fromwho}}({{vo.fromname.TrueName}})</span></div>
+                <div ng-if="vo.flowtype=='充值'" style="float:right; color:gray;">{{vo.flowtype}}</div>
+                <div style="float:right; color:#5eb95e;" ng-if="vo.flowtype=='转入'">{{vo.flowtype}}</div>
+
+                <div style="float:right; color:#F00;" ng-if="vo.flowtype=='转出'">{{vo.flowtype}}</div>
+
+                <div style="float:right; color:green;" ng-if="vo.flowtype=='返币'">{{vo.flowtype}}</div>
+            <div style="float:right; color:blue;" ng-if="vo.flowtype=='扣币'">{{vo.flowtype}}</div>
+        </div>
+        <div style="clear:both;"></div>
+        <div style="width:100%; height:1px;  background:#d3d3d3; margin-top:7px;"></div>
+
+        <div style=" margin:10px 10px 10px 10px">
+            <div style=" float:left; color:#3b3a3a;">{{vo.memo}}：</div>
+            <div style="float:right; color:#F00; font-family:Arial;">{{vo.amount}}</div>
+        </div>
+        <div style="clear:both;"></div>
+        <div style=" margin:10px 10px 10px 10px">
+            <div style=" float:left; color:#3b3a3a;">当前余额：</div>
+            <div style="float:right; font-family:Arial;">{{vo.balance}}</div>
+        </div>
+        <div style="clear:both;"></div>
+        <div style=" margin:10px 10px 10px 10px">
+            <div style=" float:left; color:#3b3a3a;">交易时间：</div>
+            <div style="float:right; color:#CCC; font-family:Arial;">{{vo.adddate}}</div>
+        </div>
+        <div style="clear:both;"></div>
+        <a href="/mobile.php/record/show?id={{vo.id}}">
+            <div style=" margin:10px 10px 10px 10px">
+                <div style="float:right; color:#5eb95e;">查看详情</div>
+            </div>
+        </a>
+        <div style="clear:both; width:100%; height:10px; background:#f5f3f3; margin-top:10px; float:left;"></div>
+    </div>
+    <div style="clear:both;"></div>
+
+</div>
+</div>
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载&#45;&#45;需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/record/accountrecord?{$param}p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                $scope.items.push(response.data.data_list[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+</script>
+
+</body>
+</html>
+-->
+
+
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>账户明细</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal;}
+        img{ width:100%; border:0;}
+        .top{width: 100%;height:50px; background:#fff;position:relative; background-color: #28bebc;}
+        .top .neirong{width: 100%;height:20px;text-align: center;line-height:50px;position:relative;background-color: #28bebc;}
+        .top .neirong a#fanhui{float: left;margin-left:3%;}
+        .zhongjian{ width:100%; margin-top:20px;font-family:"微软雅黑";}
+        .zhongjian1{ width:100%; margin-bottom:30px;font-family:"微软雅黑";height: 45px;}
+
+    </style>
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+</head>
+<body ng-app="scroll" ng-controller="Main" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+    <div class="top">
+        <div class="neirong">
+            <a href="javascript:history.back(-1);" id="fanhui"><img style=" width:10px;margin-top:14px; position:absolute; z-index:0"src="<?php echo CSS_PATH;?>mobile/images/fanhui.png" alt=""></a>
+            <div style=" width:100%; height:44px; font-size:17px;color:#333; font-family:'微软雅黑';">账户明细</div>
+        </div>
+    </div>
+    <div ng-repeat="vo in items">
+        <div class="zhongjian1">
+            <div style=" width:100%; height:70px; background:#fff;border-top: 1px solid #dddddd;">
+                <p  ng-if="vo.flowtype=='充值'" style=" float:left; margin-left:3%; margin-top:15px; color:#333; font-family:'微软雅黑'; font-size:16px;">充值到余额</p>
+                <p  ng-if="vo.flowtype=='转入'" style=" float:left; margin-left:3%; margin-top:15px; color:#333; font-family:'微软雅黑'; font-size:16px;">转入</p>
+                <p  ng-if="vo.flowtype=='转出'" style=" float:left; margin-left:3%; margin-top:15px; color:#333; font-family:'微软雅黑'; font-size:16px;">转出</p>
+                <p  ng-if="vo.flowtype=='返币'" style=" float:left; margin-left:3%; margin-top:15px; color:#333; font-family:'微软雅黑'; font-size:16px;">返币</p>
+                <p  ng-if="vo.flowtype=='扣币'" style=" float:left; margin-left:3%; margin-top:15px; color:#333; font-family:'微软雅黑'; font-size:16px;">在线支付</p>
+
+                <p style=" float:right; margin-right:3%; margin-top:15px; color:#999;font-family:'微软雅黑'; font-size:14px;">{{vo.adddate}}</p>
+            </div>
+            <div style=" margin-top:-30px;">
+                <p style=" float:left; margin-left:3%;  color:#333; font-family:'微软雅黑'; font-size:12px;">余额：{{vo.balance}}</p>
+                <p style=" float:right; margin-right:3%;color:#333;font-family:'微软雅黑'; font-size:16px;">{{vo.amount}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/record/accountrecord?{$param}p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                $scope.items.push(response.data.data_list[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+</script>
+
+</body>
+</html>
+

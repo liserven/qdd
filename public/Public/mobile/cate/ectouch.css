@@ -1,0 +1,191 @@
+/*初始样式*/
+
+html {font-size: 18px; font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", STXihei, STHeiti, "Microsoft YaHei", Heiti, SimSun, sans-serif;
+-webkit-font-smoothing: antialiased;}
+body,
+ul,
+ol,
+li,
+p,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+table,
+td,
+img,
+div,
+dl,
+dt,
+dd {margin: 0;padding: 0;border: 0;list-style: none;font-weight: normal;}
+body {background: #F6F6F9;color: #333;margin: 0 auto;font-size: 18px;font-weight: normal;}
+a,
+a:link {color: #333;text-decoration: none;}
+a:active,
+a:hover{text-decoration: underline;}
+
+* {-webkit-appearance: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);}
+input:required,
+input:valid,
+input:invalid {border: 0 none;outline: 0 none;-webkit-box-shadow: none;-moz-box-shadow: none;-ms-box-shadow: none;-o-box-shadow: none;box-shadow: none;}/* 重置文本格式元素 */
+
+
+input[type="number" ]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none !important;
+    margin: 0; 
+}
+
+input[type="number"]{-moz-appearance:textfield;}
+
+address,
+cite,
+dfn,
+em,
+var {font-style: normal;}/* 将斜体扶正 */
+
+code,
+kbd,
+pre,
+samp {}/* 统一等宽字体 */
+del {color: #aaa; font-size:1.2rem;}
+
+@media only screen and (max-width: 310px) and (min-width: 300px) {html {font-size: 9px}}
+@media only screen and (max-width: 320px) and (min-width: 310px) {html {font-size: 9px}}
+@media only screen and (max-width: 360px) and (min-width: 320px) {html {font-size: 9px} .filter-menu-list ul{margin-top:.12rem;}.filter-menu-list ul li i{font-size:2.2rem !important;}}
+@media only screen and (max-width: 360px) and (min-width: 350px) {html {font-size: 10px} .filter-menu-list ul{margin-top:.1rem;}.filter-menu-list ul li i{font-size:2.2rem !important;}}
+@media only screen and (max-width: 480px) and (min-width: 360px) {html {font-size: 10px} .filter-menu-list ul{margin-top:.1rem;}.filter-menu-list ul li i{font-size:2.2rem !important;}}
+@media only screen and (max-width: 480px) and (min-width: 470px) {html {font-size: 13.33333px}}
+@media only screen and (max-width: 560px) and (min-width: 480px) {html {font-size: 13.33333px}}
+@media only screen and (max-width: 570px) and (min-width: 560px) {html {font-size: 15.83333px}}
+@media only screen and (max-width: 640px) and (min-width: 570px) {html {font-size: 15.83333px}}
+@media only screen and (max-width: 640px) and (min-width: 630px) {html {font-size: 17.77778px}}
+@media only screen and (max-width: 710px) and (min-width: 640px) {html {font-size: 17.77778px}}
+
+
+/*动画*/
+
+
+/*=======================================
+   		共用样式
+  =======================================*/
+ #loading{ position: fixed; left:0; top: 0; right: 0; bottom: 0; background:rgba(255,255,255,1) ; margin-left:-2.5rem;  margin-top:-1rem;z-index: 111;}
+ #loading img{ position:absolute; width:5rem; height: auto; left:50%; top: 50%; margin-left:-2rem; margin-top:-3rem;}
+
+/*通用*/
+a:hover{
+	text-decoration: none;
+}
+/*垂直水平居中*/
+.tb-lr-center{  display: -webkit-box; display: -ms-flexbox;  display: -webkit-flex; display: flex !important;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;}
+ /*文字超出一行隐藏*/
+.onelist-hidden{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.clear{clear:both}
+.of-hidden{overflow: hidden;}
+.div-messages{background:rgba(0,0,0,0.6); position: fixed; -webkit-transition: all .5s; -moz-transition: all .5s; -o-transition: all .5s; transition: all .5s; visibility: hidden; opacity: 0; padding:0 1.8rem; box-sizing:content-box; left:50%; bottom:1.6rem; height:3.6rem; line-height: 3.6rem; font-size:1.6rem; color:#fff; border-radius:1.8rem; z-index: 100000;}/*此为弹出层消息并且层级应最高，内容js动态替换，默认无内容，左右居中js*/
+.div-messages.active{visibility: visible; opacity: 1; -webkit-transition: opacity .5s; -moz-transition: opacity .5s; -o-transition: opacity .5s; transition: opacity .5s;}
+.fl {float: left;}
+.fr {float: right;}
+.m-top04{margin-top:.4rem;}
+.m-top06{margin-top:.6rem;}
+.m-top08{margin-top:.8rem;}
+.m-top10{margin-top:1rem;}
+.m-top12{margin-top:1.2rem;}
+.m-top1px{margin-top:1px;}
+.margin-lr {margin: 0 1.3rem;}
+.padding-lr {padding: 0 1.3rem; box-sizing: content-box;}
+.padding-all{padding:1.3rem}
+.bodyfff {background: #fff;}
+.ellipsis-one{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+/*滚动条样式*/
+.scrollbar-none::-webkit-scrollbar {/*滚动条宽度设置*/
+    width: 0px;height: 0;
+}
+
+/*多个一行三个*/
+.w-3{width:33.33%;  float:left; padding:.6rem .4rem; box-sizing: border-box; position: relative;}
+.w-3:nth-child(3n+1){padding-left:0; padding-right:.8rem}
+.w-3:nth-child(3n){ padding-left: .8rem;padding-right:0;}
+
+/*文本框*/
+.text-all {border-bottom: 1px solid #F6F6F9;padding: 1rem 0;width: 100%;overflow: hidden;}
+.text-all.active{border-bottom:1px solid #1CBB7F;}
+.text-all label {font-size: 1.65rem;display: block;height: 3rem;line-height: 3rem;margin-right: 0.8rem;vertical-align: middle;}
+.text-all .text-all-span{height:3rem; line-height: 3rem; font-size:1.6rem; color:#666;}
+.text-all span.t-jiantou{margin-top:.8rem;}
+.input-text {position: relative;}
+.input-text input {border: 0;height: 3rem;line-height: 2rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.6rem;padding-right: 3rem;}
+.text-area1{width:100%; border:0; font-size:1.6rem; min-height: 3rem; line-height:2rem; padding: .5rem 0;  box-sizing:border-box; border-bottom:1px solid #F6F6F9; color:#555;}
+
+/*搜索框*/
+.search{padding:0 3rem; position:relative;}
+.search a.a-search-input{display:block; position: absolute; left:0; bottom:0; right:0; top:0; z-index: 2;}
+.search .text-all{border-bottom:0;}
+.search .input-text{padding:.3rem 0; border-bottom:0; background:#fff; background:#FFFFFF; border-radius: 25px; overflow: hidden;  position:relative;}
+.search .input-text input{padding-left:1rem;}
+.search .is-null{right:.6rem;}
+.search .search-check{ position: absolute; box-sizing: border-box; line-height: 2rem; padding:.5rem 0; padding-left:1rem;  color:#666;}
+.search-check i.icon-xiajiantou{ position:absolute; font-size:1.2rem;}
+a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; line-height:2rem; box-sizing: border-box; padding-left:1.2rem;}/*搜索筛选*/
+.search .btn-submit{display: block; width:6rem; height:3.6rem;box-sizing: border-box; border-radius: 0px 4px 4px 0;    line-height: 1rem;}
+
+/*商品分类页*/
+.category-top .search{border-bottom:1px solid #e8e8e8;position:fixed; left:0; top:0; right:0; z-index: 1; background:#2C2C2C;}
+.menu-left,.menu-right{position:fixed; left:0;top:5.7rem; bottom:0; overflow-y: scroll;}
+.menu-right #loading{left:11rem; top:6.7rem;}
+.menu-left{background:#353535;color: white;margin-bottom: 55px;}
+.menu-left ul li{padding:1.3rem .8rem; box-sizing: border-box;  font-size:1.5rem; width:8.6rem; text-align: center;}
+.menu-left ul li.active{background:#fed58d; position:relative;color: black;}
+.menu-right{background:#2C2C2C; position:inherit; margin-left:8.6rem; margin-top: 5.7rem; right:0; bottom:0; left: 8.6rem;margin-bottom: 55px;}
+.menu-right h5{font-size:1.3rem; color: white; margin-top:1rem; margin-bottom:.4rem;}
+.menu-right h5:first-child{margin-top:0;}
+.menu-right ul{overflow: hidden;}
+.menu-right ul li{text-align: center;}
+.menu-right ul li a{display:block; position: absolute; left:.3rem; top:.7rem; bottom:.7rem; right:.3rem;}
+.menu-right ul li:nth-child(3n+1) a{left:0; right:.7rem;}
+.menu-right ul li:nth-child(3n) a{right:0; left: .7rem;}
+.menu-right ul li span{display:block;height:2.6rem; line-height: 2.6rem; overflow: hidden; text-align: center; font-size:1.4rem;color: white;}
+.menu-right ul li img{width:5rem; height: auto;	}
+.mune-no-img img{display:none}
+.mune-no-img span{border:1px solid #efefef; color:#555; border-radius: 4px;}
+
+.nav {
+    background: #242424;
+    padding: 10px 0 3px 0;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+.nav ul {
+    height: 0px;
+}
+.nav ul li {
+    float: left;
+    width: 25%;
+    text-align: center;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.nav ul li span {
+    display: block;
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    font-family: "微软雅黑";
+    line-height: 22px;
+}
+.nav ul li span img{
+	width: 30%;
+}

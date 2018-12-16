@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单全部</title>
+    <link rel="stylesheet" href="/public/qdd/css/yifahuo.css">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+<body ng-app="scroll" ng-controller="Main" ng-cloak>
+<header>
+    <a href="/mobile.php/member/userinfo" id="ddqbfh">
+        <img src="/public/qdd/img/juxing.png" alt="">
+    </a>
+    <p>订单</p>
+</header>
+<section>
+    <ul class="ztList">
+        <li {if condition="$Request.param.status eq ''"} class="dddj" {/if}>
+            <a href="/mobile.php/order/list">全部</a>
+        </li>
+        <li {if condition="$Request.param.status eq '1'"} class="dddj" {/if}>
+            <a href="/mobile.php/order/list?status=1">待付款</a>
+        </li>
+        <li {if condition="$Request.param.status eq '5'"} class="dddj" {/if}>
+        <a href="/mobile.php/order/list?status=5">待发货</a>
+        </li>
+        <li {if condition="$Request.param.status eq '4'"} class="dddj" {/if}>
+        <a href="/mobile.php/order/list?status=4">已发货</a>
+        </li>
+        <li {if condition="$Request.param.status eq '8'"} class="dddj" {/if}>
+            <a href="/mobile.php/order/list?status=8">已收货</a>
+        </li>
+
+
+    </ul>
+    <ul class="qbList" hen-scrolled="loadMore()">
+        <li ng-repeat="vo in items">
+            <div class="ddh">
+                <img src="/public/qdd/img/dd5.png" alt="">
+                <p>{{vo.usertel}}</p>
+            </div>
+            <div class="ddsp">
+                <p><strong>ID</strong>{{vo.innerorderid}}
+                    <span ng-if="vo.status == '0'">过期订单</span>
+                    <span ng-if="vo.status == '1'">待付款</span>
+                    <span ng-if="vo.status == '2'">待发货</span>
+                    <span ng-if="vo.status == '3'">配货中</span>
+                    <span ng-if="vo.status == '4'">已发货</span>
+                    <span ng-if="vo.status == '8'">已收货</span>
+                    <span ng-if="vo.status == '15'">取消待处理</span>
+                    <span ng-if="vo.status == '10'">已取消</span>
+                    <span ng-if="vo.status == '20'">后台取消</span>
+                </p>
+                <div class="ddspxq" ng-repeat="von in vo.voo">
+                    <img src="{{von.img}}" alt="" width="70" height="70">
+                    <div>
+                        <p>{{von.proname}}</p>
+                        <p>数量：{{von.pronum}}</p>
+                        <p>单价：<span>￥{{von.price}}</span></p>
+                    </div>
+                </div>
+                <div class="dddz">
+                    <img src="/public/qdd/img/dingwei.png" alt="">
+                    <p>{{vo.province}}{{vo.city}}{{vo.county}}{{vo.address}}</p>
+                </div>
+            </div>
+            <p class="ddhj">合计({{vo.goodsnum}}件)<span>￥{{vo.goodsmoneytotle}}</span></p>
+            <p class="xdsj">下单时间<span>下单时间：{{vo.adddate}}</span></p>
+            <div class="czBtnBox">
+                <a ng-if="vo.status=='4'" href="https://m.kuaidi100.com/index_all.html?type={{vo.expcode}}&postid={{vo.awbno}}&callbackurl=http://<?php echo $_SERVER['HTTP_HOST'];?>/mobile.php/order/list?status=4" id="wlBtn">跟踪物流</a>
+                <a ng-if="vo.status == '1'" href="javascript:;" ng-click="orderCancel(vo.innerorderid)" id="shBtn">取消订单</a>
+                <a ng-if="vo.status=='1'" href="javascript:;" ng-click="orderPay(vo.innerorderid,vo.ordertype)" id="shBtn">确认付款</a>
+                <a ng-if="vo.status == '2'" href="javascript:;" id="shBtn">待发货</a>
+                <a  ng-if="vo.status=='3'" id="shBtn">配货中</a>
+                <a ng-if="vo.status=='4'" id="shBtn">待发货</a>
+                <a ng-if="vo.status=='4'" href="javascript:;" ng-click="orderOk(vo.innerorderid)" id="shBtn">确认收货</a>
+                <a ng-if="vo.status=='8'" id="shBtn">已收货</a>
+                <a ng-if="vo.status=='10'" id="shBtn">已取消</a>
+                <a ng-if="vo.status=='15'" id="shBtn">退款中</a>
+                <a ng-if="vo.status=='20'" id="shBtn">后台取消</a>
+            </div>
+        </li>
+    </ul>
+</section>
+</body>
+</html>
+<script type="text/javascript">
+    $('img').error(function() {
+        $(this).attr('src', "/public/Public/mobile/img/logo.png");
+    });
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            $scope.advanced_search=false;
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/order/list?{$param}p="+$scope.currentPage+'&ishit=1')
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                $scope.items.push(response.data.data_list[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+            //高级搜索
+            $scope.advancedSsearchShow=function(){
+                $scope.advanced_search=true;
+            };
+            //订单支付
+            $scope.payflag=true;
+            $scope.orderPay=function(orderno,ordertype){
+                layer.confirm('确认要付款吗？',function(){
+                    if($scope.payflag){
+                        $scope.payflag=false;
+                        location.href='/mobile.php/order/pay?ordertype=inner&orderno='+orderno;
+                    }else{
+                        layer.msg('请不要重复提交！');
+                    }
+                });
+            };
+            //未付款的订单会员取消
+            $scope.orderCancel=function(orderno){
+                layer.confirm('确认要取消订单吗？',function(){
+                    if($scope.payflag){
+                        $scope.payflag=false;
+                        $http.get("/api.php/order/action?action=cancelorder&orderno="+orderno)
+                            .success(function(response) {
+                                location.href=location.href;
+                                layer.msg('已取消!',{icon:1,time:1000});
+                            });
+                    }else{
+                        layer.msg('请不要重复提交！');
+                    }
+                });
+            };
+            //已付款未发货的订单会员申请取消
+            $scope.orderCancelAdmin=function(orderno){
+                layer.confirm('确认要申请退款吗？',function(){
+                    $http.get("/api.php/order/action?action=cancelorderadmin&orderno="+orderno)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已申请!',{icon:1,time:1000});
+                        });
+                });
+            };
+            //会员确认收货
+            $scope.orderOk=function(orderno){
+                layer.confirm('确认要收货吗？',function(){
+                    $http.get("/api.php/order/action?action=orderok&orderno="+orderno)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已收货!',{icon:1,time:1000});
+                        });
+                });
+            };
+
+            $scope.show=function(title,url){
+                layer_show(title,url,320,500);
+            };
+            $scope.delete=function(id){
+                layer.confirm('确认删除订单吗？',function(){
+                    $http.get('/api.php/order/delete?id='+id)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已删除!',{icon:1,time:1000});
+                        });
+                });
+            };
+        }]);
+</script>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/jl/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>mobile/jl/shouye.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>mobile/jl/shouclearfix.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>mobile/dist/css/swiper.min.css"/>
+    <style>
+        *{margin:0;
+            padding:0;
+            list-style:none;}
+        .wrap{height:170px;
+            width:490px;
+
+            overflow: hidden;
+            position: relative;
+        }
+        .wrap ul{position:absolute;}
+        .wrap ul li{height:170px;}
+        .wrap ol{position:absolute;
+            right:5px;
+            bottom:10px;}
+        .wrap ol li{height:1px; width: 1px;
+            background:#ccc;
+            border:solid 1px #666;
+            margin-left:5px;
+            color:#000;
+            float:left;
+            line-height:center;
+            text-align:center;
+            cursor:pointer;}
+        .wrap ol .on{background:#E97305;
+            color:#fff;}
+        .banner .dingbu{width: 100%;height: 50px;overflow: hidden;}
+        .banner .dingbu .kuang{width: 60%;height: 23px; margin:2% auto; background: #fafafa; border-radius:10px; border: 1px solid #9aa7ad;padding: 5px 10px; color:#999;opacity: 0.8;font-family: "苹方";font-size:20px;line-height: 20px;}
+        .banner .dingbu .kuang .icon01{ width:35px;height: 35px;float:left;}
+        .banner .dingbu .zuo{float: left; margin-left: 15px; margin-top: 15px;color:#666;font-family: "微软雅黑"; font-size: 16px;}
+        font{color: #fed58d;}
+
+    </style>
+</head>
+<body >
+<!--------------------------------------------------------------banner-------------------------- -->
+
+<!--------------------------------------------------------------banner-------------------------- -->
+<div class="bg" style="width: 100%;height: 100%;background: #2f2f2f">
+    <div class="banner">
+        <div class="dingbu">
+            <form action="/mobile.php/search_list" method="post">
+                <div class="kuang" style="    margin-left: 18%;">
+                    <div class="icon01"><img src="http://m.999000.cn/web/Public//images/selfhomeimg/search.png" alt="" /></div>
+                    <input type="text" id="search" name="keyword" autocomplete="off" placeholder="请输入搜索内容" style="width:80%;background-color:transparent;height: 24px;font-size: 16px;line-height: 20px;border-left:0px;border-top:0px;border-right:0px;border-bottom:1px;outline: none ">
+                </div>
+                <div style="float: right;margin-top: -10%;margin-right: 3.5%;"><input style="color:white;border:none;background:none;cursor:pointer;    font-size: 16px;"  type="submit" value="搜索" ></div>
+            </form>
+        </div>
+
+        <div id="focus" class="focus">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {foreach name="banner" item="b"}
+                    <div class="swiper-slide"><a href="{$b.poster_url}"><img style="width: 100%;"  src="{$b.poster_picpath}" /></a></div>
+                    {/foreach}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+
+        <div class="sc" style="width: 100%;background: #1f1f1f">
+            <ul style="width: 100%;overflow-x: scroll;overflow-y: hidden;white-space:nowrap; ">
+                {foreach name="gcategory" item="v"}
+                <li style="width: 20%; margin-left: 0%;display: inline-block;">
+                    <a href="{$v.poster_url}" class="external">
+                        <img style="width: 75%;" src="{$v.poster_picpath}" />
+                        <p style="font-size: 14px;color: white;width: 100%">{$v.cate_name}</p>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        <!--------------------------------------------------------------每日必逛-------------------------- -->
+        <div class="mrbg">
+            <span class="mrbgtop" style="clear:both;font-size: 16px;">每日必逛·总有小惊喜<a href="/mobile.php/search_list?sort=1"  style="font-size: 16px;margin-right: -5%;">全部></a></span>
+            <div id="div1" style="width: 100%;">
+                <ul class="mrul1" style="width: 100%;height: 50%;    overflow-x: scroll;overflow-y: hidden; white-space: nowrap;">
+                    {foreach name="one" item="o"}
+                    <a href="{$o.poster_url}">
+                        <li class="mrli1" style="width: 25%;height: 100%;display: inline-block;">
+                            <img style="width: 95%;margin-top: 13%;margin-left: 2%;" src="{$o.poster_picpath}"/>
+                        </li>
+                    </a>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <!--------------------------------------------------------------省钱小能手-------------------------- -->
+
+        <div>
+            {foreach name='stores' item='s'}
+            <span class="sqxns" style="width: 100%"><a href="{$s.post_url}"><img width="100%" src="{$s.store_banner}"/></a>	</span>
+            <ul class="squl" style="width: 100%;margin-top: -3%;">
+                {foreach name='s.goods' item='g'}
+                <li class="mrli1" style="    padding-left: 2.5%;width: 22%">
+                    <a href="/mobile.php/goods/{$g.goods_id}">
+                        <img src="{$g.default_image}" style="width: 100%;"/><p><font color="black" style="    font-size: 15px">￥{$g.price}</font></p>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+            {/foreach}
+        </div>
+
+        <!--------------------------------------------------------------底部导航-------------------------- -->
+
+        <div style="clear: both"></div>
+        <div style="height: 80px;"></div>
+        {:widget('Common/mobile_footer')}
+    </div>
+
+    <script src="<?php echo CSS_PATH;?>mobile/jl/jquery.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/dist/js/swiper.min.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: true,//可选选项，自动滑动
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        })
+    </script>
+    <script src="<?php echo CSS_PATH;?>mobile/jl//slide.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/jl/main.js"></script>
+</body>
+</html>

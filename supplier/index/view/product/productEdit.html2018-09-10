@@ -1,0 +1,512 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>编辑商品 - 商品管理</title>
+</head>
+<body>
+<div class="page-container">
+	<form class="form form-horizontal" id="form-product-edit" enctype="multipart/form-data" action="{:url('Product/productEdit',['proid'=>$list['proid'],'act'=>'edit'])}" method="post">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>商品名称：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$list.proname}" placeholder="" id="proname" name="proname">
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">关键词：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$list.keywords}" placeholder="关键字务必以英文逗号隔开，切记！" id="keywords" name="keywords">
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">描述：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<textarea name="description" cols="" rows="" class="textarea"  placeholder="最多不能超过100个字……" onKeyUp="textarealength(this,100)">{$list.description}</textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>商品分类：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+            {:getpcnamebyid($list['categoryid'])}
+            {if condition="$list['categorycode'] neq 0"}
+            -{:getpcnamebyid($list['categorycode'])}
+            {/if}
+            {if condition="$list['categorythird'] neq 0"}
+            -{:getpcnamebyid($list['categorythird'])}
+            {/if}
+            </div>   
+		</div>
+        
+        <!--<div class="row cl">-->
+			<!--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>商品类型：</label>-->
+			<!--<div class="formControls col-xs-10 col-sm-9 skin-minimal">-->
+				<!--<div class="radio-box">-->
+					<!--<input name="goodstype" type="radio" id="piece-1" value="2" {if condition="$list['goodstype'] eq 2"}checked{/if}>-->
+					<!--<label for="piece-1">大件</label>-->
+				<!--</div>-->
+				<!--<div class="radio-box">-->
+					<!--<input type="radio" id="piece-2" name="goodstype" value="1" {if condition="$list['goodstype'] eq 1"}checked{/if}>-->
+					<!--<label for="piece-2">小件</label>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+        <!--//包装规格暂时没修改-->
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>包装规格：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$list.productsizedetail}" placeholder="填写包装的标准,如一箱多少包,一包多少个等" id="productsizedetail" name="productsizedetail">
+			</div>
+		</div>
+		<!--//规格参数暂时没修改-->
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>规格参数：</label>
+			<div class="formControls col-xs-10 col-sm-9" id="optionContainer">
+                <iframe src="{:url('Product/productStyle',['proid'=>$list['proid'],'supid'=>$list['supplierid']])}" frameborder="0" scrolling="no" id="iframeid" width="100%" onload="this.height=45"></iframe>
+                <div id="option0">
+                    颜色 <input type="text" class="input-text" value="" placeholder="" id="pcoler1" name="pcoler[]" style="width:20%">
+                    规格 <input type="text" class="input-text" value="" placeholder="" id="psize1" name="psize[]" style="width:20%">&emsp;条形码 <input type="text" class="input-text" value="" placeholder="" id="txm1" name="txm[]" style="width:30%">&emsp;<a href="#" onClick="addRow()">添加一行</a></div>
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">商品属性：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				重量 <input type="text" class="input-text" value="{$list.weight}" placeholder="0" id="weight" name="weight" style="width:100px"> <cite class="c-999">Kg</cite>&emsp;长 <input type="text" class="input-text" value="{$list.length}" placeholder="0" id="length" name="length" style="width:100px"> <cite class="c-999">CM</cite>&emsp;宽 <input type="text" class="input-text" value="{$list.width}" placeholder="0" id="width" name="width" style="width:100px"> <cite class="c-999">CM</cite>&emsp;高 <input type="text" class="input-text" value="{$list.height}" placeholder="0" id="height" name="height" style="width:100px"> <cite class="c-999">CM</cite>
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>商品单位：</label>
+			<div class="formControls col-xs-10 col-sm-9"> 
+                <span style="width:80px">
+                     <input type="text" class="input-text" value="{$list.unit}" id="getunit" name="unit" style="width:100px">
+				</span>
+                <span class="select-box" style="width:80px">
+                    <select class="select" size="1" id="unit" name="unitselect">
+                        <option value="" selected>请选择</option>
+                        <option value="套">套</option>
+                        <option value="瓶">瓶</option>
+                        <option value="箱">箱</option>
+                        <option value="盒">盒</option>
+                        <option value="桶">桶</option>
+                        <option value="件">件</option>
+                        <option value="个">个</option>
+                        <option value="支">支</option>
+                        <option value="包">包</option>
+                        <option value="条">条</option>
+                        <option value="床">床</option>
+                        <option value="礼包">礼包</option>
+                        <option value="">其它</option>
+                    </select>
+				</span>
+            </div>
+		</div>
+        
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>最小起订量：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="number" class="input-text" value="{$list.minpurchase}" placeholder="0" id="minpurchase" name="minpurchase">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>最小起订倍数：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="number" class="input-text" value="{$list.orderstep}" placeholder="0" id="orderstep" name="orderstep">
+			</div>
+		</div>
+        <div class="row cl div_contentlist">
+            <label class="form-label col-xs-2 col-sm-2 Father_Title"><dd><span class="c-red">*</span>显示位置：</dd></label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input type="radio" name="ishit" id="checkbox1" value="1" onchange="xswz(1);" {eq name="list.ishit" value="1"}checked{/eq}>
+                    <label for="checkbox1">报单商城</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" name="ishit" id="checkbox2" value="2" onchange="xswz(2);" {eq name="list.ishit" value="2"}checked{/eq}>
+                    <label for="checkbox2">汽车商城 </label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" name="ishit" id="checkbox3" value="3" onChange="xswz(3);" {eq name="list.ishit" value="3"}checked{/eq}>
+                    <label for="checkbox3">零售商城</label>
+                </div>
+            </div>
+        </div>
+        <!--//显示位置暂时没修改-->
+        <!--<div class="row cl div_contentlist">-->
+			<!--<label class="form-label col-xs-2 col-sm-2 Father_Title"><dd><span class="c-red">*</span>显示位置：</dd></label>-->
+			<!--<div class="formControls col-xs-10 col-sm-9 skin-minimal">-->
+                <!--<div class="radio-box" >-->
+                    <!--<input type="radio" name="ishit" id="checkbox2" value="1"  {if condition='$list["ishit"] eq 1'}checked{/if}>-->
+                    <!--<label for="checkbox2">注册区</label>-->
+                <!--</div>-->
+                <!--<div class="radio-box" >-->
+                    <!--<input type="radio" name="ishit" id="checkbox3" value="2"  {if condition='$list["ishit"] eq 2'}checked{/if}>-->
+                    <!--<label for="checkbox3">消费区</label>-->
+                <!--</div>-->
+                <!--<div class="radio-box" >-->
+                    <!--<input type="radio" name="ishit" id="checkbox4" value="4"  {if condition='$list["ishit"] eq 4'}checked{/if}>-->
+                    <!--<label for="checkbox2">商城</label>-->
+                <!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>零售价：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-9">-->
+                <!--<input type="text" class="input-text" value="{:floatval(addzero($list['marketprice']))}" placeholder="" id="marketprice" name="marketprice" style="width:200px"> 元-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>市场价：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{:floatval($list['marketprice'])}" placeholder="" id="marketprice" name="marketprice" style="width:200px" > 元
+            </div>
+        </div>
+        <div style="display:{if condition="$list['ishit'] eq 6"}none{/if}" id="jfdgno1">
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>会员价：</label>
+                <div class="formControls col-xs-10 col-sm-9">
+                    <input type="text" class="input-text" value="{:floatval(addzero($list['vipprice']))}" placeholder="" id="vipprice" name="vipprice" style="width:200px"> 元
+                </div>
+            </div>
+        </div>
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2">可以使用积分：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-9">-->
+                <!--<input type="text" class="input-text" value="{:floatval($list['consumeintegral'])}" placeholder="" id="consumeintegral" name="consumeintegral" style="width:200px"> 元-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>Pv值：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-9">-->
+                <!--<input type="text" class="input-text" value="{:floatval($list['pv'])}" placeholder="" id="Pv" name="Pv" style="width:200px">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算价：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{:floatval($list['balanceprice'])}" placeholder="" id="balanceprice" name="balanceprice" style="width:200px"> 元
+            </div>
+        </div>
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>消费赠送积分：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-9">-->
+                <!--<input type="text" class="input-text" value="{:floatval($list['giveintegral'])}" placeholder="" id="GiveIntegral" name="GiveIntegral" style="width:200px"> 积分-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row cl" style="display: none;">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>推广佣金：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{:floatval(addzero($list['moneyoffirst']))}" placeholder="" id="moneyOfFirst" name="moneyOfFirst" style="width:200px"> 元
+            </div>
+        </div>
+
+
+        <div class="row cl" style="display: none;">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>二级分润：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.moneyofsecond}" placeholder="" id="moneyOfSecond" name="moneyOfSecond" style="width:200px"> 元
+            </div>
+        </div>
+        <div class="row cl" style="display: none;">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>三级分润：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.moneyofthird}" placeholder="" id="moneyOfThird" name="moneyOfThird" style="width:200px"> 元
+            </div>
+        </div>
+        <div class="row cl" style="display: none;">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>每层分的钱数：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.moneyofeveryfloor}" placeholder="" id="moneyOfEveryFloor" name="moneyOfEveryFloor" style="width:200px"> 元
+            </div>
+        </div>
+        <div class="row cl" style="display: none;">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>向上找10层中的第一个领导人的见点奖(按照推荐关系)：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.moneyoffirstleader}" placeholder="" id="moneyOfFirstLeader" name="moneyOfFirstLeader" style="width:200px"> 元
+            </div>
+        </div>
+
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>产品图片：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+			    <div class="maskWraper f-l" style="width:150px; height:150px; border:solid 1px #ddd; padding:2px"><img id="imgPre" src="{$list.img}" width="150" height="150"></div>
+                <div class="mt-50 ml-10 f-l">
+                    <span class="btn-upload form-group">
+                        <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                        <input type="file" multiple name="proimg" id="proimg" class="input-file" onchange="preImg(this.id,'imgPre');">
+                    </span>
+                    <br><label class="c-999">图片大小800×800像素</label>
+                </div>
+			</div>
+		</div>
+        <div class="row cl">
+        	<label class="form-label col-xs-2 col-sm-2">产品相册：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+                  <iframe src="{:url('Product/productPhotoDel',['id'=>$list['proid']])}" frameborder="0" scrolling="no" id="iframeid" width="100%" onload="this.height=170"></iframe>
+                  <div id="pcoptionContainer" class="f-l formControls">
+                      <div id="option0" class="f-l mr-10">
+                      	  <div class="maskWraper" style="width:150px; height:150px; border:solid 1px #ddd; padding:2px"><img id="imgPre1" src="<?php echo CSS_PATH;?>static/supplier/images/photo.png" width="150" height="150" style="display:black; border:0 #FFFFFF solid"></div>
+                          <span class="btn-upload form-group">
+                              <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                              <input type="file" multiple name="photo[]" id="photo1" class="input-file" onchange="preImg(this.id,'imgPre1');">
+                          </span>
+                      </div>
+                  </div>
+                  <a class="btn btn-primary radius" href="###" onClick="picaddRow()">添加图片</a><br>
+                  <label class="c-999">图片大小800×800像素<br>最多显示4张图片</label>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">详细内容：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<script id="container" name="content" type="text/plain" style="width:100%;height:600px;">{$list.procontent}</script>
+                <textarea id="container" name="content" style="display:none">{$list.procontent}</textarea>
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">售后服务：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<textarea name="afterservice" cols="" rows="" class="textarea"  placeholder="" onKeyUp="textarealength(this,500)">{$list.afterservice}</textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/500</p>
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">运费政策：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<textarea name="peisong" cols="" rows="" class="textarea"  placeholder="" onKeyUp="textarealength(this,500)">{$list.peisong}</textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/500</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/ueditor.config.js"></script> 
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/ueditor.all.min.js"> </script> 
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+            
+<script type="text/javascript">
+//规格参数
+var rowCount=1;  //行数默认1行
+//添加行  
+function addRow(){  
+    rowCount++;
+    var newRow='<div id="option'+rowCount+'" class="mt-15">颜色 <input type="text" class="input-text" value="" placeholder="" id="pcoler'+rowCount+'" name="pcoler[]" style="width:20%">规格 <input type="text" class="input-text" value="" placeholder="" id="psize'+rowCount+'" name="psize[]" style="width:20%">&emsp;商品编码 <input type="text" class="input-text" value="" placeholder="" id="txm'+rowCount+'" name="txm[]" style="width:30%">&emsp;<a href="###" onclick=delRow('+rowCount+')>删除</a>';
+    $('#optionContainer').append(newRow);
+}
+//删除行  
+function delRow(rowIndex){  
+    $("#option"+rowIndex).remove();  
+    rowCount--;  
+}
+
+function xswz(id){
+	//alert("xswz"+id);
+	if(id==1){
+		document.getElementById("wz1").style.display="";
+	}else{
+		document.getElementById("wz1").style.display="none";	
+	}
+	if(id==6){
+		document.getElementById("jfdgyes").style.display="";
+		document.getElementById("jfdgno1").style.display="none";	
+		document.getElementById("jfdgno2").style.display="none";
+		document.getElementById("hydgjf").style.display="";	
+		
+	}else{
+		document.getElementById("jfdgyes").style.display="none";
+		document.getElementById("jfdgno1").style.display="";	
+		document.getElementById("jfdgno2").style.display="";
+		document.getElementById("hydgjf").style.display="none";	
+	}
+	//wztxs();
+}
+
+//function wztxs(){
+//	int xx=0;
+//	for(i=1;i<6;i++){
+//		if(document.getElementById("xswz"+id).checked==true){
+//			xx=xx+1;
+//		}
+//	}	
+//	if(xx==0){
+//		return false;
+//	}else{
+//		return true;	
+//	}
+//}
+//=========================================
+
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-product-edit").validate({
+		rules:{
+			orductname:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			mobile:{
+				required:true,
+				isMobile:true
+			},
+			number:{
+				required:true,
+				min:0
+			},
+			Txt_Stock:{
+				required:true,
+				min:0
+			},
+
+
+            marketprice:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            vipprice:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            consumeintegral:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            balanceprice:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            GiveIntegral:{
+                required:true,
+                number:true,
+                min:0,
+            },
+
+            moneyOfFirst:{
+                required:true,
+                number:true,
+                min:0,
+            },
+
+            moneyOfSecond:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            moneyOfThird:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            moneyOfEveryFloor:{
+                required:true,
+                number:true,
+                min:0,
+            },
+            moneyOfFirstLeader:{
+                required:true,
+                number:true,
+                min:0,
+            },
+
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});	
+});
+
+//编辑器
+$(function(){
+	var ue = UE.getEditor('container');
+	textarea:'content'; //与textarea的name值保持一致
+	ue.addListener("ready", function() {
+		// editor准备好之后才可以使用
+		ue.setContent(result.container);
+	});
+	ue.ready(function () {
+		// editor准备好之后才可以使用
+		ue.setContent(result.container);
+	});
+});
+
+//商品单位 
+$("#unit").change(function(){
+	$("#getunit").val($(this).val());
+});
+
+//产品图片
+var picrowCount={$count}+1;  //行数默认1行
+//添加行  
+function picaddRow(){
+    if(picrowCount<4) {
+        picrowCount++;
+        var picnewRow = '<div id="option' + picrowCount + '" class="f-l mr-10"><div class="maskWraper" style="width:150px; height:150px; border:solid 1px #ddd; padding:2px"><img id="imgPre' + picrowCount + '" src="<?php echo CSS_PATH;?>static/supplier/images/photo.png" width="150" height="150" style="display:black; border:0 #FFFFFF solid"></div> <span class="btn-upload"> <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a><input type="file" multiple name="photo[]" id="photo' + picrowCount + '" class="input-file" onchange="preImg(this.id,\'imgPre' + picrowCount + '\');"></span>&emsp;<a href="###" onclick=picdelRow(' + picrowCount + ')>删除</a></div>';
+        $('#pcoptionContainer').append(picnewRow);
+    }
+}
+//删除行  
+function picdelRow(rowIndex){  
+    $("#option"+rowIndex).remove();  
+    picrowCount--;  
+}
+
+//从 file 域获取 本地图片 url 
+function getFileUrl(sourceId) { 
+	var url; 
+	if (navigator.userAgent.indexOf("MSIE")>=1) { // IE 
+		url = document.getElementById(sourceId).value; 
+	} else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox 
+		url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+	} else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome 
+		url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+	} 
+	return url; 
+} 
+
+//将本地图片 显示到浏览器上 
+function preImg(sourceId, targetId) { 
+	var url = getFileUrl(sourceId); 
+	var imgPre = document.getElementById(targetId); 
+	imgPre.src = url; 
+}
+
+//iframe 高度自适应
+function reinitIframe(){
+	var iframe = document.getElementById("iframeid");
+	try{
+		var bHeight = iframe.contentWindow.document.body.scrollHeight;
+		var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+		var height = Math.max(bHeight, dHeight);
+		iframe.height = height;
+		console.log(height);
+	}catch (ex){}
+}
+window.setInterval("reinitIframe()", 200);
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

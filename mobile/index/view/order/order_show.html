@@ -1,0 +1,112 @@
+{include file="./public/Public/meta.html" /}
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>订单详情 - 订单管理</title>
+</head>
+<body ng-app="orderApp" ng-controller="orderCtrl" ng-cloak>
+	<div class="page-container" style="padding-top:0">
+	    <div style=" width:100%; height:113px; background-color:#f81131; position:relative;">
+		<div style="position:absolute; top:15px; right:20px; width:30%;"><img src="<?php echo CSS_PATH;?>wap/images/img/bj1.jpg" style="width:100%;"></div>
+	    <div style="color:#FFF; font-size:20px; padding-top:25px;padding-left:15%;">
+			<span ng-if="orderinfo.status == '0'" >过期订单</span>
+			<span ng-if="orderinfo.status == '1'" >待付款</span>
+			<span ng-if="orderinfo.status == '2'" >已付款</span>
+			<span ng-if="orderinfo.status == '3'" >配货中</span>
+			<span ng-if="orderinfo.status == '4'" >已发货</span>
+			<span ng-if="orderinfo.status == '8'" >已收货</span>
+			<span ng-if="orderinfo.status == '15'" >取消待处理</span>
+			<span ng-if="orderinfo.status == '10'" >已取消</span>
+			<span ng-if="orderinfo.status == '20'" >后台取消</span>
+		</div>
+	</div>
+<!---分割线--->
+	<div style="clear:both;"></div>
+	<div style=" width:100%; height:1px; background-color:#eeeeee;"></div>
+
+<!---收货人--->
+
+
+<!---分割线--->
+	<div style="clear:both;"></div>
+	<div style=" width:100%; height:10px; margin-top:5px; background-color:#eeeeee;"></div>
+
+		<!---收货人--->
+		<div class="shr">
+			<ul>
+				<li style=" float:left;">收货人：{{orderinfo.receivename}}</li>
+				<li style=" float:left; margin-left:10px; ">{{orderinfo.usertel}}</li>
+				<div style="clear:both;"></div>
+				<li style=" margin-top:10px; color:#666; font-size:12px;">收货地址：{{orderinfo.province}} {{orderinfo.city}} {{orderinfo.county}} {{orderinfo.address}}</li>
+				<li style=" margin-top:10px; color:#666; font-size:12px;">买家留言：{{orderinfo.message}}</li>
+				<li style=" margin-top:10px; color:#666; font-size:12px;" ng-if="orderinfo.status==4 || orderinfo.status==8">物流信息：{{orderinfo.expcompany}}，{{orderinfo.awbno}}</li>
+				<li style=" margin-top:10px; color:#666; font-size:12px;" ng-if="orderinfo.adminmessage != ''">管理员备注：{{orderinfo.adminmessage}}</li>
+			</ul>
+		</div>
+		<!---商品--->
+		<div class="sp">
+			<div>
+				<div style="float:left; font-size:16px; color:#4a4e50;">{{orderinfo.suppliername}}</div>
+				<div style="float:left; margin-left:5px; line-height:25px;"><img src="<?php echo CSS_PATH;?>wap/images/img/fdj.png"></div>
+			</div>
+			<!---分割线--->
+			<div style="clear:both;"></div>
+			<div style=" width:100%; height:1px; background-color:#d3d3d3;"></div>
+			<!---商品内容--->
+				<div style=" margin-top:10px;float:left;" ng-repeat="vo in orderinfo.voo">
+					<div class="sptp"><img ng-src="{{vo.img}}" style="width:50px;height:50px;"></div>
+					<div class="spwz">
+						<div style="font-size:14px;color:#4a4e50;width: 100%;">{{vo.proname}}</div>
+						<div style=" font-size:12px; color:#a4a4a4; width:160px;">规格：{{vo.stylename}}</div>
+						<div style=" font-size:12px; color:#a4a4a4; width:160px;">单位：{{vo.unit}}</div>
+					</div>
+					<div class="spyz">
+						<!--<div style="color:#ff4100; font-size:14px;">{{vo.price}}元+{{vo.consumeintegral}}积分</div>-->
+						<div style="color:#ff4100; font-size:14px;">{{vo.price}}元</div>
+						<div style="text-align:right; font-size:12px; margin-right:5px;">X{{vo.pronum}}</div>
+					</div>
+				</div>
+			<!---分割线--->
+			<div style="clear:both;"></div>
+			<div style=" width:100%; height:1px; margin-top:10px; background-color:#d3d3d3;"></div>
+			<!---支付信息--->
+			<div class="zb">
+				<div>实付款：</div>
+			</div>
+
+			<div class="yb">
+				<div style="color:#ff4100; font-size:14px; float:right;">￥{{orderinfo.goodsamount}}元</div>
+			</div>
+		</div>
+</div>
+<!---分割线--->
+<div style="clear:both;"></div>
+<div style=" width:100%; height:10px; margin-top:10px; background-color:#eeeeee;"></div>
+
+<!---订单号--->
+<div style="color:#999999; font-size:14px; margin-left:5%; margin-top:10px; margin-bottom:10px;  font-family:宋体;">
+	<div style="margin-top:5px;">创建时间：{{orderinfo.adddate}}</div>
+   	<div style="margin-top:5px;" ng-if="orderinfo.status >= 2 && orderinfo.status < 10">付款时间：{{orderinfo.paydate}}</div>
+    <div style="margin-top:5px;" ng-if="orderinfo.status >= 4 && orderinfo.status < 10">发货时间：{{orderinfo.deliverdate}}</div>
+    <div style="margin-top:5px;" ng-if="orderinfo.status == 8">成交时间：{{orderinfo.receivedate}}</div></if>
+
+</div>
+
+<div style=" width:100%; height:1px; margin-top:10px; background-color:#eeeeee;"></div>
+
+</div>
+{include file="./public/Public/js_script_m.html" /}
+	<script type="text/javascript">
+        var app = angular.module('orderApp', []);
+        app.controller('orderCtrl', function($scope, $http) {
+            $http.get("/api.php/order/detail?orderno={$Request.param.orderno}")
+                .success(function (response) {
+                    if(response.status==1){
+                        $scope.orderinfo = response.data;
+                    }
+                });
+        });
+	</script>
+</body>
+</html>

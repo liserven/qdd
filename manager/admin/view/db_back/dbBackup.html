@@ -1,0 +1,70 @@
+{include file="./public/Public/meta.html" /}
+<meta charset="utf-8">
+<title>数据库管理 - 备份列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 数据库管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form action="/admin.php/admin/db_back/dbBackup?act=up" id="biaoming" method="post">
+        <div class="bk-gray">
+            <div class="col-80">备份名称：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:200px" placeholder="输入备份数据库的名称" id="name" name="name" value=""></div>
+            <a class="btn btn-primary radius"  href="javascript:;" onClick="databack()">开始备份</a>
+            <!--<div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button></div>-->
+        </div>
+    </form>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover">
+            <thead>
+            <tr class="text-c">
+                <th>数据库名称</th>
+                <th>备份时间</th>
+                <th>数据库下载</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id='vv'}
+            <tr>
+                <th style="text-align: center">{$vv.name}</th>
+                <th style="text-align: center">{$vv.addtime}</th>
+                <th style="text-align: center"><a href="/admin.php/admin/db_back/db_download?id={$vv.id}">点击下载</a></th>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+
+{include file="./public/Public/js_script.html" /}
+<script>
+    function databack(obj,id){
+        layer.confirm('确定要进行数据备份吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            layer.msg('备份中,请等待.....', {
+                icon: 16
+                ,shade: 0.01
+            });
+            $.ajax({
+                url:'{:url("DbBack/dbBackup")}?act=up',
+                type:"GET",
+                dataType:"json",
+                data:$('#biaoming').serialize(),
+                success: function(data) {
+                    if(data.code==200){
+                        layer.msg(data.msg,{icon:1,time:1000},function(){
+                            location.href=location.href;
+                        });
+
+                    }
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>
+

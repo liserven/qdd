@@ -1,0 +1,63 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>编辑广告分组 - 广告管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-video-category">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>分组名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$data.CategoryName}" placeholder="" id="categoryname" name="categoryname" >
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        $("#form-video-category").validate({
+            rules:{
+               /* categoryname:{
+                    required:true,
+                },*/
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'{:url("AdGroup/AdGroupEdit")}?action=edit&&categoryname='+$('#categoryname').val()+'&&id={$data.ID}',
+                    type:"POST",
+                    //data:$('#form-product-category').serialize(),
+                    error: function(){ //失败
+                        alert('Error loading document');
+                    },
+                    success: function(data) {
+                        var res = String($.trim(data));
+                        if(res=="catenameerror"){
+                            alert("分组名称不能为空！");
+                        }else if(res=="catenamere"){
+                            alert("您提交的分组已存在！");
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('恭喜您添加成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

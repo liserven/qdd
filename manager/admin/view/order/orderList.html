@@ -1,0 +1,449 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/tip-twitter.css" type="text/css" />
+<meta charset="utf-8">
+<title>订单列表 - 订单管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+    <div class="bk-gray">
+    	<div class="col-80">订单号：</div>
+        <div class="col-300"><input type="text" class="input-text" style="width:240px" placeholder="输入订单号" id="keyorderid" name="keyorderid" value="{$Request.param.keyorderid}"></div>
+        <div class="col-80">交易状态：</div>
+        <div class="col-200">
+        	<span class="select-box" style="width:150px">
+                <select class="select" size="1" name="Tradingclass">
+                    <option value="" selected>请选择</option>
+                    <option value="0">过期订单</option>
+                    <option value="1">待付款</option>
+                    <option value="2">已付款</option>
+                    <option value="3">配货中（已打单）</option>
+                    <option value="4">已发货</option>
+                    <option value="8">已收货</option>
+                    <option value="15">申请取消</option>
+                    <option value="10">已取消</option>
+                    <option value="20">后台取消</option>
+                </select>
+            </span>
+        </div>
+        <!--<div class="col-80">订单类型：</div>-->
+        <!--<div class="col-200">-->
+        	<!--<span class="select-box" style="width:100px">-->
+                <!--<select class="select" size="1" name="orderclass">-->
+					<!--<option value="">请选择</option>-->
+                    <!--<option value="1"  {if condition="$Request.param.orderclass eq  1"} selected {/if}>注册区</option>-->
+                    <!--<option value="2"  {if condition="$Request.param.orderclass eq  2"} selected {/if}>消费区</option>-->
+                    <!--<option value="3">商城订单</option>-->
+                <!--</select>-->
+            <!--</span>-->
+        <!--</div>-->
+        <div class="col-80">来源ID：</div>
+        <div class="col-150"><input type="text" class="input-text" style="width:150px" placeholder="输入来源ID" id="keyfrom" name="keyvip" value="{$Request.param.keyvip}"></div>
+    </div>
+    <div class="bk-gray" style="border-top:0">
+        <div class="col-80">商品ID：</div>
+        <div class="col-300"><input type="text" class="input-text" style="width:150px" placeholder="输入商品ID" id="keyproid" name="keyproid" value="{$Request.param.keyproid}"></div>
+        <div class="col-80">商家ID：</div>
+        <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入商家ID" id="keysupid" name="keysupid" value="{$Request.param.keysupid}"></div>
+        <div class="col-80">收货人：</div>
+        <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入收货人姓名" id="keyreiciver" name="keyreiciver" value="{$Request.param.keyreiciver}"></div>
+    </div>
+    <div class="bk-gray" style="border-top:0">
+
+        <div class="col-80">日期范围：</div>
+        <div class="col-300">
+            <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:120px;">
+        </div>
+        <div class="col-80">发货日期：</div>
+        <div class="col-300">
+            <input type="text" onFocus="WdatePicker({maxDate1:'%y-%M-%d'})" id="datemin1" name="datemin1" value="{$Request.param.datemin1}" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onFocus="WdatePicker({minDate1:'',maxDate1:'%y-%M-%d'})" id="datemax1" name="datemax1" value="{$Request.param.datemax1}" class="input-text Wdate" style="width:120px;">
+        </div>
+		<div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;
+        <button name="export" id="export" class="btn btn-success" type="submit" value="exports"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;
+        </div>
+	</div>
+    </form>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <!--<span class="l"<a style="text-decoration:none" class="ml-5" onClick="_merge('合并订单','order_merge','10001')" href="javascript:;" title="合并"><span class="btn btn-danger radius"><i class="Hui-iconfont">&#xe68f;</i> 合并订单</span></a> <a style="text-decoration:none" class="ml-5" onClick="_split('拆分订单','order_split','10001')" href="javascript:;" title="拆分"><span class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6bc;</i> 拆分订单</span></a></span>--> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+    <div class="mt-20 box-border">
+        <table class="table table-bg table-hover">
+            <thead>
+                <tr class="text-c">
+                    <th width="10">&nbsp;</th>
+                    <th>商品</th>
+                    <th width="150">规格</th>
+                    <th width="120">单价(元)</th>
+                    <th width="100">数量</th>
+                    <!--<th width="60">单位</th>-->
+                    <!--<th width="100">订单类型</th>-->
+                    <th width="100">实付款(元)</th>
+                    <th width="100">支付方式</th>
+                    <th width="180">订单信息</th>
+                    <th width="160">物流信息</th>
+                    <th width="120">交易状态</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+	{volist name="orderlist" id="vo"}
+    <input type="hidden" name="adminmessage{$vo['id']}" id="adminmessage{$vo['innerorderid']}" value="{$vo['adminmessage']}">
+    <div class="mt-20 box-border">
+        <table class="table table-bg">
+            <thead>
+                <tr class="text-c box-border-b">
+                    <th class="text-l"> {$vo['adddate']|strtotime|date="Y-m-d",###}&emsp;<cite>订单号：{$vo['innerorderid']}</cite>&emsp;<u style="cursor:pointer" class="text-primary c-blue" onclick="_show('查看订单详细信息','{:url('Order/orderShow',['orderno'=>$vo['innerorderid']])}','')"><span class="label label-default radius">订单详情</span></u>&ensp;{if condition="$vo['adminmessage'] neq null"}<a class="tip-box" title="{$vo.adminmessage}"><cite class="Hui-iconfont f-20 c-success">&#xe686;</cite>{/if}</th>
+                    <th colspan="6" class="text-r">{if condition="$vo['message'] neq null"}<a class="tip-box" title="{$vo.message}"><cite class="Hui-iconfont f-20 c-warning">&#xe6c5;</cite></a>{/if}&ensp;{$vo['receivename']} {$vo['usertel']} <cite>{$vo['province']}{$vo['city']}{$vo['county']}{$vo['address']}</cite>&nbsp;<a title="添加备注" onClick="_message(this,'{$vo.innerorderid}')" href="javascript:;"><cite class="Hui-iconfont f-18 c-warning">&#xe692;</cite></a><!--&#10;<cite class='c-red'>123456</cite>--></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-c va-m">
+                    <td style="padding:0">
+                    	{volist name="vo['voo']" id="von"}
+                        <table {if condition="$i eq count($vo['voo'])"}class="" {else /} class="box-border-b"{/if}>
+                            <tbody>
+                              <tr>
+                                <td width="50" class="box-border-r">{$von.proid}</td>
+                                <td class="text-l">
+                                    <dd class="f-l mr-10"><img src="{:getproimgbysid($von['styleid'])}" alt="{:getproimgbysid($von['styleid'])}" width="80" height="80"></dd>
+                                    <dd class="pos-r" style="height:80px; min-width:300px">
+                                        <!--<u style="cursor:pointer" class="text-primary c-blue" onclick="_show('查看商品详细信息','{:url('Product/productShow',['proid'=>$von['proid']])}','')">-->
+                                            {$von['proname']}
+                                        <!--</u>-->
+                                        <span class="pos-a c-999" style="bottom:0; left:90px"><i class="Hui-iconfont">&#xe667;</i> {:getsupnamebysupid($vo['supplierid'])}(<font class="c-error">{$vo['supplierid']}</font>)</span>
+                                    </dd>
+                                </td>
+                                <td width="150">{$von['stylename']}</td>
+                                <td width="120">{$von['price']}</td>
+                                <td width="100">{$von['pronum']}</td>
+                                <!--<td width="60" class="box-border-r">{:getunitbycpid($von['proid'])}</td>-->
+                              </tr>
+                            </tbody>
+                        </table>
+                        {/volist}
+                    </td>
+                    <!--<td width="100" class="box-border-r"><span class="label label-default radius">{:ordertypeby($vo['ordertype'])}</span></td>-->
+                     <td width="130" class="box-border-r"><strong>{$vo['goodsamount']}</strong></td>
+                    <td width="100" class="box-border-r"><span class="label label-default radius">{if condition='$vo.paymethod eq "1"'}微信支付{elseif condition='$vo.paymethod eq "2"'/}支付宝付款{elseif condition='$vo.paymethod eq "3"'}博顿付款{elseif condition='$vo.paymethod eq "4"'/}余额支付{/if}</span></td>
+
+                    <td width="150" class="text-l box-border-r">
+                        来源：{$vo['userid']}<cite class="c-999">(会员系统帐号{$vo['userid']})</cite></td>
+                    <td width="160" class="text-l box-border-r">
+                    {if condition="($vo['status'] lt 3) or ($vo['status'] eq 3)"}
+                    	<cite class="c-999">暂无物流信息</cite>
+                    {elseif condition="$vo['status'] gt 8" /}
+                    	<!--暂无物流信息-->
+                    {else /}
+                    	{:getexpbyid($vo['expcompanyid'])}<br><strong>{$vo['awbno']}</strong><br>{$vo.deliverdate|strtotime|date="Y-m-d H:i:s",###}
+                    {/if}
+                    </td>
+                    <td width="120" class="box-border-r">
+                        <dd class="td-status">
+                        	{if condition="$vo['status'] eq 0"}
+                            	<cite class="c-999">过期订单</cite>
+                            {elseif condition="$vo['status'] eq 1" /}
+                            	<span class='label label-primary radius'>待付款</span><br>
+                                   <!-- <a href="javascript:;" onClick="_cancelorder(this,'{$vo.innerorderid}')">取消订单(不返币)</a>-->
+                            {elseif condition="$vo['status'] eq 2" /}
+                            	<span class='label label-danger radius'>已付款</span><br>
+                                    <!--<a href="javascript:;" onClick="_cancelorderafterpay(this,'{$vo.innerorderid}')">取消订单(返币)</a>-->
+                            {elseif condition="$vo['status'] eq 3" /}
+                            	<span class='label label-warning radius'>配货中</span><br>
+                                   <!-- <a href="javascript:;" onClick="_cancelorderafterpay(this,'{$vo.innerorderid}')">取消订单(返币)</a>-->
+                            {elseif condition="$vo['status'] eq 4" /}
+                            	<span class='label label-success radius'>已发货</span>
+                            {elseif condition="$vo['status'] eq 8" /}
+                            	<span class='label label-default radius'>已收货</span><br>{$vo.receivedate|strtotime|date="Y-m-d H:i:s",###}
+                            {elseif condition="$vo['status'] eq 10" /}
+                            	已取消
+                            {elseif condition="$vo['status'] eq 15" /}
+                            	<cite class="c-red">用户已申请取消！</cite>
+                                <br><a href="javascript:;" onClick="_cancelorderok(this,'{$vo.innerorderid}')" class="btn btn-success-outline radius size-MINI">通过</a>&ensp;<a href="javascript:;" onClick="_cancelorderno(this,'{$vo.innerorderid}')" class="btn btn-success-outline radius size-MINI">拒绝</a>
+                            {elseif condition="$vo['status'] eq 20" /}
+                            	后台取消
+                            {/if}
+                            <!--<a href="javascript:;" onClick="_delete(this,'{$vo.innerorderid}')">删除订单</a>-->
+                        </dd>
+                    </td>
+				</tr>
+            </tbody>
+        </table>
+    </div>
+    {/volist}
+
+    <!--合计 begin-->
+    <table class="table table-border table-bordered table-hover table-bg mt-20">
+        <foot>
+            <tr class="text-c success">
+                <th class="text-l" colspan="2">&emsp;总计</th>
+                <th width="150"></th>
+                <th width="120"></th>
+                <th width="100"></th>
+                <th width="60"></th>
+                <th width="100"></th>
+                <th width="100">{$pricesum}元</th>
+                <th width="180"></th>
+                <th width="160"></th>
+                <th width="120"></th>
+                <th width="100"></th>
+            </tr>
+        </foot>
+    </table>
+    <!--合计 end-->
+
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+
+
+
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/jquery-1.4.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/jquery.poshytip.js"></script>
+<script type="text/javascript">
+/*-查看*/
+function _show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-发货*/
+function _fly(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-取消发货*/
+function _stop(obj,id){
+	layer.confirm('确认要取消吗？',function(index){
+		$(obj).parents("tr").find(".td-status").html('<a style="text-decoration:none" onClick="_fly(this,id)" href="javascript:;" title="发货"><span class="label label-warning radius">配货中</span></a>');
+		$(obj).remove();
+		layer.msg('待发货!',{icon: 5,time:1000});
+	});
+}
+/*-编辑*/
+function _edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+function _delete(obj,id){
+    layer.confirm('确认删除订单吗？',function(index){
+        $.ajax({
+            url:'/api.php/order/delete?id='+id,
+            type:'GET',
+            success:function(data){
+                location.href=location.href;
+                layer.msg('已删除!',{icon:1,time:1000});
+            }
+        });
+    });
+}
+
+/*-管理员备注*/
+function _message(obj,id){
+	vvvvv=document.getElementById("adminmessage"+id).value;
+	layer.alert("<textarea name='ordermsg' id='ordermsg"+id+"' cols='' rows='' class='textarea'  placeholder='为此订单添加一条备注信息吧……' onKeyUp='textarealength(this,100)'>"+vvvvv+"</textarea><p class='textarea-numberbar'><em class='textarea-length'>0</em>/100</p>", function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'{:url("Order/orderAddRemarks")}?orderno='+id+'&ordermsg='+encodeURI(document.getElementById("ordermsg"+id).value),
+			type:"GET",
+            dataType:"json",
+			success: function(data) {
+				location.href=location.href;
+				layer.msg(data.msg,{icon:1,time:1000});
+			}
+		});
+	});
+}
+
+//function _message(obj,1){
+//	layer.prompt({
+//		title: '请添加备注，并确认',
+//		formType: 2
+//	}, function(index){
+//		$(obj).remove();
+//		layer.msg('已备注!',{icon: 5,time:1000});
+//	});
+//}
+
+
+/*-取消未付款的订单*/
+var flag0=true;
+function _cancelorder(obj,id){
+	layer.confirm('确定要取消订单吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+        if(flag0){
+            flag0=false;
+            $.ajax({
+                url:'{:url("Order/orderCancel")}?orderno='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg(data.msg,{icon:1,time:1000});
+                }
+            });
+        }else{
+            layer.msg('请不要重复提交',{icon:1,time:1000});
+        }
+	});
+}
+var flag1=true;
+/*-取消已付款未发货的订单*/
+function _cancelorderafterpay(obj,id){
+	layer.confirm('确定要取消订单吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+        if(flag1){
+            flag1=false;
+            $.ajax({
+                url:'{:url("Order/orderCancelNoDeliver")}?orderno='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg(data.msg,{icon:1,time:1000});
+                }
+            });
+        }else{
+            layer.msg('请不要重复提交',{icon:1,time:1000});
+        }
+	});
+}
+
+/*-已付款但还未发货用户可以申请取消订单--重消订单和普通订单  允许取消  确认取消*/
+var flag2=true;
+function _cancelorderok(obj,orderono){
+	layer.confirm('确定要通过取消订单的申请吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+        if(flag2){
+            flag2=false;
+            $.ajax({
+                url:'{:url("Order/orderCancelConfirm")}?orderno='+orderono,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg(data.msg,{icon:1,time:1000});
+                }
+            });
+        }else{
+            layer.msg('请不要重复提交',{icon:1,time:1000});
+        }
+	});
+}
+
+/*-已付款但还未发货用户可以申请取消订单--重消订单和普通订单  不允许取消  取消申请*/
+var flag3=true;
+function _cancelorderno(obj,orderono){
+	layer.confirm('确定要取消订单的申请吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+        if(flag3){
+            flag3=false;
+            $.ajax({
+                url:'{:url("Order/orderCancelRefuse")}?orderno='+orderono,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg(data.msg,{icon:1,time:1000});
+                }
+            });
+        }else{
+            layer.msg('请不要重复提交',{icon:1,time:1000});
+        }
+	});
+}
+/*-合并订单*/
+function _merge(title,url,id,w,h){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*-拆分订单*/
+function _split(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-开始配货*/
+//function _prepare(obj,orderono){
+//	layer.confirm('确认要开始配货？',function(index){
+//		//此处请求后台程序，下方是成功后的前台处理……
+//		$.ajax({
+//			url:'order_list/action/prepare/orderno/'+orderono,
+//			type:"GET",
+//			success: function(data) {
+//				var res = String($.trim(data));
+//				if(res=="ordernoerror"){
+//					alert("请选择订单！");
+//				}else{
+//					location.href=location.href;
+//					layer.msg('订单已开始配货!',{icon:1,time:1000});
+//				}
+//			}
+//		});
+//
+//	});
+//}
+/*-确定发货*/
+//function _send(obj,orderono){
+//	layer.confirm('确定发货？',function(index){
+//		//此处请求后台程序，下方是成功后的前台处理……
+//		$.ajax({
+//			url:'order_list/action/send/orderno/'+orderono,
+//			type:"GET",
+//			success: function(data) {
+//				var res = String($.trim(data));
+//				if(res=="ordernoerror"){
+//					alert("请选择订单！");
+//				}else{
+//					location.href=location.href;
+//					layer.msg('已成功发货!',{icon:1,time:1000});
+//				}
+//			}
+//		});
+//
+//	});
+//}
+/*-确定发货*/
+//function _send(title,url,id,w,h){
+//	layer_show(title,url,w,h);
+//}
+
+
+$(function(){
+	//提示信息
+	$('.tip-box').poshytip({
+		className: 'tip-twitter',
+		showTimeout: 1,
+		alignTo: 'target',
+		alignX: 'center',
+		offsetY: 5,
+		allowTipHover: true,
+		fade: false,
+		slide: false
+	});
+	//跳转页
+	$('#jump').blur(function(){
+		var url=$('.jumpnum').attr("href");
+		//var strs=url.substr(0,25);
+		var strs=url;
+		var value=this.value;
+		var all=$('.all').attr("title");
+		var i=parseFloat(all);//将字符转化成数字
+		if(value<=i && !isNaN(value) && value>0){
+			value=Math.ceil(value);
+		}else{
+			value='';
+		}
+		var newurl=strs+value;
+		$('.jumpnum').attr("href",newurl);
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>修改信息 - 供应商管理</title>
+<link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 供应商信息 <span class="c-gray en">&gt;</span> 修改信息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="{:url('Supplier/supplier_admin',['action'=>'edit'])}" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-aupplier-edit">
+		<div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>供应商名称：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['name']}" placeholder="" id="name" name="name">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['mobile']}" placeholder="" id="mobile" name="mobile">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">负责人微信：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['wechatname']}" placeholder="" id="wechatname" name="wechatname">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">售后客服电话：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['telphone']}" placeholder="" id="telphone" name="telphone">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>银行账号：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['bankaccount']}" placeholder="" id="bankaccount" name="bankaccount">
+			</div>
+		</div>      
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>开户行：</label>
+			<div class="formControls col-xs-10 col-sm-9"> 
+                <span class="select-box">
+                    <select class="select" size="1" name="bankname">
+                        <option value="{$supxx['bankname']}" selected>{$supxx['bankname']}</option>
+                        <option value="中国银行">中国银行</option>
+                        <option value="中国工商银行">中国工商银行</option>
+                        <option value="中国建设银行">中国建设银行</option>
+                        <option value="中国农业银行">中国农业银行</option>
+                        <option value="中国农商银行">中国农商银行</option>
+                        <option value="河南农村信用社">河南农村信用社</option>
+                        <option value="中国交通银行">中国交通银行</option>
+                        <option value="中国光大银行">中国光大银行</option>
+                        <option value="中国招商银行">中国招商银行</option>
+                        <option value="中国邮政储蓄">中国邮政储蓄</option>
+                        <option value="中国邮政储蓄">中国兴业银行</option>
+                        <option value="中国民生银行">中国民生银行</option>
+                    </select>
+				</span>
+            </div>
+		</div>
+        
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>开户人：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['banksupname']}" placeholder="" id="banksupname" name="banksupname">
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">开户行地址：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['bankinfo']}" placeholder="" id="bankinfo" name="bankinfo">
+			</div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">商家网址：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" value="{$supxx['supnetwork']}" placeholder="http://" id="supnetwork" name="supnetwork">
+			</div>
+		</div>  
+<!--        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算方式：</label>
+			<div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="check-box">
+                  <input type="checkbox" id="checkbox-1">
+                  <label for="checkbox-1">周结</label>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" id="checkbox-2">
+                  <label for="checkbox-2">月结</label>
+                </div>
+			</div>
+		</div> -->     
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>主营产品：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+                {volist name="listcate" id="voone"} <!--循环第一级别-->
+                  <dl class="permission-list">
+                        <dt>
+                            <label>{:getpcnamebyid($voone['pcateid'])}</label>
+                        </dt>
+                        <dd>
+                            {volist name="voone['voo']" id="votwo"} <!--循环第二级别-->
+                            <dl class="cl permission-list2">
+                                <dt>
+                                    <label class=""><font style="font-weight:bold">{:getpcnamebyid($votwo['pcateid'])}</font></label>
+                                </dt>
+                                <dd>
+                                    {volist name="votwo['boo']" id="vothree"} <!--循环第三级别-->
+                                    <label class="">{:getpcnamebyid($vothree['pcateid'])}</label>
+                                    {/volist}
+                                </dd>
+                            </dl>
+                            {/volist}
+                        </dd>
+                    </dl>
+                 {/volist}
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">发货地：</label>
+			<div class="formControls col-xs-10 col-sm-9"> 
+				<select id="cmbProvince" class="select select-box" name="province" style="width:150px"></select>
+                <select id="cmbCity" class="select select-box" name="city" style="width:200px"></select>
+                <select id="cmbArea" class="select select-box" name="area" style="width:120px"></select>
+            </div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">详细地址：</label>
+			<div class="formControls col-xs-10 col-sm-9"> 
+				<input type="text" class="input-text" value="{$supxx.address}" placeholder="" id="address" name="address" style="width:478px">                
+            </div>
+		</div>
+		<div class="row cl">
+        	<label class="form-label col-xs-2 col-sm-2">企业资质：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+                  <div id="localrefresh">
+                  {volist name="listhornor" id="voh"}
+                      <div class="maskWraper" style="float:left; width:250px; height:300px; border:solid 1px #ddd; padding:2px; margin:0 20px 20px 0">                          
+                          <div class="msKeimgBox">
+                              <img src="/public/Upload/supplier/licence/{$voh.imgpath}" width="250" height="300">
+                              <span class="hide pic100"><img src="/public/Upload/supplier/licence/{$voh.imgpath}" /></span>
+                          </div>
+                          <div class="maskBar text-c"><a href="javascript:;" onClick="_del(this,'{$voh.id}')" class="c-white">删除</a></div>
+                      </div>
+                  {/volist}
+                  </div>
+
+                  <div id="optionContainer" style="clear:both">
+                      <div id="option0">
+                          <span class="btn-upload form-group">
+                              <input class="input-text upload-url radius" type="text" name="photo[]" id="photo[]" readonly>
+                              <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                              <input type="file" multiple name="photo[]" class="input-file">
+                          </span>
+                          <a class="btn btn-default" href="###" onClick="addRow()">添加一行</a>
+                      </div>
+                  </div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+				<button  class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--图库弹出层 开始-->
+<div class="mskeLayBg"></div>
+<div class="mskelayBox">
+  <div class="mske_html"></div>
+  <img class="mskeClaose" src="<?php echo CSS_PATH;?>static/supplier/images/mke_close.png" width="27" height="27" />
+</div>
+<!--图库弹出层 结束-->
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script src="<?php echo CSS_PATH;?>static/js/provinces.Cxselect.js"></script>
+<script src="<?php echo CSS_PATH;?>static/js/provincesData.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.min.js"></script> 
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+//主营产品分类选择
+function test(Names){
+	var Name
+	for (var i=1;i<4;i++){	//  更改数字4可以改变选择的内容数量，在下拉总数值的基础上+1.比如：下拉菜单有5个值，则4变成6
+		var tempname="mune_x"+i                                                                            
+		var NewsHot="x"+i	//  “X”是ID名称，比如：ID命名为“case1”，这里的“X”即为“case”
+		if (Names==tempname){
+			Nnews=document.getElementById(NewsHot)
+			Nnews.style.display='';
+		}else{
+			Nnews=document.getElementById(NewsHot)
+			Nnews.style.display='none';   
+		}
+	}
+}
+
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-aupplier-edit").validate({
+		rules:{
+			txtSupplierName:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			txtMobile:{
+				required:true,
+				isMobile:true
+			},
+			txtTelphone:{
+				digits:true
+			},
+			txtAccount:{
+				required:true,
+				creditcard:true
+			},
+			txtBankSupName:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			bankadr:{
+			},
+			txtSupNetwork:{
+				url:true
+			},
+			txtSupProduct:{
+				required:true
+			},			
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+
+//地址选择
+	cxSelect('cmbProvince', 'cmbCity', 'cmbArea', '{$supxx.province}', '{$supxx.city}', '{$supxx.area}');
+});
+
+//公司资质
+var rowCount=1;  //行数默认1行
+//添加行  
+function addRow(){  
+	rowCount++;  
+	var newRow='<div id="option'+rowCount+'" class="mt-15"> <span class="btn-upload form-group"><input class="input-text upload-url radius" type="text" name="photo[]" id="photo[]" readonly> <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a><input type="file" multiple name="photo[]" class="input-file"></span> <a class="btn btn-default" href="###" onclick=delRow('+rowCount+')>删除</a>';
+	$('#optionContainer').append(newRow);				  
+}
+//删除行  
+function delRow(rowIndex){  
+	$("#option"+rowIndex).remove();  
+	rowCount--;  
+}
+
+//图片遮罩条
+$(function(){
+	$.Huihover('.maskWraper');
+});
+
+//点击放大图片
+jQuery(function(){
+    $(".mskeLayBg").height($(document).height());
+    $(".mskeClaose").click(function(){
+		$(".mskeLayBg,.mskelayBox").hide()
+	});
+    $(".msKeimgBox").click(function(){
+		$(".mske_html").html($(this).find(".hide").html());
+		$(".mskeLayBg").show(); 
+		$(".mskelayBox").fadeIn(300)
+	});
+})
+
+/*-资质删除*/
+function _del(obj,id){
+	parent.layer.confirm('确认要删除吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'{:url("Supplier/supplier_hornor_del")}?action=delimg&id='+id,
+			type:"GET",
+			//data:$('#form-admin-add').serialize(),
+			success: function(data) {
+				// $('#localrefresh').html(data);
+				// parent.layer.msg('已删除!',{icon:1,time:1000});
+                if(data.code==200){
+                    parent.layer.msg('已删除!',{icon:1,time:1000});
+                    location.href=location.href;
+                }else{
+                    layer.msg('删除失败!',{icon:1,time:1000});
+                    location.href=location.href;
+                }
+			}
+			});
+	});
+}
+</script> 
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

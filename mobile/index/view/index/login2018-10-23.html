@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+	<title>{:otherconfig()['companyName']}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<style type="text/css">
+		@media all and (-webkit-min-device-pixel-ratio:2.0) and (min-resolution: .001dpcm) {
+		}
+		.masked{
+			background-image: -webkit-linear-gradient(left, #f00, #efeff4 25%, #f6383a 50%, #ddd 75%, red);
+			-webkit-text-fill-color: transparent;
+			-webkit-background-clip: text;
+			-webkit-background-size: 200% 100%;
+			-webkit-animation: masked-animation 2s infinite linear;
+			text-align: center;
+		}
+		@-webkit-keyframes masked-animation {
+			0%  { background-position: 0 0;}
+			100% { background-position: -100% 0;}
+		}
+	</style>
+</head>
+<body style="background: #353535;" onload="check()">
+<input type="hidden" id="name" value="{$username}"/>
+<div class="masked" style="margin-top: 50%;">
+	<h1>欢迎光临</h1>
+
+</div>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	function check() {
+        var name = document.getElementById("name").value;
+        var str = "username=" + name;
+        $.ajax({
+            url:"/api.php/login/check",
+            type:"post",
+            dataType:"json",
+            data: str,
+            success: function(data) {
+                if(data.status==1){
+                     window.location.href='{$url}';
+     
+                }else{
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.star-bar-show{background:url(http://static.h-ui.net/h-ui/images/star/iconpic-star-S-default.png) repeat-x 0 0}
+.star-bar-show .star{background:url(http://static.h-ui.net/h-ui/images/star/iconpic-star-S.png) repeat-x 0 0;}
+.star-1{width:20%;}
+.star-2{ width:40%}
+.star-3{width:60%;}
+.star-4{ width:80%}
+.star-5{ width:100%}
+.star-bar-show.size-M{width:120px;height:24px}
+.star-bar-show.size-M,.star-bar-show.size-M .star{background-size:24px}
+.star-bar-show.size-M .star{ height:24px}
+.star-bar-show.size-S{width:80px; height:16px}
+.star-bar-show.size-S,.star-bar-show.size-S .star{background-size:16px}
+.star-bar-show.size-S .star{ height:16px}
+
+.star-bar{font-size:0; line-height:0}
+.star-bar .star{display:inline-block;text-align:center;}
+/*中*/
+.size-M img{ width:24px;height:24px}
+/*小*/
+.size-S img{width:16px;height:16px}
+</style>
+</head>
+
+<body>
+<div class="clearfix">
+	<span class="f-l f-14 va-m">宝贝描述：</span>
+	<div class="star-bar star-bar-show size-M f-l va-m mr-10">
+		<span class="star" style="width:82%"></span>
+	</div>
+	<strong class="f-l f-14 va-m">4.1</strong>
+</div>
+
+<div class="clearfix">
+	<span class="f-l f-15 va-m">描述相符：</span>
+	<div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
+	<strong id="result-1" class="f-l va-m"></strong>
+</div>
+
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.raty.js"></script>
+
+<script>
+$(function(){
+	$("#star-1").raty({
+		hints: ['1','2', '3', '4', '5'],//自定义分数
+		starOff: 'iconpic-star-S-default.png',//默认灰色星星
+		starOn: 'iconpic-star-S.png',//黄色星星
+		path: 'http://static.h-ui.net/h-ui/images/star',//可以是相对路径
+		number: 5,//星星数量，要和hints数组对应
+		showHalf: true,
+		targetKeep : true,
+		click: function (score, evt) {//点击事件
+			//第一种方式：直接取值
+			$("#result-1").html('你的评分是'+score+'分');
+		}
+	});
+	$("#star-2").raty({
+		hints: ['1','2', '3', '4', '5'],
+		starOff: 'iconpic-star-S-default.png',
+		starOn: 'iconpic-star-S.png',
+		path: 'http://static.h-ui.net/h-ui/images/star',
+		number: 5,
+		showHalf: true,
+		targetKeep : true,
+		click: function (score, evt) {//点击事件
+			//第一种方式：直接取值
+			$("#result-2").html('你的评分是'+score+'分');
+		}
+	});
+});
+</script>
+</body>
+</html>

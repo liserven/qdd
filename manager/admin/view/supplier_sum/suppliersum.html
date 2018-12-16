@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>统计销售</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 统计销售 <span class="c-gray en">&gt;</span> 供应商统计 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+        <div class="bk-gray">
+            <div class="col-80">供应商ID：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入供应商ID" id="SupplierId" name="SupplierId" value="{$Request.param.SupplierId}"></div>
+            <div class="col-80">日期范围：</div>
+            <div class="col-300">
+                <div class="col-300">
+                    <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:120px;">
+                    -
+                    <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:120px;">
+                </div>
+            </div>
+            <div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="daochu" value="daochu" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+        </div>
+    </form>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+
+        <div id="markdown" class="mt-20"></div>
+        </span>
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span></div>
+    <div class="mt-20">
+        <form class="form form-horizontal" id="form-user-list">
+            <table class="table table-border table-bordered table-bg table-hover">
+                <thead>
+                <tr class="text-c">
+                    <th>供应商ID</th>
+                    <th>销售数量</th>
+                    <th>产品成本</th>
+                    <th>销售金额</th>
+                    <th>产品毛利</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="ProductSumList" id="vo"}
+                <tr class="text-c va-m">
+                    <td class="text-c">{$vo.SupplierId}</td>
+                    <td class="text-c">{$vo.proNum}</td>
+                    <td class="text-c">{$vo.BalancePriceSum}元</td>
+                    <td class="text-c">{$vo.PriceSum}元</td>
+                    <td class="text-c">{$vo.productprofit}元</td>
+                    <td>
+                        <a title="产品明细" href="javascript:;" onClick="_edit('产品明细','/admin.php/admin/product_sum/index/SupplierId/{$vo.SupplierId}','{$vo.SupplierId}','','530')" class="ml-5" style="text-decoration:none">查看明细</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <table class="table table-border table-bordered table-hover table-bg mt-20">
+                <foot>
+                    <tr class="text-c success">
+                        <th class="text-l" colspan="3">数据总计</th>
+                        <th>销售数量 : {$staticArr[0]['proNum']}</th>
+                        <th>产品成本 : {$staticArr[2]['BalancePriceSum']}</th>
+                        <th>销售金额 : {$staticArr[3]['PriceSum']}元</th>
+                        <th>产品毛利 : {$staticArr[5]['productprofit']}元</th>
+                    </tr>
+                </foot>
+            </table>
+
+        </form>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+    {include file="./public/Public/js_script.html" /}
+</div>
+</body>
+<script>
+    /*-查看明细*/
+    function _edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+</script>
+
+
+</html>

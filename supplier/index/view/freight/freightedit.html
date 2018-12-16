@@ -1,0 +1,256 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>物流管理 - 配送方式设置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 物流管理 <span class="c-gray en">&gt;</span> 配送区域设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-freigh-add" enctype="multipart/form-data"  method="post">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>配送区域名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.Name}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>费用计算方式:</label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal" id="type_select">
+                <div class="radio-box">
+                    <input name="type"  type="radio" id="type-1" value="1" {if condition="$list.type eq 1"}checked{/if}>
+                    <label for="type-1">按重量计算</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio"  id="type-2" name="type" value="2" {if condition="$list.type eq 2"}checked{/if}>
+                    <label for="type-2">按商品件数计算</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl" id="heavy" {if condition="$list.type eq 2"}style="display: none" {/if}>
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span> 首重为：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+               <input type="text" style="width: 20%" class="input-text" value="{$list.Heavy}" placeholder=""  name="Heavy"><span >千克以内费用</span>
+                <input type="text" style="width: 20%" class="input-text" value="{$list.HeavyMoney}" placeholder=""  name="HeavyMoney"><span>元</span>
+            </div>
+            <label class="form-label col-xs-2 col-sm-2" style="padding-top: 2%"><span class="c-red">*</span>续重每：</label>
+            <div class="formControls col-xs-10 col-sm-9" style="padding-top: 2%">
+                <input type="text" style="width: 20%" class="input-text" value="{$list.ContinuedHeavy}" placeholder=""  name="ContinuedHeavy"><span>千克或零数的费用</span>
+                <input type="text" style="width: 20%" class="input-text" value="{$list.ContinuedHeavyMoney}" placeholder=""  name="ContinuedHeavyMoney"><span>元</span>
+            </div>
+            <label class="form-label col-xs-2 col-sm-2" style="padding-top: 2%">商品满：</label>
+            <div class="formControls col-xs-10 col-sm-9" style="padding-top: 2%">
+                <input type="text" style="width: 20%" class="input-text" value="{$list.MoneyFreightFree}" placeholder=""  name="MoneyFreightFree"><span>元免运费(-1为不免运费)</span>
+            </div>
+        </div>
+        <div class="row cl" id="count" {if condition="$list.type eq 1"}style="display: none" {/if}>
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>单件商品费用为：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" style="width: 20%" class="input-text" value="{$list.CountMoney}" placeholder=""  name="CountMoney"><span>元</span>
+            </div>
+    <label class="form-label col-xs-2 col-sm-2" style="padding-top: 2%"><span class="c-red">*</span>续件费用为：</label>
+    <div class="formControls col-xs-10 col-sm-9" style="padding-top: 2%">
+        <input type="text" style="width: 20%" class="input-text" value="{$list.ContinuedCountMoney}" placeholder=""  name="ContinuedCountMoney"><span>元</span>
+    </div>
+            <label class="form-label col-xs-2 col-sm-2" style="padding-top: 2%">商品满：</label>
+            <div class="formControls col-xs-10 col-sm-9" style="padding-top: 2%">
+                <input type="text" style="width: 20%" class="input-text" value="{$list.CountFreightFree}" placeholder=""  name="CountFreightFree"><span>件免运费(-1为不免运费)</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>配送区域选择：</label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal" >
+                国家：<span id="state">
+                    <select class="select" style="width: 20%" size="1"  id="state1">
+                        <option value="-1" selected="selected">中国</option>
+                    </select>
+				</span>
+                省份：<span id="province">
+                    <select class="select" style="width: 20%" size="1"  id="province1">
+                        {volist name="province" id="vo"} <!--循环第一级别-->
+                        <option value="{$vo.Code}">{$vo.AreaName}</option>
+                        {/volist}
+                    </select>
+				</span>
+                城市：<span id="city">
+                <select class="select" style="width: 20%" size="1"  id="city1">
+                    <option value="">请选择</option>
+                </select>
+                </span>
+                区/县：<span id="county">
+                <select class="select" style="width: 20%" size="1"  id="county1">
+
+                    <option value="">请选择</option>
+
+                </select>
+                </span>
+                <span style="padding-left: 2%"><a onclick="addarer()"><i class="Hui-iconfont">&#xe600;</i></a></span>
+            </div>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal" style="padding-top: 2%" id="arer">
+                {volist name='name' id='voo'}
+                <span style="padding: 1%"><input value="{$voo.provincecitycounty_id}" type="checkbox" checked name="arer[]" /> {$voo.AreaName} </span>
+                {/volist}
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="./public/Public/js_script.html" /}
+<script>
+    $("input[name=type]").change(function(){
+        showdiv();
+    });
+    function showdiv(){
+        switch($('input[name=type]:checked').attr("id")){
+            case "type-2":
+                $("#heavy").css("display","none");
+                $("#count").css("display","block");
+                break;
+            case "type-1":
+                $("#count").css("display","none");
+                $("#heavy").css("display","block");
+                break;
+            default:
+                break;
+        };
+    }
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#form-freigh-add").validate({
+            rules:{
+                name:{
+                    required:true,
+                },
+                type:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'{:url("Freight/freightedit",["typeid"=>$id,"id"=>$list["Id"]])}',
+                    type:"POST",
+                    data:$('#form-freigh-add').serialize(),
+                    error: function(){ //失败
+                        alert('Error loading document');
+                    },
+                    success: function(data) {
+                        if(data.status==0){
+                            layer.msg(data.msg);
+                        }else{
+                            layer.msg(data.msg,{icon:6,time:1000},function () {
+                                location.href='/supplier.php/index/Freight/freightlist/id/'+data.id;
+                            })
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    function addarer() {
+        var county=$('#county1 option:selected').val();
+        var countyname=$('#county1 option:selected').text();
+        var city=$('#city1 option:selected').val();
+        var cityname=$('#city1 option:selected').text();
+        var province=$('#province1 option:selected').val();
+        var provincename=$('#province1 option:selected').text();
+        var state1=$('#state1 option:selected').val();
+        var state1name=$('#state1 option:selected').text();
+        if(county!=''&&county!=null&&county!=undefined){
+            if(checkarer(county)) {
+                $('#arer').append('<span style="padding: 1%"><input value="' + county + '" type="checkbox" checked name="arer[]" />' + countyname + '</span>');
+            }else{
+                layer.msg('选定的地区已存在');
+            }
+        }else if(city!=''&&city!=null&&city!=undefined){
+            if(checkarer(city)) {
+                $('#arer').append('<span style="padding: 1%"><input value="' + city + '" type="checkbox" checked name="arer[]" />' + cityname + '</span>');
+            }else{
+                layer.msg('选定的地区已存在');
+            }
+        }else if(province!=''&&province!=null&&province!=undefined&&province!=1){
+            if(checkarer(province)) {
+                $('#arer').append('<span style="padding: 1%"><input value="' + province + '" type="checkbox" checked name="arer[]" />' + provincename + '</span>');
+            }else{
+                layer.msg('选定的地区已存在');
+            }
+        }else{
+            if(checkarer(state1)) {
+                $('#arer').append('<span style="padding: 1%"><input value="' + state1 + '" type="checkbox" checked name="arer[]" />' + state1name + '</span>');
+            }else{
+                layer.msg('选定的地区已存在');
+            }
+        }
+        }
+        function checkarer(code){
+            var list= document.getElementsByName("arer[]");
+            var flag=true;
+            if(list.length==0){
+                return flag;
+            }else{
+               $.each(list,function (m,vo) {
+                  if(vo.value==code){
+                      flag=false;
+                  }
+               });
+                return flag;
+            }
+
+        }
+    $('#province1').change(function () {
+        var code=$('#province1').val();
+        $.ajax({
+            url: '{:url("Freight/getcity")}',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#city1').empty();
+                    $('#city1').append(' <option value="">请选择</option>');
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#city1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+    $('#city1').change(function () {
+        var code=$('#city1').val();
+        $.ajax({
+            url: '{:url("Freight/getcity")}',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#county1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

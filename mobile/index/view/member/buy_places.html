@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购买推荐名额</title>
+    <link rel="stylesheet" href="/public/qdd/css/fukuang.css">
+    <link rel="stylesheet" href="/public/qdd/css/iconfont.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <a href="/mobile.php/member/userinfo/">
+        <i class="iconfont icon-zuojiantou" id="fkfh"></i>
+    </a>
+    <span>购买推荐名额</span>
+</header>
+<section>
+    <div id="main">
+        <p class="ktTit">购买名额</p>
+        <ul class="ktXz">
+            <!-- <li onclick="changetype(1)" class="bk" class="1">
+               <span>标准版</span>
+               <i class="iconfont icon-im_xuanze_b" style="display:block"></i>
+            </li> -->
+            {if condition="$userinfo.userType eq 3"}
+            <li onclick="changetype(2)" class="2">
+              <span>尊享版</span>
+              <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+            {/if}
+            
+            {if condition="$userinfo.userType eq 4"}
+            <li onclick="changetype(3)" class="3">
+                <span>联盟商</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+            {/if}
+            <!-- <li onclick="changetype(4)">
+                <span>营销中心</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li> -->
+        </ul>
+		<p class="ktTit">购买数量</p>
+		<div class="buy_bumber">
+			<span class="reduce_nubmer" onclick="reduce_number()">-</span>
+			<span class="number_value">1</span>
+            <span class="add_number" onclick="add_number()">+</span>
+		</div>
+
+        <p class="yfje">应付金额    &nbsp;&nbsp;<strong class="je">{$priceArr[0]}</strong></p>
+        <div class="zffsTit">支付方式</div>
+        <ul class="zffs">
+            <li onclick="change_payway(1)" class="bk">
+                <span>支付宝</span>
+                <i class="iconfont icon-im_xuanze_b" style="display:block"></i>
+            </li>
+            <li onclick="change_payway(2)">
+                <span>微信</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+        </ul>
+    </div>
+    <script src="/public/qdd/js/fukuang.js"></script>
+</section>
+<div class="fukuan">
+    <a href="JavaScript:;" onclick="pay_action()">立即支付</a>
+</div>
+</body>
+{include file="./public/Public/js_script.html" /}
+<script>
+/*var usertype = 1;
+var payway = 1;
+var buy_nubmer = 1;
+var totleprice;
+var priceArr = [0,'{$priceArr[0]}','{$priceArr[1]}','{$priceArr[2]}','{$priceArr[3]}'];*/
+
+// 获取当前第一个li标签的类，即为第一个用户类型
+var nowtype = $('li:first').attr('class')
+var buy_nubmer =  1
+var priceArr = [0,'{$priceArr[0]}','{$priceArr[1]}','{$priceArr[2]}','{$priceArr[3]}'];
+// 给第一个li标签设置样式
+$('li:first').attr('class','bk')
+$('li:first>i').css('display','block')
+$('.je').text(priceArr[nowtype])
+
+var usertype = nowtype;
+var payway = 1;
+// 修改选中的会员
+function changetype(id){
+	console.log(id);
+	$('.je').text(priceArr[id]);
+	usertype = id;
+	$('.je').text( (priceArr[usertype] * buy_nubmer).toFixed(2) );
+}
+// 修改支付方式
+function change_payway(id){
+	console.log(id);
+	payway = id;
+	$('.je').text( (priceArr[usertype] * buy_nubmer).toFixed(2) );
+}
+// 增加数量
+function add_number(){
+	buy_nubmer = buy_nubmer + 1;
+	$('.number_value').text(buy_nubmer);
+	$('.je').text( (priceArr[usertype] * buy_nubmer).toFixed(2) );
+}	
+// 减少数量
+function reduce_number(){
+	if(buy_nubmer>1){
+		buy_nubmer = buy_nubmer - 1;
+		$('.number_value').text(buy_nubmer);
+		$('.je').text( (priceArr[usertype] * buy_nubmer).toFixed(2) );
+	}
+}
+function pay_action(){
+	console.log(1)
+	if(usertype == '' || payway == '' || buy_nubmer == ''){
+		layer.msg('类型选择错误！',{time:2000});
+		return false;
+	}
+	$.post(
+		"/mobile.php/member/buy_places",
+		{usertype:usertype,number:buy_nubmer,payway:payway},
+		function(data){
+			layer.msg(data.msg,{time:2000},function(){
+				if(data.status == 1){
+					location.href = "/mobile.php/weixin_pay/buy_places_pay_successful/orderid/"+data.orderid;
+				}
+				
+			});
+		}
+	)
+}
+
+
+</script>
+</html>

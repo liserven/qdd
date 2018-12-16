@@ -1,0 +1,167 @@
+
+a,
+body,
+button,
+caption,
+dd,
+div,
+dl,
+dt,
+em,
+figure,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+i,
+img,
+input,
+label,
+li,
+ol,
+p,
+span,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+tt,
+ul {
+	margin: 0;
+	padding: 0
+}
+
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 400
+}
+
+body,
+html {
+	height: 100%;
+	background: #f4f4f4
+}
+
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-size: 14px;
+	border: 0;
+	outline: 0
+}
+
+button::-moz-focus-inner,
+input[type=button]::-moz-focus-inner {
+	border: none;
+	padding: 0
+}
+
+body {
+	font: 14px/1.5 "PingFang SC", "Lantinghei SC", "Microsoft YaHei", "HanHei SC", "Helvetica Neue", "Open Sans", Arial, "Hiragino Sans GB", "微软雅黑", STHeiti, "WenQuanYi Micro Hei", SimSun, sans-serif
+}
+
+img {
+	border: 0
+}
+
+ul li {
+	list-style-type: none
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	outline: 0
+}
+
+a:focus {
+	outline: 0
+}
+
+a[class|=btn] {
+	vertical-align: top;
+	zoom: 1
+}
+
+.block,
+main {
+	display: block
+}
+
+input[type=checkbox],
+input[type=radio] {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0
+}
+
+i {
+	font-style: normal
+}
+
+input:-webkit-autofill,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
+	background-color: #FFF!important;
+	background-image: none!important;
+	color: #333!important;
+	-webkit-box-shadow: 0 0 0 1000px #f4f4f4 inset
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	color: #bbb
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+	color: #bbb
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+	color: #bbb
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+	color: #bbb
+}
+
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus {
+	-webkit-box-shadow: 0 0 0 1000px #fff inset
+}
+
+input[type=password]:focus,
+input[type=text]:focus,
+textarea:focus {
+	background: #fff;
+	color: #444
+}
+
+input[type=text].borderred,
+textarea.borderred {
+	border: 1px solid #f4523b!important
+}
+* {
+    -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" href="/public/qdd/css/login.css">
+</head>
+<body>
+    <div class="topBg">
+        <img src="/public/qdd/img/PATTERN.png" alt="">
+    </div>
+    <div class="formBD">
+        <!-- <div class="LogAndReg">
+            <a href="/mobile.php/login;" id="log">登录</a>
+            <a href="JavaScript:;" id="reg">注册</a>
+        </div> -->
+        <form id="formdata">
+            <div class="logXx">
+                <div class="logPhone">
+                    <input type="text" id="username" name="username" placeholder="请输入手机号">
+                    <img src="/public/qdd/img/MailIcon.png" alt="">
+                </div>
+                <div class="logPsw">
+                    <input type="password" id="password" name="password" placeholder="请输入密码">
+                    <img src="/public/qdd/img/PasswordIcon.png" alt="" >
+                </div>
+            </div>
+        </form>
+        <a href="JavaScript:;" id="logBtn" >
+
+        </a>
+    </div>
+</body>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        $('#logBtn').click(function(){
+            $.ajax({
+                url:"/api.php/login/mobile_check",
+                type:"post",
+                dataType:"json",
+                data: $('#formdata').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{time:500},function(){
+                            window.location.href='/mobile.php/member/userinfo';
+                        });
+                    }else{
+                        layer.msg(data.msg,{time:3000},function(){
+                            if(data.url_path == 1){
+                                window.location.href='/mobile.php/member/add_userinfo_one';
+                            }
+                            if(data.url_path == 2){
+                                window.location.href='/mobile.php/weixin_pay/active_pay_successful';
+                            }
+                           
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function changeInput(){
+        var state = $('#password').attr('type');
+        //alert(state);
+        if(state=='password'){
+            $('#password').attr('type','text');
+        }else{
+            $('#password').attr('type','password');
+        }
+    }
+</script>
+</html>
+</html>

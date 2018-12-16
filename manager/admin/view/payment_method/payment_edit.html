@@ -1,0 +1,102 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>修改 - 系统管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
+        <input type="hidden" class="input-text" value="{$paymentmethod.PaymentId}" placeholder="" id="PaymentId" name="PaymentId">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">支付方式：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-red" id="lbuserID">
+                <input type="text" class="input-text" value="{$paymentmethod.PaymentName}" id="PaymentName" name="PaymentName">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="Enabled" type="radio" id="sex-1" value="0" {if condition="$paymentmethod['Enabled'] eq 0"}checked{/if}>
+                    <label for="sex-1">禁用</label>
+                </div>
+                <div class="radio-box">
+                    <input name="Enabled" type="radio" id="sex-2" value="1" {if condition="$paymentmethod['Enabled'] eq 1"}checked{/if}>
+                    <label for="sex-2">启用</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">排序：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$paymentmethod.SortOrder}" placeholder="" id="SortOrder" name="SortOrder">
+            </div>
+        </div>
+
+        </div>
+        </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+<script  type="text/javascript" src="<?php echo CSS_PATH;?>static/js/provinces.Cxselect.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/provincesData.js"></script>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules:{
+                PaymentName:{
+                    required:true,
+                },
+                SortOrder:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'/admin.php/admin/Payment_method/payment_edit/action/edit',
+                    type:"POST",
+                    data:$('#form-member-add').serialize(),
+                    success: function(data) {
+                        var res = String($.trim(data));
+                        if(res=="mobileerror"){
+                            layer.msg("您准备修改的手机号已经存在，请换个手机号进行修改！");
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('恭喜您修改成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

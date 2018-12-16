@@ -1,0 +1,361 @@
+<!doctype html>
+<html>
+<head>
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">-->
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        /*页头样式*/
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal;}
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+        body, ul, li, h1 {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-family: 微软雅黑;
+        }
+        /*筛选按钮*/
+        #imageContainer {
+            width: 18px;
+            height: 20px;
+            float: left;
+            position: relative;
+            top: 12px;
+            left: -3%;
+            overflow: hidden;
+        }
+        #imageContainer img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #imageContainer img.active {
+            z-index: 3;
+        }
+        #imageContainer1 {
+            width: 18px;
+            height: 20px;
+            float: left;
+            position: relative;
+            top: 12px;
+            left: -1%;
+            overflow: hidden;
+        }
+        #imageContainer1 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #imageContainer1 img.active {
+            z-index: 3;
+        }
+        #imageContainer2 {
+            width: 18px;
+            height: 20px;
+            float: left;
+            position: relative;
+            top: 12px;
+            left: -3%;
+            overflow: hidden;
+        }
+        #imageContainer2 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #imageContainer2 img.active {
+            z-index: 3;
+        }
+        .zy {
+            width: 100%;
+            height: 60px;
+            background: #353535;
+        }
+        .zy ul li {
+            width: 25%;
+            height: 60px;
+            line-height:60px;
+            text-align: center;
+            float: left;
+
+        }
+        .zy ul li a{font-size: 18px;
+            color: #fff;
+            font-family: "微软雅黑";
+        }
+
+        .zy ul li a.quanbu{color: #fed58d;}
+
+        /*内容样式*/
+        .zt a{
+            font-size:18px;
+            color: #fff;
+            margin-top: 10px;
+            margin-left: 15%;
+            float: left;
+        }
+
+        .zt1 {
+            font-size: 6px;
+            font-weight: bold;
+            color: #585757;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .zt2 {
+            font-size: 6px;
+            font-weight: bold;
+            color: #585757;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .tp {
+            width: 110px;
+            margin-left: 20px;
+            float: left;
+        }
+        .tu1 {
+            width: 100%;
+            height: 210px;
+            background: #1f1f1f;
+            border-bottom: 2px solid #2f2f2f;
+        }
+
+        .neirong{width: 100%;height:54px;line-height:64px;position:relative;margin: auto;padding-top: 10px;}
+        .fanhui{float: left;margin-left:5%;}
+
+    </style>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <meta charset="utf-8">
+    <title>订单列表</title>
+</head>
+
+<body style="background: #1f1f1f;" ng-app="scroll" ng-controller="Main" ng-cloak>
+<!---页头--->
+<div when-scrolled="loadMore()">
+<div class="top">
+    <div class="neirong">
+        <a href="/mobile.php/member/userinfo" class="fanhui"><img style=" width:10px;margin-top:22px; position:absolute;" src="<?php echo CSS_PATH;?>/mobile/img/fanhui.png"></a>
+        <div style=" width:100%; height:64px; font-size:20px;color:#fff; font-family:'微软雅黑'; text-align: center;">我的订单</div>
+    </div>
+</div>
+
+<!---导航--->
+<div class="zy">
+    <ul style=" width:100%">
+        <li><a {if condition="$Request.param.status eq ''"}class="quanbu"{/if} href="/mobile.php/order/list">全部订单</a></li>
+        <li><a href="/mobile.php/order/list?status=1" {if condition="$Request.param.status eq '1'"}class="quanbu"{/if}>待付款</a></li>
+        <li><a href="/mobile.php/order/list?status=5" {if condition="$Request.param.status eq '5'"}class="quanbu"{/if}>待收货</a></li>
+        <li><a href="/mobile.php/order/list?status=8" {if condition="$Request.param.status eq '8'"}class="quanbu"{/if}>已收货</a></li>
+    </ul>
+</div>
+
+
+<!---内容--->
+<span  ng-repeat="vo in items">
+<div class="tu1">
+    <img style="position: absolute; width: 28px;margin-left: 5%;margin-top: 10px;" src="<?php echo CSS_PATH;?>/mobile/img/tub.png">
+    <div class="zt"><a href="#">{{vo.suppliername}}</a></div>
+    <!--<div style=" float: left;padding-top: 7px;margin-left: 10px;margin-top: 7px; width: 8px; "><img style=" width:100%;" src="<?php echo CSS_PATH;?>/mobile/img/jin.png"></div>-->
+    <div style=" float: left;padding-top: 7px;margin-left: 10px;margin-top: 7px; width: 8px; "><img style=" width:100%;" src="<?php echo CSS_PATH;?>/mobile/img/jin.png"></div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '0'" >过期订单</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '1'">待付款</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '2'">待发货</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '3'">配货中</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '4'">已发货</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '8'">已收货</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '15'">取消待处理</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '10'">已取消</div>
+    <div style=" float:right; font-size:18px; color:#fed58d; margin-top:10px; margin-right:5%;" ng-if="vo.status == '20'">后台取消</div>
+    <div style=" clear:both;"></div>
+    <span  ng-repeat="von in vo.voo">
+    <div style=" margin-top:20px; ">
+        <div style="  color:rgba(255,255,255,0.8); text-align: right;position: absolute;right: 20px;">×{{von.pronum}}</div>
+        <div class="tp"><a href="/mobile.php/goods/{{von.proid}}"><img style="width:100%;" src="{{von.img}}"></a></div>
+        <ul style="  margin-left:5%; margin-top:10px; float:left;width:50%;" >
+            <li style="color: #fff; font-size:15px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap; "><a style="font-size: 16px; color: #fff;" href="#">{{von.proname}}</a></li>
+            <li style=" color:rgba(255,255,255,0.6); font-size:14px; margin-top: 5px;">{{von.stylename}}</li>
+            <li style=" margin-top:10px;float:left; margin-right:10px;"><span style="font-size:16px; color:#fed58d;">¥{{von.price}}</span></li>
+            <li style=" margin-top:10px;clear: both;color:#fff;font-size:14px;margin-right:10px;">{{von.innerorderid}}</li>
+
+        </ul>
+    </div>
+    <div style=" clear:both;"></div>
+    </span>
+    <!---分隔线--->
+    <!---分隔线结束--->
+
+    <!---下层-->
+    <a ng-if="vo.status == '1'" href="javascript:;" ng-click="orderCancel(vo.innerorderid)"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#fed58d; color:#000; font-size:16px; text-align:center; line-height:25px; margin-right:5%;">取消订单</div></a>
+    <!--<a ng-if="vo.status == '2'" href="javascript:;" ng-click="orderCancelAdmin(vo.innerorderid)"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#fed58d; color:#000; font-size:16px; text-align:center; line-height:25px; margin-right:5%;">退款</div></a>-->
+    <a ng-if="vo.status == '2'" href="javascript:;" ><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#fed58d; color:#000; font-size:16px; text-align:center; line-height:25px; margin-right:5%;">待发货</div></a>
+        <a ng-if="vo.status=='3'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#fed58d; color:#000; font-size:16px; text-align:center; line-height:25px; margin-right:5%;">配货中</div></a>
+        <a ng-if="vo.status=='1'" href="javascript:;" ng-click="orderPay(vo.innerorderid,vo.ordertype)"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#fed58d; color:#000; font-size:16px; text-align:center; line-height:25px; margin-right:5%;">确认付款</div></a>
+    <!--<a><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">再次购买</div></a>-->
+        <a ng-if="vo.status=='4'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">已发货</div></a>
+        <a ng-if="vo.status=='4'" href="https://m.kuaidi100.com/index_all.html?type={{vo.expcode}}&postid={{vo.awbno}}&callbackurl=http://<?php echo $_SERVER['HTTP_HOST'];?>/mobile.php/order/list?status=4"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">查看物流</div></a>
+        <a ng-if="vo.status=='4'" href="javascript:;" ng-click="orderOk(vo.innerorderid)"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">确认收货</div></a>
+        <a ng-if="vo.status=='8'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">已收货</div></a>
+        <a ng-if="vo.status=='10'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">已取消</div></a>
+        <a ng-if="vo.status=='15'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">退款中</div></a>
+        <a ng-if="vo.status=='20'"><div style=" margin-top:5px;float:right;width:90px; height:25px; border-radius:25px; background:#2c2c2c; color:#fed58d; font-size:16px; text-align:center; line-height:25px; margin-right:10px;">后台取消</div></a>
+
+</div>
+<div style=" clear:both;"></div>
+</span>
+</div>
+</body>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/He.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/He.admin.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            $scope.advanced_search=false;
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/order/list?{$param}p="+$scope.currentPage+'&ishit=1')
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                $scope.items.push(response.data.data_list[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+            //高级搜索
+            $scope.advancedSsearchShow=function(){
+                $scope.advanced_search=true;
+            };
+            //订单支付
+            $scope.payflag=true;
+            $scope.orderPay=function(orderno,ordertype){
+                layer.confirm('确认要付款吗？',function(){
+                    if($scope.payflag){
+                        $scope.payflag=false;
+//                        if(ordertype=='3'){
+//                            location.href='/mobile.php/order/pay?ordertype=inner&orderno='+orderno;
+//                        }else{
+                        $http.get("/api.php/order/thirdpay?ishit=1&orderno="+orderno)
+                            .success(function(response) {
+                                location.href=response.data.url;
+                            });
+//                        }
+                    }else{
+                        layer.msg('请不要重复提交！');
+                    }
+                });
+            };
+            //未付款的订单会员取消
+            $scope.orderCancel=function(orderno){
+                layer.confirm('确认要取消订单吗？',function(){
+                    if($scope.payflag){
+                        $scope.payflag=false;
+                        $http.get("/api.php/order/action?action=cancelorder&orderno="+orderno)
+                            .success(function(response) {
+                                location.href=location.href;
+                                layer.msg('已取消!',{icon:1,time:1000});
+                            });
+                    }else{
+                        layer.msg('请不要重复提交！');
+                    }
+                });
+            };
+            //已付款未发货的订单会员申请取消
+            $scope.orderCancelAdmin=function(orderno){
+                layer.confirm('确认要申请退款吗？',function(){
+                    $http.get("/api.php/order/action?action=cancelorderadmin&orderno="+orderno)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已申请!',{icon:1,time:1000});
+                        });
+                });
+            };
+            //会员确认收货
+            $scope.orderOk=function(orderno){
+                layer.confirm('确认要收货吗？',function(){
+                    $http.get("/api.php/order/action?action=orderok&orderno="+orderno)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已收货!',{icon:1,time:1000});
+                        });
+                });
+            };
+
+            $scope.show=function(title,url){
+                layer_show(title,url,320,500);
+            };
+            $scope.delete=function(id){
+                layer.confirm('确认删除订单吗？',function(){
+                    $http.get('/api.php/order/delete?id='+id)
+                        .success(function(response) {
+                            location.href=location.href;
+                            layer.msg('已删除!',{icon:1,time:1000});
+                        });
+                });
+            };
+        }]);
+</script>
+</html>

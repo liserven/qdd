@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>登录</title>
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport">
+	<link href="<?php echo CSS_PATH;?>mobile/css/style.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo CSS_PATH;?>mobile/css/reset.css" rel="stylesheet" type="text/css">
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.8.3.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/mobile.js"></script>
+</head>
+
+<body>
+<div class="top">
+	<div class="zhuangtai"></div>
+	<div class="neirong">
+		<a href="javascript:history.back(-1);" id="fanhui"><img style="margin-top:10px;"src="<?php echo CSS_PATH;?>mobile/images/fanhui2.png" alt=""></a>登录&nbsp;&nbsp;&nbsp;
+	</div>
+</div>
+<img id="logo" src="<?php echo CSS_PATH;?>mobile/images/logo.png" alt="">
+<form  id="form-login" method="post">
+	<input id="username"  name="username" class="label_inpt" type="text" placeholder="请输入账户名："><br />
+	<input class="label_inpt" id="password" name="password" type="password" placeholder="请输入密码："><br />
+	<img style=" width:25px; margin-top:-0.46rem; margin-left:45%; float:right;position:absolute; z-index:1;" src="<?php echo CSS_PATH;?>mobile/images/yanjing.png" onclick="changeInput()">
+	<a href="/mobile.php/member/security_code">忘记密码？</a><br />
+	<button class="butden" id="loginid"  type="button">登录</button>
+</form>
+</body>
+<div class="fidinfo"></div>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        $('#loginid').click(function(){
+            $.ajax({
+                url:"/api.php/login/check",
+                type:"post",
+                dataType:"json",
+                data: $('#form-login').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{time:500},function(){
+                            window.location.href='/mobile.php/member/userinfo';
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function changeInput(){
+        var state = $('#password').attr('type');
+        //alert(state);
+        if(state=='password'){
+            $('#password').attr('type','text');
+        }else{
+            $('#password').attr('type','password');
+        }
+    }
+</script>
+</html>

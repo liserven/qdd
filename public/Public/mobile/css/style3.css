@@ -1,0 +1,58 @@
+body{background: #f4f5f7;}
+.top{width: 100%;/*height: 1.28rem;*/background: #28BEBC;border-bottom: 1px solid #dddddd;}
+.top .zhuangtai{width: 100%;height: 0.4rem;}
+.top .neirong{width: 100%;height: 0.88rem;text-align: center;font-size:0.3rem;color:#333;line-height: 0.88rem;}
+.top .neirong a#fanhui{width: 0.18rem;height: 0.33rem;float: left;margin-left: 0.2rem;}
+
+
+.shouhuo{width: 100%;height: 1.8rem;background: #fff;margin-top: 0.2rem;font-size:0.26rem;color:#505050;overflow: hidden;position: relative;}
+.shouhuo .ren{width: 5rem;margin-left: 0.7rem;margin-top: 0.2rem;}
+.shouhuo img#dingwei{width: 0.28rem;position: absolute;top:2em;left: 0.2rem;bottom:0.6rem;}
+.shouhuo img#gengduo{width: 0.12rem;position: absolute;top:2em;right: 0.2rem;bottom:0.6rem;}
+.shouhuo img#setiao{position: absolute;right: 0.2rem;bottom:0;}
+
+.xinxi{width: 100%;/*height: 4.7rem;*/background: #fff;margin-top: 0.2rem;font-size:0.26rem;color:#333;overflow: hidden;}
+.xinxi p#dianming{width: 100%;height: 0.4rem;margin-left: 0.2rem;margin-top: 0.2rem;position: relative;}
+.xinxi p#dianming img{width: 0.4rem;height: 0.4rem;}
+.xinxi p#dianming span{margin-top: -0.1rem;display:block;position: absolute;left: 0.5rem;top:0.1rem;}
+
+.xinxi .neirong{width: 100%;height: 1.9rem;background: #fafafa;margin-top: 0.1rem;}
+.xinxi .neirong img{width: 1.64rem;height: 1.64rem;margin-top: 0.12rem;margin-left: 0.2rem;}
+.xinxi .neirong .right{width: 4.3rem;height: 1.4rem;margin-top: 0.12rem;float: right;font-size:0.24rem;color:#333;}
+.xinxi .neirong .right p#yanse{font-size:0.22rem;color:#999;margin-top: 0.1rem;}
+.xinxi .neirong .right p#jiage{font-size:0.24rem;color:#d8320c;margin-top: 0.1rem;}
+.xinxi .neirong .right p#jiage span{font-size:0.24rem;color:#333;float: right;margin-right: 0.2rem;}
+
+.shuliang{width: 100%;height: 1rem;font-size:0.26rem;color:#fff;display: block;line-height: 1rem;    border-bottom: 2px solid #2f2f2f;}
+.shuliang span{width: 1.6rem;height: 0.5rem;display: inline-block;float: right;margin-top: 0.3rem;}
+
+
+.shuliang span#kuaidi{line-height: 0.5rem;background: #fff;}
+.shuliang span#kuaidi img{width: 0.12rem;height: 0.22rem;margin-left: 0.2rem;}
+.shuliang .jiajian{width: 2rem;height: 0.5rem;display: inline-block;float: right;position: relative;}
+.shuliang .jiajian img#jian{width: 0.55rem;height: 0.5rem;display: inline-block;}
+.shuliang .jiajian img#jia{width: 0.55rem;height: 0.5rem;display: inline-block;margin-left: 0.6rem;}
+.shuliang .jiajian input{width: 0.5rem;height: 0.5rem;line-height: 0.8rem;font-size:0.28rem;color:#333;text-align: center;position: absolute;top:0.1rem;}
+
+.liuyan{width: 100%;height: 0.8rem; font-size: 0.26rem;color: #fff;display: block;line-height: 0.8rem;border-bottom: 2px solid #2f2f2f;}
+.liuyan .shuliang a{font-size:0.26rem;color:#ccc;}
+.jine .shuliang a#zhongliang{font-size:0.2rem;color:#999;}
+
+.jine{height:auto;    background: #353535;}
+.jine .shuliang span#kuaidi{color:#d8320c;}
+
+
+.tijiao{width: 100%;height: 0.98rem;background: #353535;position:fixed;bottom:0;}
+.tijiao a.jiesuan{width: 2.9rem;height: 0.98rem;background: #28bebc;display: inline-block;font-size:0.32rem;color:#fff;line-height: 0.98rem;text-align: center;float: right;}
+.tijiao span#gongji{width: 2.4rem;height: 0.98rem;font-size:0.26rem;color:#d8320c;line-height: 0.98rem;display: inline-block;float: left;margin-left: 1.1rem;}
+
+
+
+
+
+
+
+
+
+
+

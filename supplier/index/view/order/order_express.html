@@ -1,0 +1,56 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/tip-twitter.css" type="text/css" />
+<meta charset="utf-8">
+<title>快递单号导入 - 订单管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 快递单号导入 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form  method="post" action="{:\\think\\Url::build($Request.action)}" enctype="multipart/form-data" >
+        <div class="bk-gray">
+            <div class="col-80">导入文件：</div>
+            <div class="col-300"><input type="file" class="input-text" style="width:240px"  name="kuaidi" ></div>
+            <div class="col-80">上传：</div>
+            <div class="col-200"><input type="submit" class="input-text" style="width:150px" ></div>
+             </div>
+
+    <div class="mt-20 box-border">
+        <table class="table table-border table-bordered table-bg table-hover">
+            <thead>
+            <tr>
+                <th colspan="4" style="text-align: center">导入订单失败数据</th>
+            </tr>
+            <tr class="text-c">
+                <th>订单</th>
+                <th >快递公司</th>
+                <th >快递单号</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr class="text-c va-m">
+                <td>{$vo.orderno}</td>
+                <td>{$vo.kuaidi}</td>
+                <td>{$vo.danhao}</td>
+                <td><a style="text-decoration:none" class="ml-5"  href="{:url('Order/del_express',['id'=>$vo['id']])}" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页 begin-->
+        <div class="page-bootstrap">{$page}</div>
+        <br class="clear">
+    <!--分页 end-->
+    </form>
+</div>
+
+
+
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/jquery.poshytip.js"></script>
+</body>
+</html>

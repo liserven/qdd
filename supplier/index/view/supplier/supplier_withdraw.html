@@ -1,0 +1,86 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>结算记录 - 商家提现</title>
+</head>
+<body>
+<div class="pd-20">
+    <form method="post" class="form form-horizontal" id="form-supplier-withdraw">
+    <table class="table table-border table-bordered table-hover table-bg table-sort mt-15" style="width: 40%;margin-left: 30%">
+        <thead>
+        <tr class="text-c">
+            <th width="50%" height="40" colspan="2" style="font-size: 30px">商家提现</th>
+        </tr>
+        </thead>
+        <tbody>
+        	<tr>
+                <td height="40" colspan="2" style="font-size: 20px">商家名称：{$supinfo.Name}</td>
+            </tr>
+            <tr>
+                <td height="40" colspan="2" style="font-size: 20px">手机号码：{$supinfo.Mobile}</td>
+            </tr>
+            <tr>
+                <td height="40" colspan="2" style="font-size: 20px">账户余额：{$supinfo.Account} &nbsp;&nbsp;&nbsp;&nbsp; 可提现金额：{$supinfo.WithdrawalAmount}</td>
+            </tr>
+            <tr>
+                <td width="50%" height="40"  style="font-size: 20px">开户行：</td>
+                <td height="40" style="font-size: 20px">{$supinfo.BankName}</td>
+            </tr>
+            <tr>
+                <td width="50%" height="40"  style="font-size: 20px">开户人：</td>
+                <td height="40" style="font-size: 20px">{$supinfo.BankSupName}</td>
+            </tr>
+            <tr>
+                <td width="50%" height="40"  style="font-size: 20px">银行账号：</td>
+                <td height="40" style="font-size: 20px">{$supinfo.BankAccount}</td>
+            </tr>
+            <tr>
+                <td width="50%" height="40"  style="font-size: 20px">开户地址：</td>
+                <td height="40" style="font-size: 20px">{$supinfo.BankInfo}</td>
+            </tr>
+            <tr>
+                <td width="50%" height="40"  style="font-size: 20px">提现金额：</td>
+                <td height="40" style="font-size: 20px">
+                    <input type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="input-text" value="" placeholder="" id="" name="withdrawmoney">
+                </td>
+            </tr>
+            <tr>
+                <td height="40" colspan="2" style="font-size: 20px">
+                    <input class="btn btn-primary radius" type="button" id="submitid" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" style="margin-left: 45%">
+                </td>
+            </tr>
+        </tbody>
+	</table>
+    </form>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        var flag=true;
+        $('#submitid').click(function(){
+            if(flag){
+                //flag=false;
+                $.ajax({
+                    url:'{:url("Supplier/supplier_withdraw",["act"=>"submit"])}',
+                    type:"POST",
+                    dataType:'json',
+                    data:$('#form-supplier-withdraw').serialize(),
+                    success: function(data) {
+                        if(data.status==0){
+                            layer.msg(data.msg);
+                        }else {
+                            parent.layer.msg(data.msg); //父页面显示提示
+                            location.href=location.href;
+                            parent.layer.close(index); //关闭layer
+                        }
+                    }
+                });
+            }else{
+                layer.msg('请不要重复提交！');
+            }
+        });
+    });
+</script>
+</body>
+</html>

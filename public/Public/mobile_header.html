@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script language="javascript" type="text/javascript">
+        function openScan() {
+            var ua = navigator.userAgent.toLowerCase();
+            //alert(ua);
+            if (ua.indexOf("linux; android") > 0 && ua.indexOf("chrome/") > 0) {
+                imagelistner.openScan();
+            } else if (ua.indexOf("iphone;") > 0 && ua.indexOf("mobile/") > 0) {
+                //if (ua.indexOf("safari/") > 0) {
+                //    alert("需下载app版方可进行扫码");
+                //} else {
+                imagelistner.openScan();
+                //}
+            } else {
+                //alert("需下载app版方可进行扫码");
+                if (confirm("需下载app版方可进行扫码,是否下载？")) {
+                    //如果是true ，那么就把页面转向thcjp.cnblogs.com
+                    //location.href = "http://www.hc2688.com/Public/appload/AppLoad.html";
+                }
+            }
+        }
+        function fsubmit(obj){
+            $('#form1').submit();
+        }
+    </script>
+    <style>
+        body,ul,li{ margin:0; padding:0; font-family:微软雅黑;	font-style:normal;
+        }
+        a {border:0; text-decoration:none; color:#303030;}
+
+        img{ width:100%; border:0;}
+        input{
+            background:transparent;
+        }
+
+        .banner-slider{
+            max-width:750px;
+            min-width:307px;
+            margin:0 auto;
+
+        }
+        .banner-slider img{
+            width:100%;
+            max-width:750px;
+        }
+        .focus{
+            width:100%;
+            position:relative;
+            max-width:720px;
+            text-align:center;
+        }
+        .focus div{
+            width:50%;
+            position:absolute;
+            left:50%;
+            bottom:0px;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .focus span {
+            margin:0px 5px 0px 5px;
+            display:inline-block;
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background:#fff;
+            font-size:0
+        }
+        .focus span.current {
+            background:#e61739;
+        }
+    </style>

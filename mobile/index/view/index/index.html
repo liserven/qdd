@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="/public/qdd/css/index.css">
+    <link rel="stylesheet" href="/public/qdd/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>mobile/dist/css/swiper.min.css"/>
+</head>
+<body ng-app="indexApp" ng-controller="indexCtrl" ng-cloak>
+<header>
+    <div class="ipt">
+        <input type="text"  name="keyword" placeholder="输入您想搜索的商品" style="float: left;">
+        <span id="search" class="iconfont icon-icon-test" style="float: right;font-size: 20px;margin-top: 3px;"></span>
+
+    </div>
+    <!--<div class="xiaoxi">-->
+        <!--<img src="/public/qdd/img/消息.png" alt="">-->
+    <!--</div>-->
+</header>
+<section>
+    <div class="spzs">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {foreach name="banner" item="b"}
+                <div class="swiper-slide"><a href="{$b.poster_url}"><img style="width: 100%;height: 170px;"  src="{$b.poster_picpath}" /></a></div>
+                {/foreach}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="Option" >
+        {foreach name="gcategory" item="v"}
+        <a href="{$v.poster_url}">
+            <img src="{$v.poster_picpath}" width="51" height="51" alt="">
+            <p>{$v.cate_name}</p>
+        </a>
+        {/foreach}
+    </div>
+    <div class="xpss">
+        <div class="titImg">
+            <img src="/public/qdd/img/矩形21拷贝3.png" alt="">
+        </div>
+        <ul class="xipin">
+            {volist  name='recondgoods' id="val"  key='key'}
+            <li {if condition="$key eq 1"} class="heng" style="border-right:1px solid #cecece;"
+                {elseif condition="$key eq 2" } class="heng"
+                {elseif condition="$key eq 5" } class="shu"
+                {else /} class="shu" style="border-right:1px solid #cecece;"
+            {/if}
+            >
+            <a href="/mobile.php/goods/{$val.ProId}">
+                <img src="{$val.ProImg}" alt="" width="65" height="65">
+                <p>{$val.ProName}</p>
+                <span>￥{$val.MarketPrice}</span>
+            </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <div class="jptj" when-scrolled="loadMore()">
+        <div class="titImg" style="margin:20px 0;">
+            <img src="/public/qdd/img/矩形21拷贝3.png" alt="">
+        </div>
+        <ul class="jingpin">
+            <li ng-repeat="(key,vv) in items">
+                <a href="/mobile.php/goods/{{vv.proid}}">
+                    <img ng-src="{{vv.proimg}}" err-src="/public/Public/mobile/img/logo.png" alt="" width="170" height="170">
+                    <p style="overflow: hidden;text-overflow:ellipsis; white-space: nowrap;">{{vv.proname}}</p>
+                    <strong>零售价：￥{{vv.marketprice}}</strong>
+                    <ul class="duihuan">
+                        <li class="zunxiang">
+                            <img src="/public/qdd/img/尊享兑换.png" alt="">
+                            <span>￥{{vv.enjoyprice}}</span>
+                        </li>
+                        <li class="biaozhun">
+                            <img src="/public/qdd/img/标准兑换.png" alt="">
+                            <span>￥{{vv.vipprice}}</span>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</section>
+{:widget('Common/mobile_footer')}
+</body>
+</html>
+<script src="<?php echo CSS_PATH;?>mobile/dist/js/swiper.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/cate/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: true,//可选选项，自动滑动
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    })
+</script>
+<script type="text/javascript">
+    $(function($){
+        $('img').error(function() {
+            $(this).attr('src', "/public/Public/mobile/img/logo.png");
+        });
+        $('#search').click(function () {
+            var keyword=$('input[name="keyword"]').val();
+            window.location.href="/mobile.php/search_list?keyword="+keyword;
+        });
+    })
+    // 定义模块
+    var scroll = angular.module('indexApp', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+    scroll.directive('errSrc', function () {
+        return {
+            link: function (scope, element, attrs) {
+                element.bind('error', function () { //请求图片数据失败,加载err-src
+                    if (attrs.src != attrs.errSrc) {
+                        attrs.$set('src', attrs.errSrc);
+                    }
+                });
+                attrs.$observe('ngSrc', function(value) { //ng-src值为null,加载err-src
+                    if (!value && attrs.errSrc) {
+                        attrs.$set('src', attrs.errSrc);
+                    }
+                });
+            }
+        }
+    });
+    scroll.controller('indexCtrl', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/index/recommend_goods?p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.indexlist) {
+                                $scope.items.push(response.data.indexlist[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+
+</script>

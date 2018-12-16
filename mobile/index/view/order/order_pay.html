@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单支付</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <style>
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal; }
+        body{background: #f4f4f4;}
+        .top{width: 100%;height:64px; background:#fff;position:relative;}
+        .top .neirong{width: 100%;height:64px;text-align: center;line-height:64px;position:relative;}
+        .jiantou{width:13px;margin-top:20px; position:absolute;}
+        #fanhui{float: left;margin-left:3%;}
+        .caidan{width:100%; height:64px; font-size:20px;color:#333; font-family:"微软雅黑";}
+
+        .fukuan{width: 100%;height:125px; background:url(<?php echo CSS_PATH;?>mobile/images/beijing.png) no-repeat; background-size: 100% 100%; overflow: hidden;position: relative;}
+        .dingdan{width:100%;float: left; margin-left:7%;margin-top:28px;font-size:18px;color:#FFFFFF;font-family:"微软雅黑";}
+        .dingdan1{width:100%;float: left; margin-left:7%;margin-top:5px;font-size:16px;color:#FFFFFF;font-family:"微软雅黑";}
+
+        .shouhuo{height:95px;background: #fff;font-size:20px;overflow: hidden;position: relative;}
+        .ren1{margin-left:10%;margin-top: 20px;font-size:16px;color:#666;font-family:"微软雅黑";}
+        .ren2{margin-left:10%;margin-top: 10px;font-size:16px;color:#666;font-family:"微软雅黑";}
+        #dianhua{position: absolute;right:3%; margin-top: -20px;font-size:16px;color:#666666;font-family:"微软雅黑";}
+        #dingwei{margin-left: 3%; width: 15px; position: absolute;margin-top: 10px;}
+
+        .xinxi{width: 100%;/*height: 260px;*/background: #fff;margin-top:10px;font-size:26px;color:#333;overflow: hidden;}
+        .xinxi p#dingdanhao{width: 100%;height: 30px;margin-left:3%;margin-top: 10px;position: relative;}
+        .xinxi p#dianming img{width:40px;height: 40px;}
+        .xinxi p#dianming span{margin-top: -10px;display:block;position: absolute;left: 50px;top:10px;}
+
+        .xinxi .neirong{width: 100%;/*height:130px;*/background: #fafafa;}
+        .xinxi .neirong img{width:115px;margin-top:8px;margin-left: 3%;}
+        .xinxi .neirong .right{width:64%;margin-top:10px;float: right;}
+        #biaoti{font-size:16px;color:#333;margin-top: 5px; font-family: "微软雅黑";}
+        #bianhao{font-size:15px;color:#999;margin-top: 6px;}
+        #jiage{font-size:16px;color:#d8320c;margin-top:10px;}
+        #jiage span{font-size:16px;color:#333;float: right;margin-right:20px;}
+
+        .xufukuan{width: 100%;background: #fff;overflow: hidden;}
+        .shuliang{ margin-left: 3%; font-size:16px;color:#333;font-family: "微软雅黑"; margin-top: 15px; width: 100%; height: 35px;background: #ffffff; border-bottom: 1px solid #eeeeee;}
+        .shuliang1{ margin-left: 3%; font-size:18px;color:#333;font-family: "微软雅黑";width: 100%;margin-top: 15px;width: 100%; height: 35px;background: #ffffff;}
+        .kuaidi{float: right; margin-right: 6%; color: #d8320c;font-size:18px;font-family: "微软雅黑"; }
+        .shuliang a{margin-left: 3%; font-size:16px;color:#c9c8cd;font-family: "微软雅黑"; }
+
+
+        .zffs{background: #fff;margin-top:10px;}
+        #shengyu{font-size:14px;color:#333;font-family: "微软雅黑";}
+        .xuanze0{font-size:18px;color:#000;font-family: "微软雅黑"; padding-top: 10px; width: 100%; height:30px;background: #ffffff; border-bottom: 1px solid #eeeeee;}
+        .xuanze{font-size:16px;color:#000;font-family: "微软雅黑"; padding-top: 15px;position: relative; width: 100%; height:40px;background: #ffffff; border-bottom: 1px solid #eeeeee;}
+
+        #xuanzhong{font-size:16px;color:#d8320c;font-family: "微软雅黑";}
+
+        .yue{width: 23px; position: absolute; margin-top: 14px; margin-left: 3%; z-index: 1}
+        .bodun{width: 23px; position: absolute; margin-top: 18px; margin-left: 3%; z-index: 1}
+        .ye{position: relative; margin-left: 10%;}
+        .xuanzhong{width: 20px; float: right; margin-right: 3%; margin-top:6px;}
+        .dibu{width: 100%; height: 100px; background: #fff;}
+        .jiesuan{width:90%;height:45px;background: #28bebc;display: inline-block;font-size:18px;color:#fff;line-height:45px;text-align: center; margin-top: 25px; margin-left: 5%; border-radius: 4px;}
+    </style>
+</head>
+
+<body ng-app="orderApp" ng-controller="orderCtrl" ng-cloak>
+<form method="post" class="form form-horizontal" id="form-cart-settl">
+<div class="top">
+    <div class="neirong">
+        <a href="/mobile.php" id="fanhui"><img class="jiantou" src="<?php echo CSS_PATH;?>mobile/images/fanhui.png"></a>
+        <div class="caidan">订单支付</div>
+    </div>
+</div>
+<div class="fukuan">
+    <p class="dingdan">您的订单已提交成功，等待买家付款</p>
+    <p class="dingdan1" >订单号：<span id='mainorder'style="color: #FFFFFF">{{mainorder}}</span></p>
+    <p class="dingdan1" >总金额：￥<span id="numjine" style="color: #FFFFFF">{{sum_money}}</span></p>
+</div>
+
+<div class="shouhuo">
+    <p class="ren1">收货人：{{orderlist[0]['receivename']}}</p>
+    <p id="dianhua" >{{orderlist[0]['usertel']}}</p>
+    <img id="dingwei" src="<?php echo CSS_PATH;?>mobile/images/dingwei.png">
+    <p class="ren2">收货地址：{{orderlist[0]['province']}}{{orderlist[0]['city']}}{{orderlist[0]['county']}}{{orderlist[0]['address']}}</p>
+</div>
+
+
+<div class="xinxi" ng-repeat="vo in orderlist">
+    <p id="dingdanhao"><span>订单号：{{vo.innerorderid}}</span></p>
+    <div class="neirong" ng-repeat="v in vo.voo">
+        <span >
+            <a href="/mobile.php/goods/{{v.proid}}">
+        <img src="{{v.img}}">
+        <div class="right">
+            <p id="biaoti">{{v.proname}}</p>
+            <p id="bianhao">商品编号：{{v.proid}}</p>
+            <p id="jiage">￥{{v.price}}<span>x{{v.pronum}}</span></p>
+        </div>
+                </a>
+
+            </span>
+        <div style="clear: both"></div>
+    </div>
+</div>
+
+    <div class="xufukuan">
+        <!--<p class="shuliang">可使用{{sum_integral}}衡豆 :<input type="text" placeholder="填写您要抵扣的衡豆数量" id="jifen" onchange="moneychange()" onkeyup="this.value=this.value.replace(/\D/g,'')"/></p>-->
+        <p class="shuliang1">需付款<span id="kuaidi" class="kuaidi">￥{{sum_money}}</span></p>
+    </div>
+
+<div class="zffs">
+    <p class="xuanze0" style="margin-left: 1rem;">选择支付方式</p>
+    {volist name="paymentmethod" id="vo"}
+    <div>
+        <input type="radio" {if condition="$vo.PaymentCode eq 'yue'"}checked{/if} name="pay_type" value="{$vo['PaymentId']}" ng-click="payType($event)" style="width: 20px;height: 20px;margin-top: 15px;margin-left: 1rem;"/>
+        <img class="yue" src="<?php echo CSS_PATH;?>mobile/images/{$vo['PaymentCode']}.png">
+        <p class="xuanze" style="display: inline">
+            <a class="ye">{$vo['PaymentName']}
+                {if condition="$vo['PaymentId'] eq 4"}
+                <span id="shengyu"></span>
+                {/if}
+            </a>
+        </p>
+    </div>
+    {/volist}
+    <div style="clear:both;"></div>
+    <div style="margin-top: -10px;">
+        <input type="hidden" id="pay_method" value="4">
+    </div>
+</div>
+<div class="dibu">
+    <a class="jiesuan" onclick="orderPay()">立即付款</a>
+</div>
+</form>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $('img').error(function() {
+        $(this).attr('src', "/public/Public/mobile/img/logo.png");
+    });
+    var app = angular.module('orderApp', []);
+    app.controller('orderCtrl', function($scope, $http) {
+        $scope.payType=function(event){
+            $scope.pay_type=event.target.getAttribute('value');
+        };
+        $http.get("/api.php/order/show?ordertype={$ordertype}&orderno={$orderno}&ishit=1")
+                .success(function (response) {
+                    if(response.status==1){
+                        $scope.orderlist = response.data.orderlist;
+                        $scope.mainorder = response.data.mainorder;
+                        $scope.sum_money = response.data.sum_money;
+                        $scope.sum_integral = response.data.sum_integral;
+                        $scope.sum_giveintegral = response.data.sum_giveintegral;
+                        $scope.goods_num = response.data.goods_num;
+                    }
+                });
+    });
+function moneychange(value){
+    var jifen=$('#jifen').val();
+    var total_money=$('#numjine').text();
+    if(isNaN(jifen)){
+        alert('输入有误,请正确输入');
+        $('#jifen').val('');
+        $("#kuaidi").html('￥'+total_mone);
+        return;
+    }
+    if(jifen<0){
+        alert('输入有误');
+        $('#jifen').val('');
+        $("#kuaidi").html('￥'+total_money);
+        return;
+    }
+    var GoodsAmount=(total_money-jifen).toFixed(2);
+    if(GoodsAmount<0){
+        alert('输入积分不能大于价格');
+        $('#jifen').val('');
+        $("#kuaidi").html('￥'+total_money);
+        return;
+    }
+    $("#kuaidi").html('￥'+GoodsAmount);
+}
+    var flag=true;
+    function orderPay(){
+        var pay_type=angular.element("#pay_method").val();
+        var jifen=$('#jifen').val();
+        var total_money=$('#numjine').text();
+        if(pay_type==''){
+            layer.msg('请选择支付方式');
+            return;
+        }else if(pay_type==4){
+            layer.open({
+                title: '输入支付密码',
+                formType: 1,
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'yourclass',
+                content: '<input type="password" name="LevIIPwd" id="LevIIPwd"/>',
+                yes: function () {
+                    var LevIIPwd = $('#LevIIPwd').val();
+                    var LevIIPwds = 'LevIIPwd=' + LevIIPwd;
+                    if (flag) {
+                        flag = false;
+                        $.ajax({
+                            url: "/api.php/order/pay?type=account&ordertype={$ordertype}&orderno=" + $('#mainorder').text() + "&GoodsAmount=" + total_money + "&ishit=1",
+                            type: "post",
+                            dataType: "json",
+                            data:LevIIPwds,
+                            success: function (data) {
+                                if (data.status == 1) {
+                                    layer.msg(data.msg, {icon: 1, time: 2000,shade: [0.8, '#393D49']}, function () {
+                                        window.location.href = '/mobile.php/order/list';
+                                    });
+                                } else {
+                                    flag = true;
+                                    layer.msg(data.msg, {
+                                        icon: 1,
+                                        shade: [0.8, '#393D49'] // 透明度  颜色
+                                    });
+
+                                }
+                            }
+                        });
+                    } else {
+                        layer.msg('请不要重复提交');
+                    }
+                }
+            });
+        }else if(pay_type==1){
+            if((total_money-jifen)==0){
+                layer.msg('请选择余额支付',{
+                    icon: 1,
+                    shade: [0.8, '#393D49'] // 透明度  颜色
+                });
+                return;
+            }
+            layer.msg('微信支付',{
+                icon: 1,
+                shade: [0.8, '#393D49'] // 透明度  颜色
+            });
+            var ua = window.navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                $('#form-cart-settl').attr('action','/api.php/order/wxpay?ordertype={$ordertype}&orderno='+$('#mainorder').text() + '&GoodsAmount=' + total_money + '&ConsumeIntegral=' + jifen);
+                $('#form-cart-settl').submit();
+            }else{
+                $('#form-cart-settl').attr('action','/api.php/order/jswxpay?ordertype={$ordertype}&orderno='+$('#mainorder').text() + '&GoodsAmount=' + total_money + '&ConsumeIntegral=' + jifen);
+                $('#form-cart-settl').submit();
+            }
+        }else if(pay_type==2){
+            if((total_money-jifen)==0){
+                layer.msg('请选择余额支付',{
+                    icon: 1,
+                    shade: [0.8, '#393D49'] // 透明度  颜色
+                });
+                return;
+            }
+            layer.msg('支付宝支付', {
+                icon: 1,
+                shade: [0.8, '#393D49'] // 透明度  颜色
+            });
+            $('#form-cart-settl').attr('action','/api.php/order/alipaywap?ordertype={$ordertype}&orderno='+$('#mainorder').text() + '&amount=' + total_money + '&ConsumeIntegral=' + jifen);
+            $('#form-cart-settl').submit();
+        }
+    }
+
+</script>
+
+
+
+</body>
+</html>

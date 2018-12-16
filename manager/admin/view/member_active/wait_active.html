@@ -1,0 +1,349 @@
+{include file="./public/Public/meta.html" /}
+    <meta charset="utf-8">
+    <title>用户管理 - 会员管理</title>
+</head>
+<style>
+.img-box img{
+    max-width: 200px;
+}
+.big-img{
+    display: none;
+    width: 50%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    z-index: 999;
+}
+.anglediv{
+    width: 80px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0.6;
+    filter: alpha(opacity=0.6);
+    background-color: #fff;
+    z-index: 888;
+    display: none;
+}
+.imgxz1{
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: 15px;
+    z-index: 999;
+    top:40%;
+}
+.imgxz2{
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: 15px;
+    z-index: 999;
+    top:60%;
+}
+.showplace{
+    width: 100%;
+}
+.reason{
+    width: 40%;
+    height: 500px; 
+    background-color: #ececec;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+}
+.reason p{
+    margin-top: 50px;
+    margin-left: 50px;
+}
+.reason-content{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+.reason-content input{
+    width: 80%;
+    height: 30px;
+    line-height: 30px;
+    outline: none;
+}
+.ac-btn{
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 80px;
+}
+</style>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+        <div class="bk-gray">
+            <div class="col-80">会员ID：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入会员ID" id="UserId" name="UserId" value="{$Request.param.UserId}"></div>
+            <div class="col-80">手机号码：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入手机号" id="Mobile" name="Mobile" value="{$Request.param.Mobile}"></div>
+            <div class="col-80">姓名：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入会员姓名" id="TrueName" name="TrueName" value="{$Request.param.TrueName}"></div>
+            <!-- <div class="col-80">状态：</div>
+            <div class="col-200">
+            <span class="select-box" style="width:120px">
+                          <select class="select" size="1" name="IsAudit">
+                            <option value="" >请选择</option>
+                            <option value="0">未激活</option>
+                            <option value="1" {if condition="$Request.param.IsAudit eq 1"}selected{/if}>已启用</option>
+                            <option value="2" {if condition="$Request.param.IsAudit eq 2"}selected{/if}>已锁定</option>
+                          </select>
+                        </span> 
+            </div>-->
+          <!--  <div class="col-80">会员类别：</div>
+            <div class="col-200">
+            <span class="select-box" style="width:120px">
+              <select class="select" size="1" name="userType">
+                <option value="0" >请选择</option>
+                <option value="1">普通会员</option>
+              </select>
+            </span>
+            </div>-->
+
+
+            <div class="col-80">日期范围：</div>
+            <div class="col-300">
+                <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:120px;">
+                -
+                <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:120px;">
+            </div>
+
+        <div class="bk-gray text-r pt-5 pb-5" style="border-top:0"><button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button type="submit" class="btn btn-success" name="daochu" value="daochu"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;<button name="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('');$('select option').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+        </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <!--<a href="javascript:;" onClick="member_outexcel()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 导出数据</a>-->
+
+            <!--<form action="/admin.php/admin/member/member_outexcel?p={$Request.param.p}" target="_blank" method="post" >-->
+                 <!--<button class="btn btn-primary radius" type="submit">导出当前页数据</button>-->
+        <!--</form>-->
+
+
+        <div id="markdown" class="mt-20"></div>
+        </span>
+        <span class="r" style=" float: right">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <div class="mt-20">
+        <form class="form form-horizontal" id="form-admin-list">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th><input type="checkbox" name="" value=""></th>
+                    <th>会员ID</th>
+                    <th>姓名</th>
+                   <!-- <th>类别</th>-->
+                    <!-- <th>购物/积分</th> -->
+                    <th>照片1</th>
+                    <th>照片2</th>
+                    <th>照片3</th>
+                    <th>加入时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="Member_list" id="vo"}
+                    <tr class="text-c">
+                        <td><input type="checkbox" value="{$vo.ID}" name="UserId[]"></td>
+                        <td>{$vo.UserId}</td>
+                        <td class="text-l"><u style="cursor:pointer" class="text-primary c-blue" onclick="_show('查看会员信息','/admin.php/admin/member/member_show/UserId/{$vo.UserId}','10001','450','510')">{$vo.TrueName}</u><br>{$vo.Mobile}</td>
+                        <!--<td>{:getusertypebyid($vo['userType'])}{if condition="$vo['IsAudit'] eq 1"}<a title="会员升级" href="javascript:;" onClick="_up('会员升级','/admin.php/admin/member/memberup/UserId/{$vo.UserId}','{$vo.UserId}','','510')" class="ml-5" style="text-decoration:none"><i class="f-16 c-green Hui-iconfont">&#xe6dc;</i></a>{/if}</td>-->
+                        <!--<td>{:getusertypebyid($vo['userType'])}</td>-->
+                        <!-- <td class="text-l" style="padding:0">
+                            <dd class="pd-5 box-border-b-EEE"> 购物：{$vo.Umoney}<a title="会员充值" href="javascript:;" onClick="_recharge('会员充值','/admin.php/admin/member/member_recharge_Umoney/type/1/UserId/{$vo.UserId}','10003','','510')" class="ml-5" style="text-decoration:none"><i class="f-16 c-green Hui-iconfont">&#xe604;</i></a><a title="会员扣币" href="javascript:;" onClick="_recharge('会员扣币','/admin.php/admin/member/member_recharge_Umoney/type/2/UserId/{$vo.UserId}','10003','','510')" class="ml-5" style="text-decoration:none"><i class="f-16 c-green Hui-iconfont">&#xe631;</i></a></dd>
+                            <dd class="pd-5"> 积分：{$vo.Pv}<a title="积分充值" href="javascript:;" onClick="_recharge('积分充值','/admin.php/admin/member/member_recharge_Pv/type/1/UserId/{$vo.UserId}','10004','','510')" class="ml-5" style="text-decoration:none"><i class="f-16 c-green Hui-iconfont">&#xe604;</i></a><a title="积分扣除" href="javascript:;" onClick="_recharge('积分扣除','/admin.php/admin/member/member_recharge_Pv/type/2/UserId/{$vo.UserId}','10004','','510')" class="ml-5" style="text-decoration:none"><i class="f-16 c-green Hui-iconfont">&#xe631;</i></a></dd>
+                        </td> -->
+                        <td class="img-box"><img onClick="bigimg('{$vo.license_pic1}')" src="/public/Upload/company_pic/thumb/{$vo.license_pic1}" alt=""></td>
+                        <td class="img-box"><img onClick="bigimg('{$vo.license_pic2}')" src="/public/Upload/company_pic/thumb/{$vo.license_pic2}" alt=""></td>
+                        <td class="img-box"><img onClick="bigimg('{$vo.license_pic3}')" src="/public/Upload/company_pic/thumb/{$vo.license_pic3}" alt=""></td>
+                        <td>{$vo.AddDate|strtotime|date="Y-m-d H:i:s",###}</td>
+                        <td >
+                            {if condition="$vo['IsAudit'] eq 2"}
+                                <span class="label label-default radius">待审核</span>
+                            {elseif condition="$vo['IsAudit'] eq 3" /}
+                                <span class="label label-danger radius">待激活</span>
+                            {elseif condition="$vo['IsAudit'] eq 0" /}
+                                <span class="label label-danger radius">待付款</span>
+                            {/if}
+                        </td>
+
+                        <td>
+                        {if condition="$vo['IsAudit'] eq 2"}
+                            <button type="button" class="btn btn-primary"  onClick="_auditstart(this,'{$vo.UserId}')"> 审核通过</button>&ensp;
+                            <button type="button" class="btn btn-success"  onClick="_auditstop(this,'{$vo.UserId}')"> 驳回</button>
+                        {/if}
+                        <!-- <a title="编辑" href="javascript:;" onClick="_edit('编辑','/admin.php/admin/member/member_edit/UserId/{$vo.UserId}','{$vo.UserId}','','530')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_password('修改密码','/admin.php/admin/member/change_password/UserId/{$vo.UserId}','{$vo.UserId}','','510')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                            {if condition="$vo['IsAudit'] eq 0"}
+                                <a title="删除" href="javascript:;" onClick="_del(this,'{$vo.UserId}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                            {/if} -->
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+                <!-- <foot>
+                    <tr class="text-c success">
+                        <th colspan="4" class="text-l f-14">&emsp;合&ensp;计</th>
+                        <th class="text-l"><cite>购物：</cite>{$umoneysum}
+                        <th class="text-l"><cite>积分：</cite>{$pvsum}<br>
+                        <th colspan="8"></th>
+                    </tr>
+                </foot> -->
+            </table>
+        </form>
+    </div>
+    <!--  放大图片 -->
+    <div class="big-img">
+        <img class="showplace" onClick="closeimg()" src="" alt="">
+        <div class="anglediv">
+            <img class="imgxz1" src="/public/Public/static/images/right90.png" alt="">
+            <img class="imgxz2" src="/public/Public/static/images/left90.png" alt="">
+        </div>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+{include file="./public/Public/js_script.html" /}
+<script>
+    /*-删除*/
+    function _del(obj,id){
+        layer.confirm('确认要删除吗？只能删除未激活会员！',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("Member/memberDelete")}?UserId='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:1000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+    /*-修改密码*/
+    function _password(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-编辑*/
+    function _edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+    /*-充值*/
+    function _recharge(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-升级*/
+    function _up(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-查看*/
+    function _show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-启用*/
+    function _auditstart(obj,id){
+        layer.confirm('确认要通过审核吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'/admin.php/admin/member/member_start/action/start/userid/'+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg('已激活!', {icon: 6,time:1000});
+                }
+            });
+        });
+    }
+    /*-停用*/
+    function _auditstop(obj,id){
+        layer.confirm('确认要驳回吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'/admin.php/admin/member/member_start/action/stop/userid/'+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg('已驳回!', {icon: 6,time:1000});
+                }
+            });
+        });
+    }
+// 图片处理方法
+function bigimg(name){
+
+    var imgurl =' /public/Upload/company_pic/'+name;
+    $('.big-img').css('display','block');
+    $('.showplace').attr('src',imgurl);
+    
+
+    var divwidth = $('.big-img').width();
+    var divheight = $('.big-img').height();
+    //console.log(divwidth/2);
+    //console.log(divheight/2);
+    if(divheight/2 < 50){
+        divheight = 400;
+    }
+    $('.big-img').css("marginLeft",-divwidth/2);
+    //console.log(divheight/2);
+    //console.log($(document).scrollTop());
+    //console.log($(window).height()/2);
+
+    $('.big-img').css('top',$(document).scrollTop()+$(window).height()/2-divheight/2);
+    //$('.showplace').attr('src',imgurl);
+}
+function closeimg(){
+     $('.big-img').css('display','none');
+}
+$('.big-img').mouseover(function(){
+    $('.anglediv').show();
+});
+$('.big-img').mouseout(function(){
+    $('.anglediv').hide();
+});
+$('.imgxz1').click(function(){
+   var oldangle = parseInt($('.showplace').getRotateAngle());
+   if(isNaN(oldangle)){
+     oldangle = 0;
+   }
+   var newangle = oldangle + 90;
+    $('.showplace').rotate(newangle);
+});
+$('.imgxz2').click(function(){
+    var oldangle = parseInt($('.showplace').getRotateAngle());
+    var oldangle = parseInt($('.showplace').getRotateAngle());
+    if(isNaN(oldangle)){
+        oldangle = 0;
+    }
+    $('.showplace').rotate(oldangle -90);
+});
+</script>
+</body>
+</html>
+

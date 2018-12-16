@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal;}
+
+        .top{width: 100%;height:64px; background:#f9f9f9;border-bottom: 1px solid #dddddd;position:relative;}
+
+        .top .neirong{width: 100%;height:64px;text-align: center;line-height:64px;position:relative;}
+
+        .top .neirong a#fanhui{float: left;margin-left:3%;}
+
+        .zhongjian{ width:100%; margin-top:10px;font-family:"微软雅黑";}
+
+        .zhongjian1{ width:100%;font-family:"微软雅黑";}
+
+        .anniu button{width:90%;height: 45px;border-radius:45px;background: #28bebc; border:none;font-family: "微软雅黑";font-size: 17px;color:#fff;margin:auto;}
+    </style>
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        function nsubmit(){
+            $('#form-member-add').submit();
+        }
+    </script>
+</head>
+
+<body>
+<div class="top">
+    <div class="neirong">
+        <a href="javascript:history.back(-1);" id="fanhui"><img style=" width:10px;margin-top:25px; position:absolute; z-index:0" src="<?php echo CSS_PATH;?>mobile/images/fanhui.png"></a>
+        <div style=" width:100%; height:64px; font-size:17px;color:#333; font-family:'微软雅黑';">注册</div>
+    </div>
+</div>
+
+<form id="form-member-add" method="post">
+    <!-- <div class="zhongjian">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">国家地区</p>
+            <p style=" float:right; margin-right:3%; margin-top:15px; color:#bfbfbf;font-family:'微软雅黑'; font-size:14px;">中国大陆 +86 &nbsp;&nbsp;
+                <span><img style=" width:7px;" src="<?php echo CSS_PATH;?>mobile/images/jiantou.png"></span></p>
+        </div>
+    </div> -->
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">手机号 &nbsp;
+                <input class="label_inpt label_inpt2" type="text" id="mobile" name="mobile" placeholder="请输入手机号码" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+            </p>
+        </div>
+    </div>
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">用户名 &nbsp;
+                <input class="label_inpt label_inpt2" type="text" id="userid" name="userid" placeholder="请输入用户名" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+
+            </p>
+
+        </div>
+
+    </div>
+
+<!--
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">验证码 &nbsp;
+                <input class="label_inpt label_inpt2" type="text"   placeholder="请输入验证码" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+                <a class="fr yanmasix" href="#">获取验证码</a>
+            </p>
+        </div>
+    </div>-->
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">密　码 &nbsp;
+                <input class="label_inpt label_inpt2" id="password" name="password" type="password"   placeholder="请输入密码（6-20位）" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+            </p>
+        </div>
+    </div>
+
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">确　认 &nbsp;
+                <input class="label_inpt label_inpt2" id="password2" name="password2" type="password"   placeholder="请再次输入密码" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+            </p>
+        </div>
+    </div>
+
+    <div class="zhongjian1">
+        <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+            <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">邀请码 &nbsp;
+                <input class="label_inpt label_inpt2" id="introduceId" value="{$introduceId}" name="introduceId" type="text"  readonly style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+            </p>
+        </div>
+    </div>
+
+    <div class="zhongjian1">
+       <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+           <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">支付密码 &nbsp;
+               <input class="label_inpt label_inpt2" id="paypassword" name="paypassword" type="password"   placeholder="请输入支付密码" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+           </p>
+       </div>
+   </div>
+   <div class="zhongjian1">
+       <div style=" width:100%; height:50px; background:#fff;border-bottom: 1px solid #dddddd;">
+           <p style=" float:left; margin-left:3%; margin-top:15px; color:#000000; font-family:'微软雅黑'; font-size:16px;">确认密码 &nbsp;
+               <input class="label_inpt label_inpt2" id="paypassword2" name="paypassword2" type="password"   placeholder="请再次输入支付密码" style="color:#bfbfbf; font-family:'微软雅黑'; font-size:17px;border:none;outline: none;">
+           </p>
+       </div>
+   </div>
+
+
+
+    <div class="anniu" style=" margin-top:40px; text-align:center;">
+
+        <button class="butden" type="button" id="regid">立即注册</button>
+
+    </div>
+
+
+
+</form>
+
+
+
+<div class="fidinfo"></div>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+
+    $(function(){
+        $('#regid').click(function(){
+            $.ajax({
+                url:"/api.php/member/reg",
+                type:"post",
+                dataType:"json",
+                data: $('#form-member-add').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{time:2000},function(){
+                            window.location.href='/mobile.php/member/pay_annual_free';
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>
+
+
+
+
+

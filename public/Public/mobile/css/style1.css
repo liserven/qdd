@@ -1,0 +1,38 @@
+body{background: #f9f9f9; width:100%; position:relative;}
+.top{width: 100%;height: 1.28rem;background: #f9f9f9;border-bottom: 1px solid #dddddd;}
+.top .zhuangtai{width: 100%;height: 0.4rem;}
+.top .neirong{width: 100%;height: 0.88rem;text-align: center;font-size:0.3rem;color:#333;line-height: 0.88rem; margin-top:-10px;}
+.top .neirong a#fanhui{width: 0.18rem;height: 0.33rem;float: left;margin-left: 0.2rem; margin-top:5px;}
+
+.top .neirong input{width: 5.0rem;height: 0.6rem; border-radius: 0.48rem;color:#333;font-size: 0.28rem; margin-top:0;padding-left: 0.2rem; background:#ececec;}
+
+.leibie{width: 100%;height: 0.88rem;margin-top: 0.1rem;background: #fff;}
+.leibie ul li{width: 25%;height: 0.88rem;float: left;color:#28bebc;font-size: 0.28rem;text-align: center;line-height: 0.88rem;}
+
+.zhanshi{margin-top: 0.1rem; width:100%;}
+.zhanshi ul li{width:48%;float: left;margin:0 1%;height: 273px;}
+.zhanshi ul li img{width:100%; margin-top:0.1rem;height: 198px;}
+.zhanshi ul li p#biaoti{color:#000;font-size: 0.20rem;line-height: 0.30rem;}
+.zhanshi ul li p#jiage{color:#d8320c;font-size: 0.20rem;line-height: 0.30rem; float:left;}
+.zhanshi ul li p#jiage span{color:#8e8e8e; margin-left:1.3rem; font-family:"微软雅黑"; font-size:0.15rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

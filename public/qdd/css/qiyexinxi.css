@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #fafafa;
+}
+a{
+    text-decoration: none;
+}
+i{
+    list-style: none;
+}
+li{
+    list-style: none;
+}
+header{
+    width:100%;
+    height: 50px;
+    background: #333333;
+    font-size: 20px;
+    color: #fff;
+    line-height: 50px;
+    position: relative;
+}
+header>a>i{
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    font-size: 20px;
+    color: #fff;
+}
+header>span{
+    display: block;
+    text-align: center;
+}
+#rzfh{
+    font-size: 20px;
+    margin-left: 10px;
+
+}
+.rzxz{
+    background: #fff;
+    margin-bottom: 20px;
+}
+.rzxz>div{
+    display: flex;
+    align-items:center;
+    height: 50px;
+}
+.rzxz>div>img{
+    margin-left: 16px;
+}
+.rzxz>div>span{
+    font-size: 18px;
+    margin-left: 22px;
+}
+.rzxz>div>a{
+   margin-left: 130px;
+}
+.qyrzxz{
+    border-bottom: 1px solid #f7f9f8;
+}
+
+
+.rzxx{
+    background: #fff;
+}
+.rzxx>p{
+    line-height: 45px;
+    text-align: center;
+    font-size: 18px;
+}
+.rzxxTit{
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+
+}
+.rzxxTit>img{
+    margin: 0 9px;
+}
+.zjlx>div{
+    position: relative;
+
+}
+.zjlx>div>select{
+    width: 200px;
+    height: 45px;
+    border: none;
+    outline:none;
+    font-size: 16px;
+    margin-left: 20px;
+    background: url("../img/多边形1.png") no-repeat;
+    background-size:14px 6px;
+    background-position: 183px 19px;
+    color: #666666;
+}
+
+.zjr>input{
+
+}
+.formStyle{
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
+.red{
+    color: red;
+}
+.formStyle>span{
+    line-height: 45px;
+    margin-left: 18px;
+    font-size: 18px;
+}
+.formStyle>input{
+    width: 200px;
+    height: 45px;
+    border: none;
+    outline:none;
+    font-size: 16px;
+    color: #666666;
+    margin-left: 20px;
+}
+.qyzj{
+    background: #fafafa;
+}
+.qyzj>span{
+    margin-left: 35px;
+}
+.qyzj>p{
+    margin-left: 20px;
+    color: rgb(51, 51, 51)
+}
+.xyb{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.xyb>a{
+
+    display: block;
+    margin: 0 auto;
+    width: 336px;
+    height: 45px;
+    background: url(../img/下一步.png) no-repeat center;
+}

@@ -1,0 +1,358 @@
+<!-- 顶部内容 begin -->
+<div class="w-hd" id="toptoolbar">
+    <div class="w-top">
+        <div class="top-toolbar">
+            <ul class="left">
+                <li class="logininfo" id="userLoginInfo">
+                    <span>欢迎访问飞度商城！</span>
+                     <span id='isLogin' style='display:none'>0</span>
+                     <a href='/index.php/Home/Login/Login_user' rel='nofollow'><span id='authid'>请 <b>登录</b></span></a>
+                </li>
+            </ul>
+            <ul class="right">
+                <li class="ttnav_gz"> <a class="a-greyish" href="" rel="nofollow"><i class="Hui-iconfont f-12 c-error">&#xe682;</i> 关注飞度 <b class="common-bg cart-arrow"></b></a>
+                	<span class="blank none">&nbsp;</span>
+                    <div class="gz_box"><img src="" alt=""><img src="<?php echo CSS_PATH;?>static/images/web/wx_500px.png" width="100" height="100" alt=""/><br>关注飞度商城</a></div>
+              	</li>
+                
+                <li class="ttnav_duan"><em>|</em><a class="a-greyish tt_duan" id="mycctHome" href="" rel="nofollow"><i class="Hui-iconfont f-12 c-error">&#xe708;</i> 移动客户端 <b class="common-bg cart-arrow"></b></a>
+                	<span class="blank none">&nbsp;</span>                   
+                    <div class="duan_box">
+                        <div class="cp_l"></div>
+                        <div class="cp_r">
+                        	<h4>手机客户端</h4>
+                            <p>轻按手指，全球宝贝送到家！</p>
+                            <p><a href="http://vip.hc2688.com/Public/wap/hc2688App_shop.apk" target="_blank" class="cp_rbut1 fcode_cp_rbut1"></a><a class="cp_rbut2 fcode_cp_rbut2"></a></p>
+                        </div>
+                    </div>
+                </li>
+
+                <!--<li class="top-mycart phc-cart"><em>|</em>
+                	<a class="a-greyish" href="" title="查看我的购物车" rel="nofollow" target="_blank" id="cart_end"><i class="Hui-iconfont f-14 c-error">&#xe6b9;</i> 购物车：<strong id="popCartCount" class="c-error">0</strong>件 <b class="common-bg cart-arrow"></b></a>
+                    <div id="cart_msg">已成功加入购物车！</div>
+                    <span class="blank none">&nbsp;</span>
+                    <div id="JS_cart_box" class="cart-box">
+                        <ul id="shop_cart_lay" class="cart-list cart-full">
+                            <li class="nothing"><b class="common-bg nothing-icon"></b>&nbsp;购物车中还没有商品，赶紧选购吧！</li>
+                            <li class="cart-item">
+                                <p class="cart-img"><a href="" target="_blank" title="果芙家居 婚庆大红四件套 富贵龙凤"><img src="<?php echo CSS_PATH;?>static/images/photo.png" alt="果芙家居 婚庆大红四件套 富贵龙凤"></a></p>
+                                <p class="cart-cal">
+                                	<a target="_blank" class="cart-link" title="果芙家居 婚庆大红四件套 富贵龙凤" href="">果芙家居 婚庆大红四件套 富贵龙凤</a>
+                                	<a class="cart-del" href="javascript:void(0)">删除</a><strong class="cart-price red" id="JS_danjia0">￥899.00元</strong>×<strong class="black"> 2</strong>
+                                </p>
+                            </li>
+
+                            <li class="cart-item cartgoods" cartid="35985" qn="1" price="3372.00" points="3372">
+                                <p class="cart-img"><a href="" target="_blank" title="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）"><img class="cart-img" src="<?php echo CSS_PATH;?>static/images/photo.png" alt="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）"></a></p>
+                                <p class="cart-cal">
+                                	<a target="_blank" class="cart-link" title="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）" href="">[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+</a>
+                                	<a class="cart-del" href="javascript:void(0)">删除</a><strong class="cart-price red" id="JS_danjia0">￥3372.00元</strong>×<strong class="black"> 1</strong>
+                                </p>
+                            </li>
+                            
+                        </ul>
+                        <div id="JS_count_area" class="cart-count">
+                            <p class="count-area">共<b id="JS_cart_count" class="c-error">0</b>件商品，共计￥<b class="c-error">0</b>元</strong></p>
+                            <a class="count-btn" target="_blank" href="">去购物车结算</a>
+                        </div>
+                    </div>
+                </li>-->
+                
+                <li class="ttnav"><em>|</em><!--<a class="a-greyish" id="myOrderLink" href="" rel="nofollow">我的收藏</a><em>|</em>--><a class="a-greyish" id="myOrderLink" href="__MODULE__/User/user_order" rel="nofollow">我的订单</a><em>|</em><a class="a-greyish" id="mycctHome" href="__MODULE__/User/user" rel="nofollow">会员中心</a><em>|</em><a class="a-greyish" href="__MODULE__/news/news_list/cateid/2" rel="nofollow">公司动态</a></li>
+            </ul>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <div class="logo-search">
+        <div class="c-logo"><a href="" title="飞度商城"><img id="imgLogoTag" src="<?php echo CSS_PATH;?>static/images/web/logo.png"></a></div>
+        <div class="c-slogan"></div>
+        <div class="search-tab">
+            <div class="search-form">
+                <!--<form action="{:url('product/product_list_search')}" id="search_form" method="post">-->
+                <form name="search_form" onSubmit="return bottomForm(this);" id="search_form" target="_blank" method="post">
+                    <div class="select_box">
+                    	<input type="text" name="infos" class="soinput" id="infos" value="" placeholder="请输入您想要找的信息">
+                        <div id="pt1" class="select_nav">
+                            <a id="s0">全站搜索</a>
+                            <div style="display:none;" id="pt2" class="part"> 
+                                <p>
+                                <a id="s1">全站搜索</a>
+                                <a id="s2">劲爆抢购</a>
+                                <a id="s3">飞度优品</a>
+                                <a id="s4">创客空间</a>
+                                <a id="s5">积分兑购</a>
+                                </p>
+                            </div>
+                        </div> 
+                    	<input id="catid" name="catid" type="hidden" value="0">
+                    </div>
+                    <input id="searchBtn" type="button" class="sobtn sogoods" value="搜 索" onclick="$('#search_form').submit()">
+                    <div class="clr"></div>
+                </form>
+            </div>
+            <div class="search-tags">
+                <a href="__MODULE__/product/product_list_search/oid/3" class="a-orange" rel="nofollow" id="firstKeyword" target="_blank" title="母婴用品">母婴用品</a>
+                <a href="__MODULE__/product/product_list_search/oid/4" class="a-greyish" rel="nofollow" target="_blank" title="食品保健">食品保健</a>
+                <a href="__MODULE__/product/product_list_search/oid/24" class="a-orange" rel="nofollow" target="_blank" title="家居生活">家居生活</a>
+                <a href="__MODULE__/product/product_list_search/oid/5" class="a-greyish" rel="nofollow" target="_blank" title="美妆饰品">美妆饰品</a>
+                <a href="__MODULE__/product/product_list_search/oid/329" class="a-orange" rel="nofollow" target="_blank" title="家用电器">家用电器</a>
+            </div>
+        </div>
+        <!--<div class="top-wx j-aCloseDiv"><a href="javascript:void(0);" title="收起" class="a-close"></a></div>-->
+        <!--购物车 begin-->
+        <div class="phc-cart">
+            <a class="a-greyish f-14" href="{:url('product/product_cart')}" title="查看我的购物车" rel="nofollow" target="_blank" id="cart_end"><span class="badge badge-danger" id="cartnum">{$Think.session.cartno}</span><i class="Hui-iconfont f-18 c-error">&#xe6b9;</i> 我的购物车 <b class="common-bg cart-arrow"></b></a>
+            <div id="cart_msg">已成功加入购物车！</div>
+            <span class="blank">&nbsp;</span>
+            <div id="JS_cart_box" class="cart-box">
+                <ul id="shop_cart_lay" class="cart-list cart-full">
+                    {if condition="$Think.session.cartno eq 0"}
+                    	<li class="nothing"><b class="common-bg nothing-icon"></b>&nbsp;购物车中还没有商品，赶紧选购吧！如果已选，请刷新！</li>
+					{else /}
+                        {volist name="topshopcartlist" id="cvo"}
+                        <li class="cart-item">
+                            <p class="cart-img"><a href="__MODULE__/product/product_show/proid/{$cvo.ProId}" target="_blank" title="{$cvo.ProName}"><img src="/upload/cpimg/{$cvo.Proimg}" alt="{$cvo.ProName}"></a></p>
+                            <p class="cart-cal">
+                                <a target="_blank" class="cart-link" title="{$cvo.ProName}" href="">{$cvo.ProName}</a>
+                                <a class="cart-del" href="javascript:;" onclick="_cartdel(this,'{$cvo.id}')">删除</a>
+                                <strong class="cart-price red" id="JS_danjia0">￥
+                                {if condition="vipisregbyvipid(session('userid')) gt 1">
+                                {:getcppriceobysid($cvo[styleid],"fxj")}
+                                <else />
+                                {:getcppriceobysid($cvo[styleid],"ckj")}
+                                {/if}元
+                                </strong>×<strong class="black"> {$cvo.pronum}</strong>
+                            </p>
+                        </li>
+                        {/volist}
+                    {/if}
+                    
+                </ul>
+                <div id="JS_count_area" class="cart-count">
+                    <p class="count-area">共<b id="JS_cart_count" class="c-error">{$cartno}</b>件商品，共计￥<b class="c-error">{$topshopcartsum}</b>元</strong></p>
+                    <a class="count-btn" target="_blank" href="{:url('product/product_cart')}">去购物车结算</a>
+                </div>
+            </div>
+        </div>
+        <!--购物车 end-->        
+    </div>
+    <div class="w-nav">
+        <div class="t-nav">
+            <div class="nav-categorys j-allCate">
+                <div class="catetit">
+                    <h2><a href="{:url('index/all_menu')}" rel="nofollow"><i class="Hui-iconfont">&#xe667;</i>&ensp;所有商品分类<i class="Hui-iconfont f-r ml-30 mr-20">&#xe6d5;</i></a></h2>
+                </div>
+                <ul class="cate-item j-extendCate">
+                    <!-- 一级分类 -->
+                    <li class="top-one-class" data-id="1332">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe607;</i><a href="__MODULE__/product/product_list_search/oid/3">母婴用品</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/3">婴童用品</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/9">奶粉辅食</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/17">玩具</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1331">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe608;</i><a href="__MODULE__/product/product_list_search/oid/4">食品保健</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/5">休闲零食</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/22">滋补养生</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/72">酒水</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1326">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe602;</i><a href="__MODULE__/product/product_list_search/oid/24">家居生活</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/8">全季床品</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/34">厨房工具</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/66">个人清洁</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1327">
+                        <div class="cateone"><i class="iconfont">&#xe606;</i><a href="__MODULE__/product/product_list_search/oid/5">美妆护肤</a>
+                        <div class="cateone-info"><a href="__MODULE__/product/product_list_search/hid/1">彩妆/美妆</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/42">美发造型</a>&ensp;<a href="__MODULE__/product/product_list_search/hid/95">化妆品</a></div>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1328">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe60e;</i><a href="__MODULE__/product/product_list_search/oid/33">时尚箱包</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/35">潮流女包</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/37">精品男包</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/38">功能箱包</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1329">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe616;</i><a href="__MODULE__/product/product_list_search/oid/90">潮流服装</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/91">女士服装</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/203">服饰配件</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/204">儿童服装</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1330">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe614;</i><a href="__MODULE__/product/product_list_search/oid/51">手机数码</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/52">手机通讯</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/54">影音娱乐</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/56">电子教育</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1335">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe603;</i><a href="__MODULE__/product/product_list_search/oid/329">家用电器</a>
+                        	<dd class="cateone-info"><a href="__MODULE__/product/product_list_search/tid/340">大家电</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/330">生活电器</a>&ensp;<a href="__MODULE__/product/product_list_search/tid/334">厨房小电</a></dd>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="div_hide_two_class" style="display:none;">
+                <!-- 二级级分类 1-->
+                <div class="catetwo top-two-class" data-id="1332" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="onecate" id="voone"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$voone['Id']}">{$voone['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="voone['one']" id="voonex"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$voonex['Id']}">{$voonex['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 2-->
+                <div class="catetwo top-two-class" data-id="1331" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="twocate" id="votwo"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$votwo['Id']}">{$votwo['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="votwo['one']" id="votwox"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$votwox['Id']}">{$votwox['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 3-->
+                <div class="catetwo top-two-class" data-id="1326" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="threecate" id="vothree"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$vothree['Id']}">{$vothree['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="vothree['one']" id="vothreex"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$vothreex['Id']}">{$vothreex['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 4-->
+                <div class="catetwo top-two-class" data-id="1327" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="fourcate" id="vofour"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$vofour['Id']}">{$vofour['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="vofour['one']" id="vofourx"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$vofourx['Id']}">{$vofourx['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+
+                <!-- 二级级分类 5-->
+                <div class="catetwo top-two-class" data-id="1328" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="fivecate" id="vofive"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$vofive['Id']}">{$vofive['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="vofive['one']" id="vofivex"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$vofivex['Id']}">{$vofivex['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 6-->
+                <div class="catetwo top-two-class" data-id="1329" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="sixcate" id="vosix"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$vosix['Id']}">{$vosix['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="vosix['one']" id="vosixx"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$vosixx['Id']}">{$vosixx['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 7-->
+                <div class="catetwo top-two-class" data-id="1330" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="sevencate" id="voseven"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$voseven['Id']}">{$voseven['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="voseven['one']" id="vosevenx"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$vosevenx['Id']}">{$vosevenx['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+                <!-- 二级级分类 8-->
+                <div class="catetwo top-two-class" data-id="1335" style="left: 210px;">
+                    <p class="act"></p>
+                    <dl>
+                        {volist name="eightcate" id="voeight"}
+                            <dt><a href="__MODULE__/product/product_list_search/tid/{$voeight['Id']}">{$voeight['name']}</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd>
+                                {volist name="voeight['one']" id="voeightx"}
+                                    <em><a href="__MODULE__/product/product_list_search/hid/{$voeightx['Id']}">{$voeightx['name']}</a></em>
+                                {/volist}
+                            </dd>
+                            <br class="clear">
+                        {/volist}
+                    </dl>
+                </div>
+
+            </div>
+             <ul class="nav-items">
+                <li><a href="/index.php" target="_self"><span {if condition="$Request.param.ishit eq null"}style="color:#E1533D"{/if}>网站首页</span></a></li>
+                <li><a rel="nofollow" href="/index.php/list/2"><span {if condition="$Request.param.ishit eq 2"}style="color:#E1533D"{/if}>劲爆抢购</span></a></li>
+                <!--<li><a rel="nofollow" href="__MODULE__/product/product_list/ishit/3"><span {if condition="I('ishit') eq 3">style="color:#E1533D"{/if}>进口商品</span></a></li>-->
+                <li><a rel="nofollow" href="/index.php/list/4"><span {if condition="$Request.param.ishit eq 4"}style="color:#E1533D"{/if}>飞度优品</span></a></li>
+                <li><a rel="nofollow" href="/index.php/list/1"><span {if condition="$Request.param.ishit eq 1"}style="color:#E1533D"{/if}>创客空间</span></a></li>
+                <li><a rel="nofollow" href="/index.php/list/6"><span {if condition="$Request.param.ishit eq 6"}style="color:#E1533D"{/if}>积分兑购</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 顶部内容 end -->
+<div class="clear"></div>
+
+<script type="text/javascript">
+/*-删除*/
+function _cartdel(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'__MODULE__/product/product_cart/action/delete/cartid/'+id,
+			type:"GET",
+			success: function(data) {
+				location.href=location.href;
+				layer.msg('已删除!',{icon:1,time:1000});
+			}
+		});
+	});
+}
+
+</script>

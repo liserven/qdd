@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<LINK rel="Bookmark" href="<?php echo CSS_PATH;?>favicon.ico" >
+	<LINK rel="Shortcut Icon" href="<?php echo CSS_PATH;?>favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/He.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/He.admin.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/He-iconfont/1.0.7/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/iconfont/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>lib/icheck/icheck.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>static/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH;?>/static/admin/css/app.css"/>
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+
+	<style>
+		body{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			font-family: 微软雅黑;
+			background-color:#fff;
+		}
+		img{ width:100%;}
+		/* 页眉样式 */
+		.bj {
+			width: 100%;
+			height: 60px;
+			background:#ff0000;
+			position: relative;
+			overflow: hidden;
+		}
+		.zjt {
+			width: 28px;
+			height: 28px;
+			float: left;
+			margin-top: 16px;
+			position: absolute;
+			left: 10px;
+		}
+		.gwj{ font-size:20px; height:60px; line-height:60px; text-align:center
+		; color:#FFF; }
+
+		/*选项卡样式*/
+
+		.tab1{width:100%;}
+		.menu{height:28px;margin:10px auto 0 -10px;}
+		.menu{background-color:#fff;border:solid 1px #FFFFFF;display:inline-block}
+		.menu li{margin-left:25px;float:left;width:100%;text-align:center;line-height:28px;height:28px;cursor:pointer;color:#fff;font-size:14px;
+			background:#ff6600;
+		}
+		.menu li.off{background:#FFFFFF;color:#ff6600;}
+
+		.menudiv{background:#fefefe}
+		.menudiv div{line-height:28px;}
+		.xl{ text-decoration:none;width:80px; height:45px;border:1px solid #d3d3d3; text-align:center; background-color:#FFF; border-radius:4px; float:left; margin-bottom:5px;}
+
+		.xl:hover{border:1px solid #f00; text-decoration:none;}
+		.panel{ width:55%;  margin:0 auto; border:solid 1px #d3d3d3; background-color:#FFF; border:solid 1px #7db5de; position:absolute; z-index:99999; border-radius:3px; top:443px; left:37%; display:none;
+			background:#f0f9ff;
+			background:-moz-linear-gradient(top, #f0f9ff, #a1dbff);
+			background:-o-linear-gradient(left top,left bottom, from(#f0f9ff), to(#a1dbff));
+			background:-webkit-gradient(linear,left top,left bottom, from(#f0f9ff), to(#a1dbff)); }
+	</style>
+<meta charset="utf-8">
+<title>账户余额</title>
+</head>
+<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak>
+<!---页头--->
+<div style="width: 100%; height: 50px; background-color: #28bebc;">
+	<div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+		<a href="/mobile.php/member/userinfo">
+			<img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;"></a></div>
+	<div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;">
+	</div>
+	<div style="width:30%; margin-left: 30%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">账户余额</div>
+</div>
+<div style="clear:both;"></div>
+<!---选项卡--->
+<div class="tab1" id="tab1" style="margin-left: 10%">
+	<div class="menudiv">
+        <!---个人基本账户--->
+        <div style="clear:both;"></div>
+        <!---商家云联账户--->
+		<div id="con_one_3">
+        	<!---进货积分--->
+        	<div style="margin-top:10px;">
+        		<div style="float:left;text-align:right; width:30%;font-size: 15px;">业务员ID：</div>
+        		<div style="float:left; color:#ff6600; font-size:14px; font-family:Arial;margin-top: 3px;">{{userinfo.userid}}[{{userinfo.truename}}]</div>
+        	</div>
+        	<div style="clear:both;"></div>
+        	<div style="margin-top:10px;">
+        		<div style="float:left;text-align:right; width:30%;font-size: 15px;">购物币：</div>
+            	<div style="float:left; color:#ff6600;  font-size:14px; font-family:Arial;margin-top: 3px;">{{userinfo.umoney}}</div>
+				<!--<div style="float:left;text-align:right; width:25%;font-size: 15px;"><a href="/mobile.php/index/Member/recharge_umoney">充值</a></div>-->
+        	</div>
+        	<div style="clear:both;"></div>
+        	
+        	<div style="margin-top:10px;">
+        		<div style="float:left;text-align:right; width:30%;font-size: 15px;">消费积分：</div>
+            	<div style="float:left; color:#ff6600; font-size:14px; font-family:Arial;margin-top: 3px;">{{userinfo.pv}}</div>
+        	</div>
+			<div style="clear:both;"></div>
+        
+        </div>
+        <div style="clear:both;"></div>
+<!--请在下方写此页面业务相关的脚本-->
+		{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    var app = angular.module('memberApp', []);
+    app.controller('memberCtrl', function($scope, $http) {
+        $http.get("/api.php/member/userinfo")
+            .success(function (response) {
+                $scope.userinfo = response.data;
+            });
+    });
+//所在地区选择
+</script>
+</body>
+</html>

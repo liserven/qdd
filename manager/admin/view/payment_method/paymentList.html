@@ -1,0 +1,121 @@
+{include file="./public/Public/meta.html" /}
+    <meta charset="utf-8">
+    <title>系统管理 - 支付方式管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 支付方式 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+        <div id="markdown" class="mt-20"></div>
+        </span>
+        <span class="r" style=" float: right">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <div class="mt-20">
+        <form class="form form-horizontal" id="form-admin-list">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th>ID</th>
+                    <th>支付方式</th>
+                    <th>状态</th>
+                    <th>排序</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="paymentmethod" id="vo"}
+                    <tr class="text-c">
+                        <td>{$vo.PaymentId}</td>
+                        <td>{$vo.PaymentName}</td>
+                        <td>
+                            {if condition="$vo['Enabled'] eq 0"}
+                                <a onClick="_auditstart(this,'{$vo.PaymentId}')" href="javascript:;" title="开通"><span class="label label-default radius">已锁定</span></a>
+                            {elseif condition="$vo['Enabled'] eq 1" /}
+                                <a onClick="_auditstop(this,'{$vo.PaymentId}')" href="javascript:;" title="停用"><span class="label label-success radius">已启用</span></a>
+                            {/if}
+                        </td>
+                        <td>{$vo.SortOrder}</td>
+                        <td><a title="编辑" href="javascript:;" onClick="_edit('编辑','/admin.php/admin/Payment_method/payment_edit/PaymentId/{$vo.PaymentId}','{$vo.PaymentId}','','530')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+{include file="./public/Public/js_script.html" /}
+<script>
+    /*-删除*/
+    function _del(obj,id){
+        layer.confirm('确认要删除吗？只能删除未激活会员！',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("Member/memberDelete")}?UserId='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:1000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+    /*-编辑*/
+    function _edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+    /*-启用*/
+    function _auditstart(obj,id){
+        layer.confirm('确认要启用吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'/admin.php/admin/Payment_method/payment_start/action/start/PaymentId/'+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                success: function(data) {
+                    layer.msg('已启用!', {icon: 6,time:1000},function(){
+                        location.href=location.href;
+                    });
+
+                }
+            });
+        });
+    }
+    /*-停用*/
+    function _auditstop(obj,id){
+        layer.confirm('确认要停用吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'/admin.php/admin/Payment_method/payment_start/action/stop/PaymentId/'+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                success: function(data) {
+                    layer.msg('已停用!', {icon: 6,time:1000},function(){
+                        location.href=location.href;
+                    });
+                }
+            });
+        });
+    }
+
+</script>
+</body>
+</html>
+

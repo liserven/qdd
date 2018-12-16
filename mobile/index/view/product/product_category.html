@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分类</title>
+    <link rel="stylesheet" href="/public/qdd/css/fenlei.css">
+</head>
+<body>
+<header>
+    <a href="javascript:history.go(-1);" id="flfh">
+        <img src="/public/qdd/img/juxing3.png" alt="">
+    </a>
+    <div>
+        <input type="text" name="keyword" placeholder="搜索你想要的商品名称" id="">
+        <a href="javascript:;" id="search">
+            <img src="/public/qdd/img/sousuo.png" alt="">
+        </a>
+    </div>
+
+</header>
+<section>
+    <div id="left">
+        <ul>
+            {foreach name="leftCate" key="key" item="vo"}
+                {if condition="$cid eq '0'"}
+                    {if condition="$key eq '0'"}
+                        <li ><a class="fldj">{$vo.name}</a></li>
+                    {else/}
+                        <li  onclick="selectone({$vo['cid']})"><a>{$vo.name}</a></li>
+                    {/if}
+                {else/}
+                    {if condition="$vo['cid'] eq $cid "}
+                        <li ><a class="fldj">{$vo.name}</a></li>
+                    {else /}
+                        <li  onclick="selectone({$vo['cid']})"><a>{$vo.name}</a></li>
+                    {/if}
+                {/if}
+            {/foreach}
+        </ul>
+    </div>
+    <div id="right">
+        <ul class="flsp">
+            {foreach name="mainCate" item="voo"}
+            <li>
+                <a href="{$voo['url']}">
+                    <img src="{$voo['img']}" alt="">
+                    <p style="overflow: hidden;text-overflow:ellipsis; white-space: nowrap;">{$voo['name']}</p>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</section>
+{:widget('Common/mobile_footer')}
+</body>
+</html>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/cate/jquery.min.js"></script>
+<script>
+    $('img').error(function() {
+        $(this).attr('src', "/public/Public/mobile/img/logo.png");
+    });
+    $('#search').click(function () {
+        var keyword=$('input[name="keyword"]').val();
+        window.location.href="/mobile.php/search_list?keyword="+keyword;
+    });
+    function  selectone(ccid) {
+        window.location.href='/mobile.php/category?cid='+ccid;
+    }
+</script>

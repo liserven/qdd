@@ -1,0 +1,91 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>物流管理 - 配送方式设置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 物流管理 <span class="c-gray en">&gt;</span> 配送方式设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-delivery-add" enctype="multipart/form-data" action="{:url('Product/productAdd')}?action=add" method="post">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.name}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>描述：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.description}" placeholder="" id="description" name="description">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>排序：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.sort}" placeholder="" id="sort" name="sort">
+            </div>
+        </div>
+        <div class="row cl div_contentlist">
+            <label class="form-label col-xs-2 col-sm-2 Father_Title"><dd><span class="c-red">*</span>是否开启：</dd></label>
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input type="radio" name="is_on" id="checkbox5" value="1" {if condition="$list.is_on eq 1"}checked{/if}>
+                    <label for="checkbox5">是</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" name="is_on" id="checkbox6" value="2" {if condition="$list.is_on eq 2"}checked{/if}>
+                    <label for="checkbox6">否</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="submit" class="btn btn-success radius" id="admin-role-save" ><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        $("#form-delivery-add").validate({
+            rules:{
+                name:{
+                    required:true,
+                },
+                is_on:{
+                    required:true,
+                },
+                sort:{
+                    number:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'{:url("Freight/deliverytypeedit")}?id={$list.id}',
+                    type:"POST",
+                    data:$('#form-delivery-add').serialize(),
+                    error: function(){ //失败
+                        alert('Error loading document');
+                    },
+                    success: function(data) {
+                        if(data.status==0){
+                            layer.msg(data.msg);
+                        }else{
+                            layer.msg(data.msg,{icon:6,time:1000},function () {
+                                location.href='/supplier.php/index/Freight/index.html';
+                            })
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

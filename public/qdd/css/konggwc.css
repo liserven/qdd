@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.dj{
+    color: #ff6501;
+}
+li{
+    list-style: none;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction:column;
+}
+section{
+    flex: 1;
+    margin: 50px 0 60px;
+    position: relative;
+}
+footer,header{
+    width: 100%;
+    height: 50px;
+    background: #ff6501;
+    position: fixed;
+    left: 0;
+    z-index: 2;
+}
+header{
+    top: 0;
+}
+footer{
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #cecece;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+footer>a{
+    margin-top: 3px;
+    width: 53px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+header a{
+    position: absolute;
+}
+header p{
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+}
+#kgwcfh{
+    left: 15px;
+    top: 50%;
+    margin-top: -11px;
+}
+#kgwcxx{
+    right: 12px;
+    top: 50%;
+    margin-top: -12px;
+}
+.kgwc{
+    width: 100%;
+    text-align: center;
+}
+.kgwc img{
+    text-align: center;
+    margin: 20px 0 30px;
+}
+.kgwc p{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.main{
+    margin-top: 25px;
+}
+.mainTit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.mainTit img{
+    margin: 0 10px;
+}
+
+.jingpin{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.jingpin>li{
+    position: relative;
+    margin-bottom: 20px;
+}
+.jingpin>li>a>p{
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333333;
+    line-height: 16px;
+    font-size: 16px;
+}
+.jingpin>li>a>img{
+    width: 170px;
+    height: 170px;
+}
+.jingpin>li>a>strong{
+    font-weight: 500;
+    display: block;
+    font-size: 12px;
+    color: #999999;
+    line-height: 24px;
+    text-decoration:line-through;
+}
+
+.duihuan{
+    width: 170px;
+    display: flex;
+    justify-content: space-between;
+}
+.duihuan>li{
+    flex:0 0 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    font-size: 16px;
+    line-height: 25px;
+}
+.zunxiang{
+    color: red;
+}
+.biaozhun{
+    color: #44a0fe;
+}

@@ -1,0 +1,85 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>添加商品分类 - 商品管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-keyword-add">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>功能描述：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="description" name="description" style="width: 200px;">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>关键字：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="keywords" name="keywords" style="width: 200px;">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>扩展关键字：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="extKeywords" name="extKeywords" style="width: 350px;">(关键字以英文','号分割，如："音乐,视频")
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>回复类型：</label>
+            <div class="formControls col-xs-9 col-sm-10">
+                <input type="radio" class="input-radio" value="1" placeholder="" id="replyType" name="replyType" checked>文字
+                <!--<input type="radio" class="input-radio" value="2" placeholder="" id="menutype" name="menutype">链接-->
+                <!--<input type="radio" class="input-radio" value="3" placeholder="" id="menutype" name="menutype">素材-->
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>回复内容：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <textarea id="replyContent" name="replyContent" cols="55" rows="10"></textarea>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+
+<script type="text/javascript">
+    $(function(){
+        $("#form-menu-add").validate({
+            rules:{
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(data){
+                $.ajax({
+                    url:'{:url("Weixin/menu_add",["type"=>"add"])}',
+                    type:"POST",
+                    dataType:"json",
+                    data:$('#form-menu-add').serialize(),
+                    success: function(rep) {
+                        if(rep.status=="0"){
+                            layer.msg(rep.msg);
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            layer.msg(rep.msg); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

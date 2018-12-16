@@ -1,0 +1,217 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商品查看 - 商品管理</title>
+</head>
+<body>
+<div class="page-container">
+      <!--商品图片 begin-->
+      <div class="tb-box">
+          <div class="tb-booth tb-pic tb-s310"><a href="{$ckinfo.maximg}"><img src="{$ckinfo.maximg}" alt="" rel="{$ckinfo.maximg}" class="jqzoom" /></a></div>
+          <ul class="tb-thumb" id="thumblist">
+              <li class="tb-selected"><div class="tb-pic tb-s50"><a href="###"><img src="{$ckinfo.img}" mid="{$ckinfo.maximg}" big="{$ckinfo.maximg}"></a></div></li>
+              {volist name="proimglist" id="vo"}
+              <li><div class="tb-pic tb-s50"><a href="###"><img  src="{$vo.img}" mid="{$vo.img}" big="{$vo.img}"></a></div></li>
+              {/volist}
+          </ul>
+      </div>
+      <!--商品图片 end-->
+
+      <!--商品详细信息 begin-->
+      <div class="prcYe_info sys_item_spec pb-20">
+          <h1>{$ckinfo.proname}</h1>
+          <div class="proinfo-con-price">
+              <div class="price-com">
+                  <dl class="price">
+                      <dd>市场价&emsp;&yen; <s class="sys_item_mktprice">{$ckinfo.marketprice}</s>元</dd>
+                      <!--<dd class="pt-5">会员价&emsp;<em>&yen; <font class="sys_item_price">{$ckinfo.vipprice}</font>元+ <font class="sys_item_fen">{$ckinfo.consumeintegral}</font>积分</em></dd>-->
+                      <dd class="pt-5">会员价&emsp;<em>&yen; <font class="sys_item_price">{$ckinfo.vipprice}</font>元 </em></dd>
+                  </dl>
+              </div>
+          </div>
+          <div class="pro-sg-info">
+              <dl>
+                  <dt>编号ID：</dt>
+                  <dd>{$ckinfo.proid}</dd>
+              </dl>
+              <dl>
+                  <dt>商家名称：</dt>
+                  <dd><span>{:supnamebysupid($ckinfo['supplierid'])}</span></dd>
+              </dl>
+          </div>
+
+          <div class="pro-info-center">
+              <div class="goods-comment-sale">
+                  <ul>
+                      <!--<li><a href="">收藏</a> <b class="num">0</b></li>-->
+                      <li>已浏览：<span>{$ckinfo.hit}</span></li>                                
+                  </ul>
+              </div>
+          </div>
+          
+          <div class="sys_item_specpara" data-sid="1">
+              
+              <dt>商品规格</dt>
+              <dd>
+                  <ul class="sys_spec_text">
+                      {volist name="psizelist" id="vo"}
+                      <li data-aid="{$vo.styleid}"><a href="javascript:;" title="{$vo.stylename}">{$vo.stylename}</a><i></i></li>
+                      {/volist}
+                  </ul>
+              </dd>
+              <span id="numStock" class="proinfo-con-price" style="display:none; background:none; border:0">（库存<b class="sys_item_pstock" id="prokucun">0</b>件) <cite id="aaid" style="display:none">0</cite></span>
+          </div>
+          <div class="clear"></div>
+      </div>
+      <!--商品详细信息 end-->
+      <br class="clear">
+      
+      <!--图文信息 begin-->
+      <div class="Huialert Huialert-info mt-10 f-16" style="margin-bottom:0">商品介绍</div>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="row cl">
+                  <div class="col-xs-12 col-sm-4">商品类型：{if condition="$ckinfo['goodstype'] eq 1"}小件{else /}大件{/if}</div>
+                  <div class="col-xs-12 col-sm-4">包装规格：{$ckinfo.productsizedetail}</div>
+                  <div class="col-xs-12 col-sm-4">商品编码：<span id="txmid">{$vo.txm}</span></div>
+                  <div class="col-xs-12 col-sm-4">单位：{$ckinfo.unit}</div>
+                  <div class="col-xs-12 col-sm-4">最小起订量：{$ckinfo.minpurchase}</div>
+                  <div class="col-xs-12 col-sm-4">最小起订倍数：{$ckinfo.orderstep}</div>
+              </div>
+          </div>
+      </div>
+        
+      <div class="panel panel-default pt-20" style="border-top:0">
+          <div class="pt-10" style="overflow:hidden">{$ckinfo.procontent}</div>
+      </div>
+      <!--图文信息 end-->
+      
+      <!--售后服务 begin-->
+      <div class="panel panel-default mt-20">
+          <div class="panel-header">售后服务</div>
+          <div class="panel-body">{$ckinfo.afterservice}</div>
+      </div>
+      <!--售后服务 end-->
+      
+      <!--配送说明 begin-->
+      <div class="panel panel-default mt-20">
+          <div class="panel-header">运费政策</div>
+          <div class="panel-body">{$ckinfo.peisong}</div>
+      </div>
+      <!--配送说明 end-->      
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/jquery.imagezoom.min.js"></script>
+<script type="text/javascript">
+//商品大图
+$(document).ready(function(){
+	$(".jqzoom").imagezoom();
+	$("#thumblist li a").click(function(){
+		$(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
+		$(".jqzoom").attr('src',$(this).find("img").attr("mid"));
+		$(".jqzoom").attr('rel',$(this).find("img").attr("big"));
+	});
+});
+//价格json
+var sys_item={
+    "sys_attrprice":{
+{:echowebprice($ckinfo['proid'])}
+}
+};
+	
+//商品规格选择
+$(function(){
+	
+	$(".sys_item_spec .sys_item_specpara").each(function(){
+		var i=$(this);
+		var p=i.find("ul>li");
+		p.click(function(){
+			if(!!$(this).hasClass("selected")){
+				$(this).removeClass("selected");
+				i.removeAttr("data-attrval");
+			}else{
+				$(this).addClass("selected").siblings("li").removeClass("selected");
+				i.attr("data-attrval",$(this).attr("data-aid"))
+			}
+			getattrprice() //输出价格
+
+            $.ajax({
+                url:"/api.php/goods/stock?proid={$Request.param.proid}&styleid="+document.getElementById("aaid").innerHTML,
+                type:"get",
+                dataType:"json",
+                success: function(data) {
+                    $('#prokucun').text(data.kucun);
+                    $('#txmid').text(data.txm);
+                }
+            });
+		});
+	});
+	
+	//获取对应属性的价格
+	function getattrprice(){
+
+		
+		var defaultstats=true;
+		var _val='';
+		var _resp={
+			mktprice:".sys_item_mktprice",
+			price:".sys_item_price",
+			nprice:".sys_item_price_n",
+			fenice:".sys_item_fen",
+			fenxice:".sys_item_fenx",
+			adice:".sys_item_ad",
+			pstock:".sys_item_pstock"
+		}  //输出对应的class
+		$(".sys_item_spec .sys_item_specpara").each(function(){
+			var i=$(this);
+			var v=i.attr("data-attrval");
+			if(!v){
+				document.getElementById("numStock").style.display="none";
+				document.getElementById("aaid").innerHTML=0;
+				defaultstats=false;
+			}else{
+				document.getElementById("numStock").style.display="";
+				document.getElementById("aaid").innerHTML=v;
+				_val+=_val!=""?"_":"";
+				_val+=v;
+			}
+		});
+		if(!!defaultstats){
+			_mktprice=sys_item['sys_attrprice'][_val]['mktprice'];
+			_price=sys_item['sys_attrprice'][_val]['price'];
+			_nprice=sys_item['sys_attrprice'][_val]['nprice'];
+			_fenice=sys_item['sys_attrprice'][_val]['fenice'];
+			_fenxice=sys_item['sys_attrprice'][_val]['fenxice'];
+			_adice=sys_item['sys_attrprice'][_val]['adice'];
+			_pstock=sys_item['sys_attrprice'][_val]['pstock'];
+		}else{
+			_mktprice=sys_item['mktprice'];
+			_price=sys_item['price'];
+			_nprice=sys_item['nprice'];
+			_fenice=sys_item['fenice'];
+			_fenxice=sys_item['fenxice'];
+			_adice=sys_item['adice'];
+			_pstock=sys_item['pstock'];
+		}
+		//输出价格
+		$(_resp.mktprice).text(_mktprice);  ///其中的math.round为截取小数点位数
+		$(_resp.price).text(_price);
+		$(_resp.nprice).text(_nprice);
+		$(_resp.fenice).text(_fenice);
+		$(_resp.fenxice).text(_fenxice);
+		$(_resp.adice).text(_adice);
+		$(_resp.pstock).text(_pstock);
+	}
+});
+
+//textarea 换行
+$(function(){
+     var element = $("div[id='new-comment']");
+     var temp =  element.text().replace(/\n/g,'<br/>');
+     element.html(temp);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <link rel="stylesheet" href="/public/qdd/css/registered.css">
+</head>
+<body>
+    <div class="regTop">
+        <img src="/public/qdd/img/PATTERN.png" alt="">
+    </div>
+    <div class="regFormBD">
+       <!--  <div class="LogAndReg">
+           <a href="JavaScript:;" id="log">登录</a>
+           <a href="JavaScript:;" id="reg">注册</a>
+       </div> -->
+        <form id="formdata">
+        <div class="regXx">
+            
+                <div class="regPhone">
+                    <input type="text" name="UserId" placeholder="请输入手机号">
+                    <img src="/public/qdd/img/MailIcon.png" alt="">
+                </div>
+                <!-- <div class="regCode">
+                    <input type="text" placeholder="请输入验证码">
+                    <a href="JavaScript:;" name="code" id="hqCode">获取验证码</a>
+                </div> -->
+                <div class="regPsw">
+                    <input type="password" name="password" placeholder="请输入密码">
+                    <img src="/public/qdd/img/PasswordIcon.png" alt="" >
+                </div>
+                <input type="hidden" name="introduceId" value="{$introduceId}">
+            
+        </div>
+        </form>
+        <a href="JavaScript:;" id="regBtn" >
+
+        </a>
+    </div>
+</body>
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    $(function(){
+        $('#regBtn').click(function(){
+            $.ajax({
+                url:"/api.php/member/reg",
+                type:"post",
+                dataType:"json",
+                data: $('#formdata').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{time:2000},function(){
+                            window.location.href='/mobile.php/member/add_userinfo_one';
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>

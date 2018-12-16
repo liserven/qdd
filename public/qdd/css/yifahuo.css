@@ -1,0 +1,169 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #fafafa;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+li{
+    list-style: none;
+}
+section{
+    margin-top: 50px;
+}
+header{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    z-index: 2;
+    top: 0;
+    background: #fff;
+}
+header a{
+    position: absolute;
+}
+header p{
+    text-align: center;
+    line-height: 50px;
+    color: #333333;
+}
+#ddqbfh{
+    left: 15px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.ztList{
+    width: 100%;
+    height: 30px;
+    border-bottom: 3px solid #f0f0f0;
+    background: #fff;
+}
+.ztList li{
+    float: left;
+    width: 20%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+}
+.dddj{
+    border-bottom: 3px solid #ff9600  !important;
+}
+
+
+.ddh{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+}
+.ddh p{
+    font-size: 12px;
+}
+.ddh img{
+    margin: 0 15px;
+}
+
+.ddsp{
+    background: #fafafa;
+}
+.ddsp>p{
+    line-height: 40px;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.ddsp>p>strong{
+    margin: 0 15px;
+}
+.ddsp>p>span{
+    float: right;
+    margin-right: 30px;
+    color: red;
+}
+
+.ddspxq{
+    height: 102px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+.ddspxq>img{
+    margin: 0 15px;
+}
+.ddspxq>div>p:nth-child(1){
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ddspxq>div>p{
+    margin-top: 5px;
+    font-size: 12px;
+}
+.ddspxq>div>p>span{
+    color: red;
+    font-size: 14px;
+}
+
+.dddz{
+    display: flex;
+    align-items: center;
+    height: 45px;
+    font-size: 12px;
+}
+.dddz>img{
+    margin: 0 9px;
+}
+
+.ddhj{
+    line-height: 40px;
+    font-size: 14px;
+    padding-left: 14px;
+    background: #fff;
+
+}
+.ddhj>span{
+    color: red;
+    font-size: 16px;
+    float: right;
+    margin-right: 16px;
+}
+
+.xdsj{
+    line-height: 40px;
+    color: #999999;
+    font-size: 14px;
+    padding-left: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fff;
+}
+.xdsj>span{
+    float: right;
+    margin-right: 16px;
+}
+
+.czBtnBox{
+    height: 57px;
+    background: #fff;
+
+}
+
+.czBtnBox a{
+    display: block;
+    width: 77px;
+    height: 24px;
+    border: 1px solid #f6f6f6;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    border-radius: 25px;
+    float: right;
+    margin-top: 14px;
+    margin-right: 14px;
+}

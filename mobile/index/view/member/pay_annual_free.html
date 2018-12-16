@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>付款</title>
+    <link rel="stylesheet" href="/public/qdd/css/fukuang.css">
+    <link rel="stylesheet" href="/public/qdd/css/iconfont.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <a href="#">
+        <i class="iconfont icon-zuojiantou" id="fkfh"></i>
+    </a>
+    <span>开通联盟商</span>
+</header>
+<section>
+    <div id="main">
+        <p class="ktTit">开通服务</p>
+        <ul class="ktXz">
+        {if condition="$puserinfo['one_level_places'] neq 0"}
+            <li onclick="changetype(1)" class="bk" class="1">
+               <span>开通标准版</span>
+               <i class="iconfont icon-im_xuanze_b" style="display:block"></i>
+            </li>
+        {/if}
+       	{if condition="$puserinfo['two_level_places'] neq 0"}
+            <li onclick="changetype(2)" class="2">
+              <span>开通尊享版</span>
+              <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+        {/if}
+       	{if condition="$puserinfo['three_level_places'] neq 0"}    
+            <li onclick="changetype(3)" class="3">
+                <span>开通联盟商</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+        {/if}
+       	{if condition="$puserinfo['four_level_places'] neq 0"}
+            <li onclick="changetype(4)" class="4">
+                <span>开通营销中心</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+        {/if}
+        </ul>
+        <p class="yfje">应付金额    &nbsp;&nbsp;<strong class="je">{$priceArr[0]}</strong></p>
+        <div class="zffsTit">支付方式</div>
+        <ul class="zffs">
+            <li onclick="change_payway(1)" class="bk">
+                <span>支付宝</span>
+                <i class="iconfont icon-im_xuanze_b" style="display:block"></i>
+            </li>
+            <li onclick="change_payway(2)">
+                <span>微信</span>
+                <i class="iconfont icon-im_xuanze_b"></i>
+            </li>
+        </ul>
+    </div>
+    <script src="/public/qdd/js/fukuang.js"></script>
+</section>
+<div class="fukuan">
+    <a href="JavaScript:;" onclick="pay_action()">立即支付</a>
+</div>
+</body>
+{include file="./public/Public/js_script.html" /}
+<script>
+// 获取当前第一个li标签的类，即为第一个用户类型
+var nowtype = $('li:first').attr('class')
+var priceArr = [0,'{$priceArr[0]}','{$priceArr[1]}','{$priceArr[2]}','{$priceArr[3]}'];
+// 给第一个li标签设置样式
+$('li:first').attr('class','bk')
+$('li:first>i').css('display','block')
+$('.je').text(priceArr[nowtype])
+
+var usertype = nowtype;
+var payway = 1;
+
+// 修改选中的会员
+function changetype(id){
+	console.log(id);
+	$('.je').text(priceArr[id]);
+	usertype = id;
+}
+// 修改支付方式
+function change_payway(id){
+	console.log(id);
+	payway = id;
+}
+function pay_action(){
+	console.log(1)
+	if(usertype == '' || payway == ''){
+		layer.msg('类型选择错误！',{time:2000});
+		return false;
+	}
+	/*var formdata = new FormData();
+	formdata.append('usertype',usertype);
+	formdata.append('payway',payway);*/
+	$.post(
+		"/mobile.php/member/pay_annual_free",
+		{userType:usertype,payway:payway},
+		function(data){
+			layer.msg(data.msg,{time:2000},function(){
+				if(data.status == 1){
+					location.href = "/mobile.php/weixin_pay/active_pay_successful/orderid/"+data.orderid;
+				}
+				
+			});
+		}
+	)
+}
+
+</script>
+</html>

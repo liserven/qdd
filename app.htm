@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{:otherconfig()['companyName']}客户端下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="http://www.999000.cn/includes/libraries/javascript/jquery.js"></script>
+
+</head>
+
+<body>
+<!---背景图--->
+<div style="width:100%;height: 100%;position:absolute;z-index:-1;top:0px; overflow:hidden; ">
+    <img src="img/beijing.png">
+</div>
+<!---logo--->
+<div style=" margin:auto;width:50%; margin-top:10px;">
+    <img src="img/logo.png">
+</div>
+<!---内容--->
+<div style=" width:90%; margin:auto; margin-top:1px;">
+    <img src="img/tupian.png">
+</div>
+<!---下载按钮--->
+<div style=" width:50%; margin:auto;margin-top:5px;">
+    <a href="#" id="download"><img src="img/lijixiazai.png"></a>
+</div>
+
+<script type="text/javascript">
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isAndroid && !isiOS) {//android
+        $('#download').attr('href', 'http://byg.zzfeidu.com/public/app/byg-release.apk?a=' + parseInt(10 * Math.random()));
+    } else if (isiOS && !isAndroid) {//ios
+        $('#download').attr('href', 'https://www.pgyer.com/DbHW');
+    } else {//不知道
+        $('#download').attr('href', 'http://byg.zzfeidu.com');
+    }
+    function is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    var isWeixin = is_weixin();
+    var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+    var weixinTip = $('<div id="weixinTip"><p><img src="http://byg.zzfeidu.com/public/app/live_weixin.png" alt="微信打开"/></p></div>');
+
+    if (isWeixin) {
+        $("body").append(weixinTip);
+    }
+    $("#weixinTip").css({
+        "position": "fixed",
+        "left": "0",
+        "top": "0",
+        "height": winHeight,
+        "width": "100%",
+        "z-index": "1000",
+        "background-color": "rgba(0,0,0,0.8)",
+        "filter": "alpha(opacity=80)",
+    });
+    $("#weixinTip p").css({
+        "text-align": "center",
+        "margin-top": "10%",
+        "padding-left": "5%",
+        "padding-right": "5%"
+    });
+</script>
+</body>
+</html>

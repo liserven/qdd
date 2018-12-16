@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>支付成功</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal;}
+        .tubiao{text-align: center; margin-top: 105px;}
+        .zftb{width: 20%;}
+        .wenzi{text-align: center; margin-top: 20px;}
+        .zhifu{font-family: "微软雅黑"; font-size: 22px; color: #28bebc;}
+        .anniu button{width:90%;height: 50px;border-radius:4px;background: #28bebc; border:none;}
+        .chakan{font-family: "微软雅黑";font-size: 18px;color:#FFFFFF;margin:auto;}
+        .anniu2 button{width:90%;height: 50px;border-radius:4px;background: #dedede; border:none;}
+
+        .fanhui{ background: #dedede; font-family: "微软雅黑";font-size: 18px;color:#999999;margin:auto;}
+
+    </style>
+</head>
+
+<body>
+<div class="tubiao"><img class="zftb" src="<?php echo CSS_PATH;?>mobile/images/zhifu.png"></div>
+<div class="wenzi"><p class="zhifu">支付成功</p></div>
+<div class="anniu" style=" margin-top:40px; text-align:center;">
+    <a href='/mobile.php/order/show?orderno={$orderno}'><button class="chakan">查看订单</button></a>
+</div>
+<div class="anniu2" style=" margin-top:15px; text-align:center;">
+    <a href="/mobile.php"><button class="fanhui">返回首页</button></a>
+</div>
+
+
+</body>
+</html>

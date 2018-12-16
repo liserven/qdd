@@ -1,0 +1,95 @@
+{include file="./public/Public/meta.html" /}
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/zTreeStyle.css" type="text/css">
+
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/css/jquery.jOrgChart.css"/>
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/css/custom.css"/>
+<link href="<?php echo CSS_PATH;?>static/css/css/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/js/prettify.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/js/jquery-ui.min.js"></script>
+<script src="<?php echo CSS_PATH;?>static/js/js/jquery.jOrgChart.js"></script>
+<style>
+    .line{border: 1px;}
+</style>
+<script>
+    jQuery(document).ready(function() {
+        $("#org").jOrgChart({
+            chartElement : '#chart',
+            dragAndDrop  : true
+        });
+    });
+</script>
+
+<meta charset="utf-8">
+<title>推荐关系树状图</title>
+</head>
+<body onload="prettyPrint();">
+<form action="/admin.php/admin/recommend_tree_chart/index.html" method="post">
+    <span id="Label1">会员账号：</span>
+    <input name="userid" type="text" style="width:100px;">
+    <input type="submit" value="搜索" />
+    <!--<a href="/admin.php/admin/recommend_tree_chart/index/userid/{$referrerid}" ><span class="label label-success radius" style="width: 40px;height: 20px;color: #000;text-align: center;line-height: 20px;">返回</span></a>-->
+</form>
+
+<ul id="org" style="display:none">
+    {if  condition="$fu_id"}
+    <li>
+        {$fu_id}<p>{$fu_name}</p>
+        <ul>
+            {volist name="list" id="vo" }
+            <li><a href="/admin.php/admin/recommend_tree_chart/index/userid/{$vo.userId|urldecode}">{$vo.userId}</a><p>{$vo.TrueName}</p>
+                <ul>
+                    {volist name="vo.xiaji" id="voo" }
+                    <li><a href="/admin.php/admin/recommend_tree_chart/index/userid/{$voo.userId|urldecode}">{$voo.userId}</a><p>{$voo.TrueName}</p>
+                        <ul>
+                            {volist name="voo.erji" id="vooo" }
+                            <li><a href="/admin.php/admin/recommend_tree_chart/index/userid/{$vooo.userId|urldecode}">{$vooo.userId}</a><p>{$vooo.TrueName}</p></li>
+                            {/volist}
+                        </ul>
+                    </li>
+                    {/volist}
+                </ul>
+            </li>
+            {/volist}
+        </ul>
+    </li>
+    {else}
+    <li>该会员不存在</li>
+    {/if}
+</ul>
+
+<div id="chart" class="orgChart"></div>
+
+<script>
+    jQuery(document).ready(function() {
+
+        /* Custom jQuery for the example */
+        $("#show-list").click(function(e){
+            e.preventDefault();
+
+            $('#list-html').toggle('fast', function(){
+                if($(this).is(':visible')){
+                    $('#show-list').text('Hide underlying list.');
+                    $(".topbar").fadeTo('fast',0.9);
+                }else{
+                    $('#show-list').text('Show underlying list.');
+                    $(".topbar").fadeTo('fast',1);
+                }
+            });
+        });
+
+        $('#list-html').text($('#org').html());
+
+        $("#org").bind("DOMSubtreeModified", function() {
+            $('#list-html').text('');
+
+            $('#list-html').text($('#org').html());
+
+            prettyPrint();
+        });
+    });
+
+</script>
+</body>
+</html>

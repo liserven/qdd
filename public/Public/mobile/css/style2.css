@@ -1,0 +1,49 @@
+.banner{width: 100%;height: 6.4rem;}
+.banner img{width: 100%}
+body{background: #2f2f2f;}
+.neirong{ color: white;    background: #1f1f1f;  padding-left: 0.2rem;  padding-top: 0.2rem;  overflow: hidden;}
+p{font-size: 0.28rem;font-family: "΢���ź�";color:#000;}
+p#jiage{font-size: 0.34rem;  color: #fed58d;  margin-top: 0.15rem;}
+p#jiage span{width: 0.62rem;height: 0.24rem;font-size: 0.18rem;color:#28bebc;border-radius: 2px;}
+p#jiage span#qiangxin{border: 1px solid #28bebc;color:#28bebc;}
+p#jiage span#quan{border: 1px solid #d8320c;color:#d8320c;}
+p#jiage01{font-size: 0.22rem;color:#666;}
+
+
+.neirong01{ background: #1f1f1f;padding-left: 0.2rem;border-top: 2px solid #2f2f2f;overflow: hidden;}
+.neirong01 p{ cursor: pointer;}
+.neirong01 p span{float: right; color:#e6e6e6;margin-right: 0.2rem;}
+.pingjia{width: 100%;height: 0.4rem;margin-top: 0.3rem;text-align: center; font-size: 0.22rem;color:#999;display: block;}
+.pingjia span{width: 0.3rem;height: 0.3rem;display: inline-block;margin-top: 0.1rem;}
+
+.kuang{width: 100%;height: 0.8rem;background: #fff;display: inline-block;font-size: 0.26rem;color:#333;line-height: 0.8rem;}
+
+.dianpu{width: 100%;height:2.3rem;background: #fff;margin-top: 0.2rem;padding-top: 0.2rem;font-size: 0.28rem;color:#333;}
+.dianpu .wenzi{width: 100%;height: 0.81rem;}
+.dianpu .wenzi p{line-height: 0.81rem;float: right;margin-right: 3rem;}
+.dianpu span.logo{width: 0.8rem;height: 0.8rem;display: inline-block;margin-left: 0.2rem;}
+
+.dianpu .shangpin{width: 33%;height: 1rem;text-align: center;margin-top: 0.2rem;display: inline-block;border-right: 1px solid #999;}
+.dianpu .shangpin p#shuzi{height: 0.5rem;font-size: 0.28rem;color:#454545;}
+.dianpu .shangpin p#hanzi{height: 0.5rem;font-size: 0.22rem;color:#999;}
+.dianpu ul{width: 30%;margin-top: 0.2rem;float: right; display: inline-block;font-size: 0.2rem;color:#999;text-align: center;}
+.dianpu ul li{margin: 0.05rem 0;}
+.dianpu ul li span{width: 0.25rem;height: 0.25rem;display: inline-block;background: #28bebc;color:#fff;text-align: center;line-height: 0.25rem;border-radius: 0.03rem;}
+.dianpu ul li span#teshu{background: #d8320c;}
+.pingjia01{width: 100%;height: 0.3rem;margin-top: 0.3rem;text-align: center; font-size: 0.22rem;color:#999;line-height: 0.3rem;display: block;}
+.pingjia01 span{width: 0.3rem;height: 0.3rem;display: inline-block;}
+.xiangqing img{width: 100%;margin-top: 0.2rem;}
+
+.dibu{width: 100%;height: 1rem;position: fixed;bottom:0;background: #353535;}
+.dibu ul{width: 2.4rem;height: 0.88rem;margin-top: 0.1rem;font-size: 0.18rem;color:#999;display: inline-block;}
+.dibu ul li{width: 50%;float: left;text-align: center;}
+.dibu ul li p{font-size: 0.18rem;color:white;}
+.dibu a#jiaru{width: 2.0rem;height: 1rem;background: #fed58d;display: inline-block;font-size: 0.26rem;color:#000;text-align: center;line-height: 1rem;float:right;}
+.dibu a#goumai{width: 2.0rem;height: 1rem;background: #1f1f1f;display: inline-block;font-size: 0.26rem;color:#fed58d;text-align: center;line-height: 1rem;float:right;}
+
+.back{position: fixed;top:0.2rem;left: 0.2rem;}
+
+
+
+
+

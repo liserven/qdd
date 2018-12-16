@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>更改订单状态</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 更改订单状态 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div style="color: red;text-align: center;">
+        <h2>此功能仅在特殊情况下使用</h2>
+        <h3>请保证该订单已付款，如若该订单没有付款，请关闭该页面</h3>
+    </div>
+    <form action="/admin.php/admin/order/changeorderstatus?act=edit" id="biaoming" method="post">
+        <div class="bk-gray" style="text-align: center">
+            <div class="col-80">订单号：</div>
+            <div class="col-300"><input type="text" class="input-text" style="width:240px" placeholder="输入订单号" id="orderno" name="orderno" value="">
+            </div>
+            <div class="col-90">来源ID：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:200px" placeholder="输入来源ID" id="userid" name="userid" value="">
+            </div>
+            <a class="btn btn-primary radius"  href="javascript:;" onClick="databack()">提交</a>
+        </div>
+    </form>
+</div>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    /*-清空用户和奖金记录*/
+    function databack(obj,id){
+        layer.confirm('确定要更改订单状态吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("order/changeorderstatus")}',
+                type:"GET",
+                data:$('#biaoming').serialize(),
+                dataType:"json",
+                success: function(data) {
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:1000});
+                        }
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

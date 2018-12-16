@@ -1,0 +1,85 @@
+﻿{include file="./public/Public/meta.html" /}
+<link href="<?php echo CSS_PATH;?>static/css/He.login.css" rel="stylesheet" type="text/css" />
+
+<meta charset="utf-8">
+<title>商家管理系统 - Supplier v1.0</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<input type="hidden" id="TenantId" name="TenantId" value="" />
+<!--<div class="header"></div>-->
+
+<div class="tip_txt c-white">商家管理系统</div>
+<div class="loginWraper_sup">
+<div class="tip_sup_box"></div>
+  <div id="loginform" class="loginBox">
+    <form id="form-supplier-login" class="form form-horizontal" method="post">
+      <div class="row cl">
+        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+        <div class="formControls col-xs-8">
+          <input id="adminname" name="adminname" type="text" placeholder="账户" class="input-text size-L">
+        </div>
+      </div>
+      <div class="row cl">
+        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+        <div class="formControls col-xs-8">
+          <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L">
+        </div>
+      </div>
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <input  class="input-text size-L" type="text" placeholder="验证码" onBlur="if(this.value==''){this.value='验证码:'}" onClick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;" name="captcha">
+          <img src="{:url('Login/captcha')}" width="100" height="40" onClick="this.src='{:url('Login/captcha')}?rand='+Math.random()"> 看不清，换一张  </div>
+      </div>
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <label for="online">
+            <input type="checkbox" name="online" id="online" value="">
+            使我保持登录状态</label>
+        </div>
+      </div>
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <input id="submitid" name="" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="footer">Copyright &copy; 2015-2017 <a href="http://www.zzfeidu.com/">飞度科技</a> All Rights Reserved
+</div>
+<script type="text/javascript" src="/public/Public/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/public/Public/static/admin/lib/layer/2.4/layer.js"></script>
+<script>
+    $(function () {
+    	$('#submitid').click(function(){
+            if($('#adminname').val()==''){
+            	layer.msg('用户名不能为空');
+            	return;
+            }
+            if($('#password').val()==''){
+            	layer.msg('密码不能为空');
+            	return;
+            }
+            $.ajax({
+                url:"{:url('Login/index')}",
+                type:"POST",
+                dataType:"json",
+                data:$('#form-supplier-login').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{},function(){
+                            window.location.href='{:url('Index/index')}';
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+    	});
+    })
+</script>
+</body>
+</html>

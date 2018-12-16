@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>忘记密码</title>
+    <meta name="viewport"  content="width=device-width,user-scalable=no">
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+
+<!-- id=innerbox 标签外面 不放任何标签  为自适应标签   -->
+<div class="innerbox" id="innerbox">
+    <div class="inner">
+        <div class="top">
+            <a class="topfan" href="javascript:history.back(-1);"><em class="iconfont icon-fanhui"></em></a>
+            <h2>手机验证</h2>
+        </div>
+        <div class="cl"></div>
+        <div class="content_ce">
+            <form id="form-member-add" method="post">
+                <div class="inputbut inputbut_ce" style="margin-top: 10px">
+                    <ul>
+                        <li>
+                            <label class="label_box label_box2 fl" for="">国家地区</label>
+                            <div class="xial_ipt fl">
+                                <input class="label_inpt label_inpt2" type="text" placeholder="中国大陆">
+                                <span class="iconfont icon-iconfontjiantou1 fr"></span>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <label class="label_box label_box2 fl" for="">+86</label>
+                            <div class="xial_ipt fl">
+                                <input class="label_inpt label_inpt2" type="text" id="mobile" name="mobile" placeholder="输入手机号码">
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <input class="label_inpt label_inpt2" type="text" placeholder="请输入验证码" name="security_code">
+                            <a class="fr yanmasix" href="#">获取验证码</a>
+                            <div class="cl"></div>
+                        </li>
+                        <li>
+                            <div class="butdiv">
+                                <button class="butden" style="background-color: #28bebc;" type="button" id="regid">提交</button>
+                                <div class="cl"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="fidinfo"></div>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        $('#regid').click(function(){
+            $.ajax({
+                url:"/api.php/member/security_code",
+                type:"post",
+                dataType:"json",
+                data: $('#form-member-add').serialize(),
+                success: function(data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{time:2000},function(){
+                            window.location.href='/mobile.php/member/reset_password?mobile='+data.mobile;
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

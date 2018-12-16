@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>购物车</title>
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+
+<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+<script>
+    $(document).ready(function() {
+        var srcImg =$('img').attr('src');
+        alert(srcImg);
+    });
+</script>
+
+</head>
+<body class="backmall" style="background: #1f1f1f" ng-app="cartApp" ng-controller="cartCtrl" ng-cloak >
+
+<!-- id=innerbox 标签外面 不放任何标签  为自适应标签   -->
+<div class="pdindeix" id="innerbox">
+    <div class="inner">
+       <div class="top" style="background: #1f1f1f">
+          <div style="width: 45px;position: absolute;width: 25px;top: 25px;left: 20px;">
+                <!--{if condition="isset($http_referer)"}-->
+                    <!--{if condition="strpos($http_referer,'name')"}-->
+                       <!--<a href="<?php echo config('API_URL');?>/mobile.php/member/userinfo">-->
+                        <!--<img src="/public/Public/wap/images/zjt.png" style="width:45px;" alt=""></a>-->
+                    <!--{else}-->
+                        <a href="javascript:history.go(-1);">
+                        <img src="/public/Public/wap/images/zjt.png" style="width:45px;" alt=""></a>
+                    <!--{/if}-->
+                <!--{/if}-->
+            </div>
+           <h2>购物车</h2>
+       </div>
+       <div class="cl"></div>
+
+       <form method="post" action="/mobile.php/order/affirm" id="form-cart-settle">
+      <div ng-repeat="v in cartlist" class="cartList" >
+      <div class="chafen" style="background: #353535;display: none">
+          <a href="#" style="color:white;">{{v.supname}}<em class="iconfont icon-youjiantou1"></em></a>
+      </div>
+
+       <div class="con_item con_itemms1" style="background: #353535">
+           <!--<div class="test" style="margin-bottom: -50px;margin-left: 80px"><span>满减</span>购满4件，即享优惠</div>-->
+             <ul>
+                   <li ng-repeat="(key,vo) in v.sub" style="    border-bottom: 2px solid;">
+                       <div style="margin-top: 50px;" ng-if="key == 0"></div>
+                       <input type="checkbox"  style="width: 30px;height: 30px;float: left;margin-left: -40px;margin-top: 60px;display: none" name="proids[]" value="{{vo.id}}" id="id_{{vo.id}}" ng-if="vo.status == 0">
+                       <input type="checkbox"  style="width: 30px;height: 30px;float: left;margin-left: -40px;margin-top: 60px;display: none" name="proids[]" value="{{vo.id}}" id="id_{{vo.id}}" ng-if="vo.status == 1" checked="checked">
+                       <img src="<?php echo CSS_PATH;?>mobile/img/qux1.png" style="float: left;margin-left: -40px;margin-top: 60px;" data-ng-click="select(vo.id)" id="img_{{vo.id}}" name="image[]" ng-if="vo.status == 0"/>
+                       <img src="<?php echo CSS_PATH;?>mobile/img/qux.png" style="float: left;margin-left: -40px;margin-top: 60px;" data-ng-click="select(vo.id)" id="img_{{vo.id}}" name="image[]" ng-if="vo.status == 1"/>
+                       <div class="pdbox">
+                         <div class="leftpic leftpicmms fl">
+                               <a href="/mobile.php/goods/{{vo.proid}}"><img src="{{vo.img}}" alt=""></a>
+                         </div>
+                         <div class="fr dinspul">
+                               <div class="text_min text_min2">
+                                     <p style="color: white">{{vo.proname}}.</p>
+                               </div>
+                               <div class="cl"></div>
+                               <div class="chimabox">
+                                   <p>颜色分类：<span>{{vo.procolor}};</span>尺码：<span>{{vo.stylename}}</span></p>
+                               </div>
+                               <div class="cl h20"></div>
+                              <div class="">
+                               <div class="pric pric_2 fl">
+                                   <!--<p ng-if="vo.shopprice != 0 && vo.consumeintegral == 0"><em>￥</em><span>{{vo.shopprice}}元</span></p>-->
+                                   <!--<p ng-if="vo.consumeintegral != 0 && vo.shopprice == 0"><span class="bifen"></span><span>{{vo.consumeintegral}}</span>积分</p>-->
+                                   <!--<p ng-if="vo.shopprice != 0 && vo.consumeintegral != 0"><em>￥</em><span>{{vo.shopprice}}元+</span><span class="bifen"></span>积分<span>{{vo.consumeintegral}}</span></p>-->
+                                   <p ng-if="vo.shopprice != 0" style="color: #fed58d"><em style="color: #fed58d">￥</em><span>{{vo.shopprice}}元</span></p>
+                                   <div class="cl"></div>
+                                   <!--<div style="font-size: 20px;margin-top: 5px;color: #d8320c;" ng-if="vo.giveintegral > 0">赠积分：{{vo.giveintegral}}</div>-->
+                               </div>
+                                  <div style="float: right;font-size: 30px;margin-top:0px;margin-left: 10px;" ng-click="delGoods(vo.id)">
+                                      <img src="/public/Public/mobile/img/shanchu.png" alt=""></div>
+                               <div class="babenpust fr" style="float: right;border:0">
+                                    <span class="cut" ng-click="reduce(vo.id)" style="display: inline-block;line-height: 50px;width: 50px;height: 50px;text-align: center;font-size: 35px;color: #000;float: left;background: #fed58d;" id="reduce_{{vo.id}}" ng-if="vo.pronum == 1">-</span>
+                                    <span class="cut" ng-click="reduce(vo.id)" style=" display: inline-block;line-height: 50px;width: 50px;height: 50px;text-align: center;font-size: 35px;color: #000;float: left;background: #fed58d;"  id="reduce_{{vo.id}}" ng-if="vo.pronum > 1">-</span>
+                                    <input style="display: inline-block;line-height: 50px;width: 62px;text-align: center;font-size: 30px;color: rgba(255,255,255,0.8);border: none;outline: none;float: left;background: #353535;" class="num" readonly type="text" value="{{vo.pronum}}" id="{{vo.id}}">
+                                    <span class="add" ng-click="increase(vo.id)" style="display: inline-block;line-height: 50px;width: 50px;height: 50px;text-align: center;font-size: 35px;color: #000;float: left;background: #fed58d;">+</span>
+                                    <div class="cl"></div>
+                              </div>
+
+                               <div class="cl"></div>
+                               </div>
+                               <div class="cl"></div>
+                         </div>
+                         <div class="cl"></div>
+                        </div>
+                   </li>
+             </ul>
+             <div class="cl"></div>
+       </div>
+      </div>
+        <div style="height:200px; width:100%; clear:both;"></div>
+       </form>
+    </div>
+</div>
+
+<!-- 结算 -->
+<div class="suanbox" style="margin-bottom: 68px;
+    padding-bottom: 0px;background: #353535">
+      <div class="bgxuan">
+            <div class="quantext fl" ng-click="selectAll($event)" style="color: white">全选</div>
+            <div class="hali fl">
+                <!--<p>合计：<span>￥<em><span id="sum_money1">{{sum_money}}元</span>+<span>{{sum_integral}}积分（赠：{{sum_giveintegral}}）</span></em></span></p>-->
+                <p style="font-size: 28px;color:white;">合计：<span style="color: #fed58d">￥<em><span id="sum_money1" style="color: #fed58d">{{sum_money}}元</span></em></span></p>
+            </div>
+            <a class="suanwa fr" href="#" ng-click="settle()" style="color: #000000;font-size:30px;background: #fed58d">结算<!--（<span id="sum_money2">0</span>）--></a>
+            <div class="cl"></div>
+      </div>
+</div>
+
+<!-- 结算end -->
+
+<!-- 底部固定导航 -->
+{:widget('Common/mobile_footer')}
+
+<!-- 底部固定导航end -->
+</body>
+<div class="fidinfo"></div>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<script type="text/javascript">
+           var app = angular.module('cartApp', []);
+           app.controller('cartCtrl', function($scope, $http) {
+               $scope.empty=false;
+               $scope.selectStatus=true;
+               $scope.select=function(id){
+                   if($('#img_'+id).attr('src')=='/public/Public/mobile/img/qux1.png'){
+                       $('#img_'+id).attr('src','/public/Public/mobile/img/qux.png');
+                       $('#id_'+id).attr('checked','checked');
+                       $scope.selectAction(id,1);
+                   }else if($('#img_'+id).attr('src')=='/public/Public/mobile/img/qux.png'){
+                       $('#img_'+id).attr('src','/public/Public/mobile/img/qux1.png');
+                       $('#id_'+id).removeAttr('checked');
+                       $scope.selectAction(id,0);
+                   }
+               };
+
+               $scope.selectAll=function(event){
+                   if($scope.selectStatus){
+                       $(":input[type='checkbox'] + img").attr('src','/public/Public/mobile/img/qux.png');
+                       $(":input[type='checkbox']").attr('checked','checked');
+                       event.target.setAttribute('class','quantext2 fl');
+                       $scope.selectStatus=false;
+                       $http.get("/api.php/cart/status?action=all")
+                           .success(function (response) {
+                               $scope.sum_money = response.sum_money;
+                               $scope.sum_integral = response.sum_integral;
+                               $scope.sum_giveintegral = response.sum_giveintegral;
+                           });
+                   }else{
+                       $(":input[type='checkbox'] + img").attr('src','/public/Public/mobile/img/qux1.png');
+                       $(":input[type='checkbox']").removeAttr('checked');
+                       event.target.setAttribute('class','quantext fl');
+                       $scope.selectStatus=true;
+                       $http.get("/api.php/cart/status?action=nothing")
+                           .success(function (response) {
+                               $scope.sum_money = response.sum_money;
+                               $scope.sum_integral = response.sum_integral;
+                               $scope.sum_giveintegral = response.sum_giveintegral;
+                           });
+                   }
+               };
+               $scope.selectAction=function(id,status){
+                   $http.get("/api.php/cart/status?id="+id+"&status="+status)
+                       .success(function (response) {
+                           $scope.sum_money = response.sum_money;
+                           $scope.sum_integral = response.sum_integral;
+                           $scope.sum_giveintegral = response.sum_giveintegral;
+                       });
+               };
+
+               $scope.settle=function(){
+                   $http.get("/api.php/cart/status?action=check&ishit=1")
+                       .success(function (response) {
+                           if(response.status==1){
+                               window.location.href='/mobile.php/order/affirm';
+                           }else{
+                               layer.msg(response.msg);
+                           }
+                       });
+               };
+               /**
+                * 购物车中商品数量的减少
+                */
+               $scope.reduce=function(cartid){
+                   $http.get("/api.php/cart/update?act=reduce&cartid="+cartid)
+                       .success(function (response) {
+                           if(response.status==1){
+                               //layer.msg(response.msg);
+                               var id=cartid;
+                               $scope.sum_money = response.data.shopcartsum;
+                               $scope.sum_integral = response.data.shoppvsum;
+                               $scope.sum_giveintegral = response.data.shopgivepvsum;
+                               angular.element('#'+id).val(response.data.pronum);
+                               if(angular.element('#'+id).val()==1){
+//                                   angular.element('#reduce_'+id).attr('style','color:#E5E5E5');
+                               }
+                               //getProNum();
+                           }
+                       });
+               };
+               /**
+                * 购物车中商品数量的增加
+                */
+               $scope.increase=function(cartid){
+                   $http.get("/api.php/cart/update?act=increase&cartid="+cartid)
+                       .success(function (response) {
+                           if(response.status==1){
+                               //layer.msg(response.msg);
+                               var id=cartid;
+                               $scope.sum_money = response.data.shopcartsum;
+                               $scope.sum_integral = response.data.shoppvsum;
+                               $scope.sum_giveintegral = response.data.shopgivepvsum;
+                               angular.element('#'+id).val(response.data.pronum);
+//                               angular.element('#reduce_'+id).attr('style','color:#666666');
+                              // getProNum();
+                           }else{
+                               layer.msg(response.msg);
+                           }
+                       });
+               };
+               /**
+                * 购物车中商品的删除
+                * @param event
+                */
+               $scope.delGoods=function(cartid){
+                   layer.confirm('<span style="color:#303030;">确认要删除吗？</span>',{icon: 3, title:'删除提示',
+                       btn: ['确认','取消'] //按钮
+                   },function(){
+                       $http.get("/api.php/cart/delete?cartid="+cartid)
+                           .success(function (response) {
+                               if(response.status==1){
+                                   layer.msg(response.msg,{},function(){
+                                       window.location.href='/mobile.php/cart/list';
+                                   });
+                                  // getProNum();
+                               }else{
+                                   layer.msg(response.msg);
+                               }
+                           });
+                   });
+               };
+               $http.get("/api.php/cart/list?ishit=1")
+                   .success(function (response) {
+                       if(response.status==1){
+                           $scope.cartlist = response.data.data_list;
+                           $scope.goods_num = response.data.goods_num;
+                           $scope.sum_money = response.data.sum_money;
+                           $scope.sum_integral = response.data.sum_integral;
+                           $scope.sum_giveintegral = response.data.sum_giveintegral;
+                       }else if(response.msg=='购物车为空'){
+                          //location.href='/mobile.php/cart/empty';
+                          location.href='/mobile.php/cart/empty?http_referer={$http_referer}';
+                       }else
+                       {
+                           $scope.empty=true;
+                       }
+                   });
+           });
+           /*function getProNum(){
+               sum_money2
+               var num=0;
+               var proType=$('.cartList li').size();
+               for(var i=0;i<proType;i++){
+                   var singleNum = $('.cartList .num').eq(i).val();
+                   num = Number(num)+Number(singleNum);
+               }
+               $('#sum_money2').html(num);
+           }*/
+       </script>
+</html>

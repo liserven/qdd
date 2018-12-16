@@ -1,0 +1,153 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商品入库 - 库存管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 库存管理 <span class="c-gray en">&gt;</span> 库存列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+    <div class="bk-gray">
+        <div class="col-80">商品ID：</div>
+        <div class="col-200"><input type="text" name="keyproid" id="keyproid" value="{$Request.param.keyproid}" placeholder="输入商品ID" style="width:150px" class="input-text"></div>
+        <div class="col-90">商品名称：</div>
+        <div class="col-300"><input type="text" name="keyproname" id="keyproname" value="{$Request.param.keyproname}" placeholder="输入商品名称" style="width:240px" class="input-text"></div>
+        <div class="col-80">商品分类：</div>
+        <div class="col-200">
+            <span class="select-box" style="width:120px">
+              <select class="select" size="1" name="productcate">
+                <option value="">请选择</option>
+                  {volist name='cate' id='vm'}
+                <option value="{$vm.Id}" {if condition="$Request.param.productcate eq $vm.Id"}selected{/if}>{$vm.name}</option>
+                  {/volist}
+              </select>
+            </span>
+        </div>
+        <div class="f-r mt-5"><button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('');$('select option').val('');"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+    </div>
+    </form>
+    
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span> 
+    </div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover">
+            <thead>
+                <tr class="text-c">
+                    <th>商品ID</th>
+                    <th>商品</th>
+                    <th>商品分类</th>
+                    <!--<th width="50">单位</th>-->
+                    <!--<th width="100">显示位置</th>-->
+                    <th width="180">颜色</th>
+                    <th width="180" style="border-left:0">商品规格</th>
+                    <th width="100" style="border-left:0">商品库存</th>
+                    <th width="80" style="border-left:0">未付款订单</th>
+                    <th width="80" style="border-left:0">未发货订单</th>
+                    {if condition="$Think.session.supplierid neq '1'"}
+                    <th width="200">操作</th>
+                    {/if}
+                </tr>
+            </thead>
+            <tbody>
+                {volist name="prolist" id="vo"}
+                    <tr class="text-c va-m">
+                        <td>{$vo.proid}</td>
+                        <td class="text-l">
+                            <dd class="f-l mr-10"><img src="{$vo.img}" alt="{$vo.proname}" width="80" height="80"></dd>
+                            <!--<u style="cursor:pointer" class="text-primary c-blue" onclick="_show('查看商品详细信息','{:url('Product/productShow',['proid'=>$vo['proid']])}','10001')">-->
+                                {$vo.proname}
+                            <!--</u>-->
+                        </td>
+                        <td>{:getpcnamebyid($vo['categoryid'])}<br>{:getpcnamebyid($vo['categorycode'])}<br>{:getpcnamebyid($vo['categorythird'])}</td>
+                        <!--<td>{$vo.unit}</td>-->
+                        <!--<td>-->
+                            <!--{if condition="$vo['ishit'] eq 2"}-->
+                            <!--<span class="label label-default radius">消费区</span><br>-->
+                            <!--{/if}-->
+                            <!--{if condition="$vo['ishit'] eq 1"}-->
+                            <!--<span class="label label-default radius">注册区</span><br>-->
+                            <!--{/if}-->
+                            <!--{if condition="$vo['ishit'] eq 3"}-->
+                            <!--<span class="label label-default radius">复消区</span><br>-->
+                            <!--{/if}-->
+                            <!--{if condition="$vo['ishit'] eq 4"}-->
+                            <!--<span class="label label-default radius">商城</span><br>-->
+                            <!--{/if}-->
+                            <!--{if condition="$vo['ishit'] eq 5"}-->
+                            <!--<span class="label label-default radius">重复消费区</span><br>-->
+                            <!--{/if}-->
+                            <!--{if condition="$vo['ishit'] eq 6"}-->
+                            <!--<span class="label label-default radius">积分兑购区</span><br>-->
+                            <!--{/if}-->
+                        <!--</td>-->
+                        <td colspan="5" style="padding:0">
+                          <table border="0" width="100%">
+                            <tbody>
+                              {volist name="vo['voo']" id="von"}
+                              <tr {if condition="$i eq count($vo['voo'])"}class="" {else /} class="box-border-b"{/if}>
+                                <td width="180" style="border:0">{$von['stylename1']}&emsp;</td>
+                                <td width="180" style="border:0">{$von['stylename']}&emsp;</td>
+                                <td width="100" style="border:0">{:kucunaccount($von['styleid'],'kkcc')}</td>
+                                <td width="80" style="border:0">{:kucunaccount($von['styleid'],'wfkkccww')}</td>
+                                <td width="80" style="border:0">{:kucunaccount($von['styleid'],'kkccww')}</td>
+                              </tr>
+                              {/volist}
+                            </tbody>
+                          </table>
+                        </td>
+                        {if condition="$Think.session.supplierid neq '1'"}
+                        <td width="200">
+                        <a style="text-decoration:none" class="ml-5" onClick="_add('商品入库','{:url('Stock/stock_action',['act'=>'add','proid'=>$vo['proid']])}','','','500')" href="javascript:;" title="商品入库"><span class="btn btn-warning radius"><i class="Hui-iconfont">&#xe692;</i> 入库</span></a>&nbsp;<a style="text-decoration:none" class="ml-5" onClick="_out('商品出库','{:url('Stock/stock_action',['act'=>'out','proid'=>$vo['proid']])}','','','500')" href="javascript:;" title="商品出库"><span class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6ab;</i> 出库</span></a>
+                        </td>
+                        {/if}
+                    </tr>
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+/*-查看*/
+function _show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+/*-入库*/
+function _add(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-出库*/
+function _out(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+$(function(){
+	//跳转页
+	$('#jump').blur(function(){
+		var url=$('.jumpnum').attr("href");
+		//var strs=url.substr(0,25);
+		var strs=url;
+		var value=this.value;
+		var all=$('.all').attr("title");
+		var i=parseFloat(all);//将字符转化成数字
+		if(value<=i && !isNaN(value) && value>0){
+			value=Math.ceil(value);
+		}else{
+			value='';
+		}
+		var newurl=strs+value;
+		$('.jumpnum').attr("href",newurl);
+	});
+});
+</script>
+</body>
+</html>

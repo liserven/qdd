@@ -1,0 +1,102 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>修改文章 - 资讯管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form class="form form-horizontal" id="form_article_edit">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>文章标题：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.title}" placeholder="" id="title" name="title">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">文章摘要：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <textarea id="remark" name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...最多输入200个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{$list.remark}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>文章类型：</label>
+            <div class="formControls col-xs-10 col-sm-9"> <span class="select-box">
+				<select name="categoryid" class="select">
+                    <option value="{$list.categoryid}">{:getcolumncatenamebycid($list['categoryid'])}</option>
+                    {volist name="clist" id="voc"}
+                    <option value="{$voc.id}">{$voc.categoryname}</option>
+                    {/volist}
+				</select>
+				</span> </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">文章内容：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <script id="editor" name="content" type="text/plain" style="width:100%;height:400px;">{$list.content}</script>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+            </div>
+        </div>
+    </form>
+</article>
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        var ue = UE.getEditor('editor');
+        $("#form_article_edit").validate({
+            rules:{
+                title:{
+                    required:true,
+                    minlength:2,
+                },
+                keywords:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'/admin.php/admin/news/news_edit/action/edit/id/{$list.id}',
+                    type:"POST",
+                    data:$('#form_article_edit').serialize(),
+                    success: function(data) {
+                        var res = String($.trim(data));
+                        if(res=="titleerror"){
+                            alert("标题不能为空！");
+                        }else if(res=="contenterror"){
+                            alert("内容不能为空！");
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('恭喜您修改成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

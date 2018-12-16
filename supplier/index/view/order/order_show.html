@@ -1,0 +1,110 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>订单详情 - 订单管理</title>
+</head>
+<body>
+<div class="page-container" style="padding-top:0">
+    <div class="pos-r">
+        <div class="Huialert Huialert-error mt-20" style="margin-bottom:10px">订单号：{$orderinfo.innerorderid}<span class="label label-default radius f-r mr-30 mt-5"></span></div>
+        <button class="btn btn-primary radius size-S pos-a" style="top:6px; right:15px" onClick="window.print()"><i class="Hui-iconfont f-18">&#xe652;</i></button>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover mt-10">
+        <thead>
+            <tr class="text-c">
+                <th width="80">收货地址</th>
+                <td class="text-l">{$orderinfo.receivename}，{$orderinfo.usertel}，{$orderinfo.province} {$orderinfo.city} {$orderinfo.county} {$orderinfo.address}</td>
+            </tr>
+            <tr class="text-c">
+                <th class="c-danger">客户留言</th>
+                <td class="text-l">{$orderinfo.message}</td>
+            </tr>
+            <if condition="$orderinfo[adminmessage] neq null">
+            <tr class="text-c">
+                <th class="c-success">管理员备注</th>
+                <td class="text-l">{$orderinfo.adminmessage}</td>
+            </tr>
+            </if>
+        </thead>
+    </table>
+    <table class="table table-border table-bordered table-bg table-hover mt-10">
+        <thead>
+            <tr class="text-c">
+                <th>会员</th>
+                <td colspan="3" class="text-l">{$orderinfo['userid']}<cite class="c-999">(会员系统账户{$orderinfo['userid']})</cite></td>
+            </tr>
+            <tr class="text-c">
+                <th>供应商</th>
+                <td colspan="3" class="text-l">{:supnamebysupid($orderinfo['supplierid'])}(<font class="c-error">{$orderinfo['supplierid']}</font>)&ensp;{:getsupmobilebysupid($orderinfo['supplierid'])}</td>
+            </tr>
+            <tr class="text-c">
+                <th width="80">下单时间</th>
+                <td class="text-l">{$orderinfo.adddate|strtotime|date="Y-m-d H:i:s",###}</td>
+                <th width="80">付款时间</th>
+                <td class="text-l">
+                {if condition="($orderinfo['status'] egt 2) and ($orderinfo['status'] lt 10)"}
+                {$orderinfo.paydate|strtotime|date="Y-m-d H:i:s",###}
+                {/if}
+                </td>
+            </tr>
+            <tr class="text-c">
+            	{if condition="$orderinfo['expcompanyid'] neq 0"}
+                <th width="80">物流信息</th>
+                <td class="text-l">{:getexpnamebyid($orderinfo['expcompanyid'])}，{$orderinfo.awbno}</td>
+           		{/if}
+                {if condition="($orderinfo['status'] egt 4) and ($orderinfo['status'] lt 10)"}
+                <th width="80">发货时间</th>
+                <td class="text-l">{$orderinfo.deliverdate|strtotime|date="Y-m-d H:i:s",###}</td>
+                {/if}
+            </tr>
+            <tr class="text-c">
+                {if condition="($orderinfo['status'] eq 8)"}
+                <th width="80">收货时间</th>
+                <td colspan="3" class="text-l">{$orderinfo.receivedate|strtotime|date="Y-m-d H:i:s",###}</td>
+                {/if}
+            </tr>
+        </thead>
+    </table>
+    <table class="table table-border table-bordered table-bg table-hover mt-10">
+        <thead>
+            <tr class="text-c">
+                <th>ID</th>
+                <th>商品名称</th>
+                <th>规格</th>
+                <th>单位</th>
+                <th>单价(元)</th>
+                <th>积分</th>
+                <th>数量</th>
+                <th>实付款(元)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="orderdetail" id="vo"}
+            <tr class="text-c va-m">
+                <td>{$vo.proid}</td>
+                <td class="text-l">{:getcpnamebycpid($vo['proid'])}</td>
+                <td>{:getpsizetxmbypsid($vo['styleid'])}</td>
+                <td>{:getunitbycpid($vo['proid'])}</td>
+                <td>{$vo['price']}</td>
+                <td>{:getcppvobysid($vo['styleid'])}</td>
+                <td>{$vo['pronum']}</td>
+                <td><?php echo $vo['price']*$vo['pronum'].'元'?></td>
+            </tr>
+            {/volist}
+        </tbody>
+        <thead>
+            <tr class="text-c">
+                <th width="50">合计</th>
+                <th colspan="6"></th>
+                <th>{$orderinfo['orderamount']}元(含运费:{$orderinfo['freight']}元)</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+
+</body>
+</html>

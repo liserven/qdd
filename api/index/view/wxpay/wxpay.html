@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>pc微信支付</title>
+    <style>
+        dd, dt, body, div, a, span, img, h1, h2, h3, h4, h5, h6, p, ul, li, ol, dl, input {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+            font-family: "微软雅黑";
+            font-style: normal;
+        }
+
+        body {
+            width: 100%;
+            background: #ffffff;
+        }
+
+        .neirong {
+            width: 1000px;
+            background: #FFFFFF;
+            margin: auto;
+            position: relative;
+        }
+
+        .top {
+            margin-top: 10px;
+        }
+
+        .danhao {
+            float: left;
+            font-family: "微软雅黑";
+            font-size: 14px;
+            color: #333;
+            margin-left: 15px;
+        }
+
+        .tijiao {
+            width: 100%;
+            height: 25px;
+            padding-top: 15px;
+        }
+
+        .jine {
+            float: right;
+            font-family: "微软雅黑";
+            font-size: 12px;
+            color: #333;
+            margin-right: 15px;
+        }
+
+        .jiage {
+            font-family: "微软雅黑";
+            font-size: 16px;
+            color: #e31613;
+        }
+
+        .tijiao1 {
+            width: 100%;
+            height: 25px;
+        }
+
+        .jine1 {
+            float: right;
+            font-family: "微软雅黑";
+            font-size: 12px;
+            color: #67a4ff;
+            margin-right: 15px;
+            cursor:pointer;
+        }
+
+        .zhixian {
+            width: 940px;
+            height: 35px;
+            border-bottom: 1px solid #dddddd;
+            margin: auto;
+        }
+
+        .shouhuo {
+            font-family: "微软雅黑";
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            margin-left: 30px;
+        }
+
+        .xiangqing {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .beijing {
+            width: 1030px;
+            height: 540px;
+            margin: auto;
+        }
+
+        .bjt {
+            width: 1030px;
+            height: 540px;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .wxzf {
+            width: 540px;
+            height: 540px;
+        }
+
+        .weixin {
+            font-family: "微软雅黑";
+            font-size: 18px;
+            color: #333;
+            padding-top: 28px;
+            padding-left: 45px;
+        }
+
+        .shuaxin {
+            font-family: "微软雅黑";
+            font-size: 14px;
+            color: #666;
+            float: right;
+            margin-top: 5px;
+            margin-right: 70px;
+        }
+
+        .erweima {
+            float: right;
+            margin-right: 35px;
+            margin-top: 20px;
+        }
+
+        .shouji {
+            float: right;
+            margin-right: 15px;
+            margin-right: 14%;
+            margin-top: 60px;
+        }
+
+        .anniu {
+            margin-top: 340px;
+        }
+
+        .anniu button {
+            width: 22%;
+            height: 40px;
+            border-radius: 5px;
+            background: #dedede;
+            border: none;
+            font-family: "微软雅黑";
+            font-size: 16px;
+            color: #999;
+            float: left;
+            margin-left: 223px;
+            cursor:pointer;
+        }
+
+        .anniu2 button {
+            width: 22%;
+            height: 40px;
+            border-radius: 5px;
+            background: #28bebc;
+            border: none;
+            font-family: "微软雅黑";
+            font-size: 16px;
+            color: #fff;
+            float: right;
+            margin-right: 57px;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="neirong">
+    <div class="top"><img src="/public/Public/static/images/logo1.png"></div>
+    <div class="tijiao">
+        <p class="danhao">订单提交成功，请尽快付款！订单号：{$orderno}</p>
+        <p class="jine">应付金额<span class="jiage">{$usermoney}</span>元</p>
+    </div>
+    <div class="tijiao1">
+        <!--<p class="jine1" onclick="_show('查看商品详细信息','/index.php/order/show?orderno={$orderno}')">订单详情</p>-->
+        <p class="jine1" onclick="show()">订单详情</p>
+
+    </div>
+    <div class="zhixian"></div>
+    <div class="xiangqing">
+        <p class="shouhuo">收货地址：{$addre} &nbsp;&nbsp;&nbsp;&nbsp;收货人：{$receivename} &nbsp;&nbsp;&nbsp;&nbsp; 联系方式：{$uertel}</p>
+        <p class="shouhuo">商品名称：{$goodname}</p>
+    </div>
+</div>
+<div class="beijing">
+    <img class="bjt" src="/public/Public/static/images/beijingtu1.png">
+    <img class="shouji" src="/public/Public/static/images/tupian1.png">
+
+    <div class="wxzf">
+        <p class="weixin">微信支付 <a class="shuaxin">此二维码有效期为2个小时,请尽快支付</a></p>
+        <img class="erweima" src="{$erweima}" style="width: 302px;height: 302px;">
+        <div class="anniu">
+            <button onclick="history.back();">取消支付</button>
+        </div>
+        <div class="anniu2">
+            <button onclick="queryOrderStatus()">支付完成</button>
+        </div>
+    </div>
+</div>
+
+</body>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    var qrTimer = null;
+    setTimeout(function () {
+        qrTimer = setInterval(queryOrderStatus, 2000);
+    }, 2000);
+
+    /**
+     * 查询订单状态
+     */
+    function queryOrderStatus() {
+        $.ajax({
+            type: "GET",
+            url: "/api.php/index/payment/queryOrderStatus",
+            data:'orderno={$orderno}',
+            dataType: "json",
+            timeout: 2000,
+            success: function (result) {
+                if (result.status == 1) {
+                    layer.msg(result.msg,{icon:1,time:1000},function(){
+                        payComplete(result.orderno);
+                    });
+
+                } else {
+                    // 不做操作
+                }
+            }
+        });
+    }
+
+    function payComplete(orderno) {
+        location.href='/index.php/index/Pay/paysuccess/orderno/'+orderno;
+    }
+
+    /*-查看*/
+    function _show(title,url,w,h){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+    function show(){
+        var css=$(".xiangqing").css('display');
+        if(css=='none'){
+            $(".xiangqing").css('display','block');
+        }else{
+            $(".xiangqing").css('display','none');
+        }
+    }
+</script>
+</html>

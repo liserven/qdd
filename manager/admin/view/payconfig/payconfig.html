@@ -1,0 +1,102 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>系统管理 - 支付配置</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-member-recharge">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">微信APPID：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.wxappid}" placeholder="" id="wxappid" name="wxappid">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">微信MCHID：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.wxmchid}" placeholder="" id="wxmchid" name="wxmchid">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">微信KEY：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.wxkey}" placeholder="" id="wxkey" name="wxkey">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">微信APPSECRET：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.wxappsecret}" placeholder="" id="wxappsecret" name="wxappsecret">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">支付宝APP_ID：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.aliapp_id}" placeholder="" id="aliapp_id" name="aliapp_id">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">支付宝私匙：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.merchant_private_key}" placeholder="" id="merchant_private_key" name="merchant_private_key">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">支付宝公匙：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.alipay_public_key}" placeholder="" id="alipay_public_key" name="alipay_public_key">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        var flag1=true;
+        $type=$("#radio_1").val();
+        $("#form-member-recharge").validate({
+            rules:{
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                if (flag1) {
+                    flag1 = false;
+                    $.ajax({
+                        url:'/admin.php/admin/Payconfig/payconfig',
+                        type:"POST",
+                        data:$('#form-member-recharge').serialize(),
+                        success: function(data) {
+                            if(data.code==200){
+                                layer.msg(data.msg,{icon:1,time:1000},function(){
+                                   location=location;
+                                });
+                            }
+                        }
+                    });
+                }
+                else{
+                    layer.msg('请不要重复提交',{icon:1,time:1000});
+                }
+
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

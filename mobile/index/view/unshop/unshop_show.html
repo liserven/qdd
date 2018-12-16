@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7;IE=edge,chrome=1">
+    <meta name="viewport"  content="width=device-width,user-scalable=no">
+    <title>联盟商家详情</title>
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        body{ background: #f2f2f2;}
+        .top{ width: 100%; height: 40px;background: #ccc;position: fixed;top:0px;}
+        .zhanwei{width: 100%; height: 40px;background: #ccc;}
+        .neirong{ width: 100%;height:0px; }
+        .neirong .dingbu{width: 100%;height: 50px;overflow: hidden;}
+        .neirong .dingbu .kuang{width: 65%;height: 23px; margin:10px auto; background: #fafafa; border-radius:10px; border: 1px solid #9aa7ad;padding: 5px 10px; color:#999;opacity: 0.8;font-family: "苹方";font-size:20px;line-height: 20px;}
+        .neirong .dingbu .kuang .icon01{ width:35px;height: 35px;float:left;}
+        .neirong .dingbu .kuang .icon02{ float:right;}
+        .neirong .dingbu .zuo{float: left; margin-left: 15px; margin-top: 15px;color:#666;font-family: "微软雅黑"; font-size: 20px;}
+        .neirong .shoutu{position:relative}
+        .neirong .shoutu .banner .kuai{width: 117px;height: 36px;background: #e70000; position: absolute;top:0;left:0; font-size: 20px;font-family:"苹方";color:#fff;text-align: center;line-height: 36px;cursor:pointer;}
+        .neirong .shoutu .biaoti{height: 35px;margin:10px 20px;font-size: 20px;font-family:"苹方";color:#363636;font-weight: bold;}
+        .neirong .shoutu .biaoti span{float: right;}
+        .neirong .shoutu .wuxing{margin-left: 20px;}
+        .neirong .shoutu .xiaofei{font-size: 18px;font-family:"苹方";color:#434343;margin-left: 20px;}
+        .neirong .shoutu .xiaofei span{color:#e70000;font-size: 28px;}
+        .neirong .shoutu .wenzi{color:#434343;font-size: 18px;font-family:"苹方";margin-left: 20px;}
+        .neirong .xiangqing .jieshao{ width: 117px;height: 36px;background: #e70000;font-size: 20px;font-family:"苹方";color:#fff;text-align: center;line-height: 36px;cursor:pointer;}
+        .neirong .xiangqing .xiangqingtu{width: 100%;}
+    </style>
+</head>
+<body>
+<div class="neirong">
+
+    <div style="width: 100%; height: 50px; background-color: #D8320C;">
+        <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+            <a href="javascript:history.back(-1);">
+                <img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;"></a></div>
+        <div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;">
+        </div>
+        <div style="width:25%; margin-left: 30%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">联盟商家</div>
+    </div>
+
+    <div class="shoutu">
+
+        <div class="banner" ><img onerror="this.src='/public/Public/static/images/Unshop/5-160914192R6-51.gif'" style="width: 100%;" src="{$udetails.SupplierBannerForApp}" alt="" />
+
+        <div class="biaoti"><font style="font-size: 18px;">{$udetails.Name}</font>
+            <span>
+            </span>
+        </div>
+        <div class="xiaofei"><font style="font-size: 17px;">人均消费：<span style="font-size:17px;">{$udetails.WithdrawalAmountLimit}元</span></font></div>
+        <div class="wenzi"><font style="font-size: 17px;">营业时间：09:00--21:00 <br> 联系电话：{$udetails.Mobile}</font></div>
+
+    </div>
+    <div class="xiangqing" style="margin-top: 20px">
+        <div class="jieshao"><font style="font-size: 17px;">商家介绍</font></div>
+        <div class="xiangqingtu" style="width:90%;margin-left: 5%;">
+            {$udetails.Remark}
+                <!--<cite class="c-999">选择实体店联盟商家消费，可于{:otherconfig()['companyName']}线下运营中心兑购【消费金额50%】的等价产品；或可选择加入{:otherconfig()['companyName']}【消费宝】享受联盟消费分红，打造跨界消费新时代！！</cite>-->
+
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!-- 顶部内容 begin -->
+<div class="w-hd" id="toptoolbar">
+    <div class="w-top">
+        <div class="top-toolbar">
+            <ul class="left">
+                <li class="logininfo" id="userLoginInfo">
+                    <span>欢迎访问飞度商城！</span>
+                    <if condition="$Think.session.username eq null">
+                    <a href="{:U('login/login_user')}" rel="nofollow">请 <b>登录</b></a>
+                    <span id="isLogin" style="display:none">0</span>
+                    <else />
+                    <span id="isLogin" style="display:none">1</span>
+                    <span><a href="{:U('user/user')}"><b class="f-14">{$Think.session.username}</b></a>  <a href="{:U('login/login_out_user')}">注销</a></span>
+                    </if>
+                </li>
+            </ul>
+            <ul class="right">
+                <li class="ttnav_gz"> <a class="a-greyish" href="" rel="nofollow"><i class="Hui-iconfont f-12 c-error">&#xe682;</i> 关注商城 <b class="common-bg cart-arrow"></b></a>
+                	<span class="blank none">&nbsp;</span>
+                    <div class="gz_box"><img src="" alt=""><img src="<?php echo CSS_PATH;?>static/images/web/wx_500px.png" width="100" height="100" alt=""/><br>关注飞度商城</a></div>
+              	</li>
+                
+                <li class="ttnav_duan"><em>|</em><a class="a-greyish tt_duan" id="mycctHome" href="" rel="nofollow"><i class="Hui-iconfont f-12 c-error">&#xe708;</i> 移动客户端 <b class="common-bg cart-arrow"></b></a>
+                	<span class="blank none">&nbsp;</span>                   
+                    <div class="duan_box fcode_phone">
+                        <div class="cp_l"></div>
+                        <div class="cp_r">
+                        	<h4>手机客户端</h4>
+                            <p>轻按手指，全球宝贝送到家！</p>
+                            <p><a href="" target="_blank" class="cp_rbut1 fcode_cp_rbut1"></a><a href="" target="_blank" class="cp_rbut2 fcode_cp_rbut2"></a></p>
+                        </div>
+                    </div>
+                </li>
+
+                <!--<li class="top-mycart phc-cart"><em>|</em>
+                	<a class="a-greyish" href="" title="查看我的购物车" rel="nofollow" target="_blank" id="cart_end"><i class="Hui-iconfont f-14 c-error">&#xe6b9;</i> 购物车：<strong id="popCartCount" class="c-error">0</strong>件 <b class="common-bg cart-arrow"></b></a>
+                    <div id="cart_msg">已成功加入购物车！</div>
+                    <span class="blank none">&nbsp;</span>
+                    <div id="JS_cart_box" class="cart-box">
+                        <ul id="shop_cart_lay" class="cart-list cart-full">
+                            <li class="nothing"><b class="common-bg nothing-icon"></b>&nbsp;购物车中还没有商品，赶紧选购吧！</li>
+                            <li class="cart-item">
+                                <p class="cart-img"><a href="" target="_blank" title="果芙家居 婚庆大红四件套 富贵龙凤"><img src="<?php echo CSS_PATH;?>static/images/photo.png" alt="果芙家居 婚庆大红四件套 富贵龙凤"></a></p>
+                                <p class="cart-cal">
+                                	<a target="_blank" class="cart-link" title="果芙家居 婚庆大红四件套 富贵龙凤" href="">果芙家居 婚庆大红四件套 富贵龙凤</a>
+                                	<a class="cart-del" href="javascript:void(0)">删除</a><strong class="cart-price red" id="JS_danjia0">￥899.00元</strong>×<strong class="black"> 2</strong>
+                                </p>
+                            </li>
+
+                            <li class="cart-item cartgoods" cartid="35985" qn="1" price="3372.00" points="3372">
+                                <p class="cart-img"><a href="" target="_blank" title="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）"><img class="cart-img" src="<?php echo CSS_PATH;?>static/images/photo.png" alt="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）"></a></p>
+                                <p class="cart-cal">
+                                	<a target="_blank" class="cart-link" title="[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+书架）" href="">[Caladoll卡乐多] 中式风格 全松木 儿童书桌组合（书桌+</a>
+                                	<a class="cart-del" href="javascript:void(0)">删除</a><strong class="cart-price red" id="JS_danjia0">￥3372.00元</strong>×<strong class="black"> 1</strong>
+                                </p>
+                            </li>
+                            
+                        </ul>
+                        <div id="JS_count_area" class="cart-count">
+                            <p class="count-area">共<b id="JS_cart_count" class="c-error">0</b>件商品，共计￥<b class="c-error">0</b>元</strong></p>
+                            <a class="count-btn" target="_blank" href="">去购物车结算</a>
+                        </div>
+                    </div>
+                </li>-->
+                
+                <li class="ttnav"><em>|</em><!--<a class="a-greyish" id="myOrderLink" href="" rel="nofollow">我的收藏</a><em>|</em>--><a class="a-greyish" id="myOrderLink" href="__MODULE__/User/user_order" rel="nofollow">我的订单</a><em>|</em><a class="a-greyish" id="mycctHome" href="__MODULE__/User/user" rel="nofollow">会员中心</a><em>|</em><a class="a-greyish" href="" rel="nofollow">帮助中心</a></li>
+            </ul>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <div class="logo-search">
+        <div class="c-logo"><a href="" title="飞度商城"><img id="imgLogoTag" src="<?php echo CSS_PATH;?>static/images/web/logo.png"></a></div>
+        <div class="c-slogan"></div>
+        <div class="search-tab">
+            <div class="search-form">
+                <form action="/ld_search.asp" id="search_form" method="get">
+                    <div class="so-input-box"><input type="text" name="Gstr" class="soinput" id="searchKeywords" placeholder="请输入您想要找的信息"></div>
+                    <input id="searchBtn" type="button" class="sobtn sogoods" value="搜 索" onclick="$('#search_form').submit()">
+                    <div class="clr"></div>
+                </form>
+            </div>
+            <div class="search-tags">
+                <a href="" class="a-orange" rel="nofollow" id="firstKeyword" target="_blank" title="婴童用品">婴童用品</a>
+                <a href="" class="a-greyish" rel="nofollow" target="_blank" title="食品保健">食品保健</a>
+                <a href="" class="a-orange" rel="nofollow" target="_blank" title="家居生活">家居生活</a>
+                <a href="" class="a-greyish" rel="nofollow" target="_blank" title="美妆饰品">美妆饰品</a>
+                <a href="" class="a-orange" rel="nofollow" target="_blank" title="数码电器">数码电器</a>
+            </div>
+        </div>
+        <!--<div class="top-wx j-aCloseDiv"><a href="javascript:void(0);" title="收起" class="a-close"></a></div>-->
+        <!--购物车 begin-->
+        <div class="phc-cart">
+            <a class="a-greyish f-14" href="{:U('product/product_cart')}" title="查看我的购物车" rel="nofollow" target="_blank" id="cart_end"><span class="badge badge-danger" id="cartnum">{$Think.session.cartno}</span><i class="Hui-iconfont f-18 c-error">&#xe6b9;</i> 我的购物车 <b class="common-bg cart-arrow"></b></a>
+            <div id="cart_msg">已成功加入购物车！</div>
+            <span class="blank">&nbsp;</span>
+            <!--<div id="JS_cart_box" class="cart-box">
+                <ul id="shop_cart_lay" class="cart-list cart-full">
+                    <if condition="$Think.session.cartno eq 0">
+                    <li class="nothing"><b class="common-bg nothing-icon"></b>&nbsp;购物车中还没有商品，赶紧选购吧！</li>
+					<else />
+                    <li class="cart-item">
+                        <p class="cart-img"><a href="" target="_blank" title="果芙家居 婚庆大红四件套 富贵龙凤"><img src="<?php echo CSS_PATH;?>static/images/photo.png" alt="果芙家居 婚庆大红四件套 富贵龙凤"></a></p>
+                        <p class="cart-cal">
+                            <a target="_blank" class="cart-link" title="果芙家居 婚庆大红四件套 富贵龙凤" href="">果芙家居 婚庆大红四件套 富贵龙凤</a>
+                            <a class="cart-del" href="javascript:void(0)">删除</a><strong class="cart-price red" id="JS_danjia0">￥899.00元</strong>×<strong class="black"> 2</strong>
+                        </p>
+                    </li>
+                    </if>
+                    
+                </ul>
+                <div id="JS_count_area" class="cart-count">
+                    <p class="count-area">共<b id="JS_cart_count" class="c-error">0</b>件商品，共计￥<b class="c-error">0</b>元</strong></p>
+                    <a class="count-btn" target="_blank" href="">去购物车结算</a>
+                </div>
+            </div>-->
+        </div>
+        <!--购物车 end-->        
+    </div>
+    <div class="w-nav">
+        <div class="t-nav">
+            <div class="nav-categorys j-allCate">
+                <div class="catetit">
+                    <h2><a href="{:U('index/all_menu')}" rel="nofollow"><i class="Hui-iconfont">&#xe667;</i>&ensp;所有商品分类<i class="Hui-iconfont f-r ml-30 mr-20">&#xe6d5;</i></a></h2>
+                </div>
+                <ul class="cate-item j-extendCate">
+                    <!-- 一级分类 -->
+                    <li class="top-one-class" data-id="1332">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe607;</i><a href="">母婴用品</a>
+                        	<dd class="cateone-info"><a href="">婴童洗护</a> <a href="">婴儿喂哺</a> <a href="">早教/玩具</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1331">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe608;</i><a href="">食品保健</a>
+                        	<dd class="cateone-info"><a href="">熟食/特产</a> <a href="">酒水</a> <a href="">茶叶</a> <a href="">营养保健</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1326">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe602;</i><a href="">家居生活</a>
+                        	<dd class="cateone-info"><a href="">居家日用</a> <a href="">家纺布艺</a> <a href="">个人护理</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1327">
+                        <div class="cateone"><i class="iconfont">&#xe606;</i><a href="">美妆饰品</a>
+                        <div class="cateone-info"><a href="">彩妆/美妆</a> <a href="">美发/护发</a> <a href="">化妆品</a></div>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1328">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe604;</i><a href="">生活服务</a>
+                        	<dd class="cateone-info"><a href="">金融保险</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1329">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe600;</i><a href="">服装鞋包</a>
+                        	<dd class="cateone-info"><a href="">箱包皮具</a> <a href="">女装</a> <a href="">内衣家居</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1330">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe605;</i><a href="">电脑数码</a>
+                        	<dd class="cateone-info"><a href="">电脑</a> <a href="">电脑周边</a> <a href="">手机</a></dd>
+                        </div>
+                    </li>
+                    <li class="top-one-class" data-id="1331">
+                        <div class="cateone">
+                        	<i class="iconfont">&#xe603;</i><a href="">生活家电</a>
+                        	<dd class="cateone-info"><a href="">大家电</a> <a href="">生活电器</a> <a href="">厨卫电器</a></dd>
+                        </div>
+                    </li>
+                </ul>
+                <div id="div_hide_two_class" style="display:none;">                    
+                    <!-- 二级级分类 1-->
+                    <div class="catetwo top-two-class" data-id="1332" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">00001</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 2-->
+                    <div class="catetwo top-two-class" data-id="1331" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护2</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 3-->
+                    <div class="catetwo top-two-class" data-id="1326" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护3</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 4-->
+                    <div class="catetwo top-two-class" data-id="1327" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护4</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 5-->
+                    <div class="catetwo top-two-class" data-id="1328" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 6-->
+                    <div class="catetwo top-two-class" data-id="1329" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                    
+                    <!-- 二级级分类 7-->
+                    <div class="catetwo top-two-class" data-id="1330" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+    
+                    <!-- 二级级分类 8-->
+                    <div class="catetwo top-two-class" data-id="1324" style="left: 210px;">
+                        <p class="act"></p>
+                        <dl>
+                            <dt><a target="_blank" href="">婴童洗护</a> <i class="Hui-iconfont">&#xe6d7;</i></dt>
+                            <dd><em><a href="#">免费费</a></em><em><a href="#">1小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">3小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em><em><a href="#">免费</a></em><em><a href="#">2小说</a></em><em><a href="#">励志与成功</a></em><em><a href="#">婚恋/两性</a></em><em><a href="#">文学</a></em><em><a href="#">经管</a></em><em><a href="#">畅读VIP</a></em></dd>
+                        </dl>
+                    </div>
+                
+                </div>
+            </div>
+            <ul class="nav-items">
+                <li><a href="/" target="_self"><span <if condition="I('ishit') eq null">style="color:#E1533D"</if>>网站首页</span></a></li>
+                <li><a rel="nofollow" href="__MODULE__/product/product_list/ishit/1"><span <if condition="I('ishit') eq 1">style="color:#E1533D"</if>>创客空间</span></a></li>
+                <li><a rel="nofollow" href="__MODULE__/product/product_list/ishit/2"><span <if condition="I('ishit') eq 2">style="color:#E1533D"</if>>劲爆抢购</span></a></li>
+                <li><a rel="nofollow" href="__MODULE__/product/product_list/ishit/3"><span <if condition="I('ishit') eq 3">style="color:#E1533D"</if>>进口商品</span></a></li>
+                <li><a rel="nofollow" href="__MODULE__/product/product_list/ishit/4"><span <if condition="I('ishit') eq 4">style="color:#E1533D"</if>>飞度优品</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 顶部内容 end -->
+<div class="clear"></div>

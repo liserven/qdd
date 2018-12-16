@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>收藏列表</title>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport"  content="width=device-width,user-scalable=no">
+
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+
+
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+
+	<style>
+
+
+
+		/*share_start*/
+
+		#share {position:fixed;_position:absolute;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)-34+"px");bottom:34px;left:50%;width:30px;zoom:1;z-index: 100}
+
+		#share a{background-image:url(/Public/mobile/images/share.png); background-repeat:no-repeat; display:block; width:30px; height:30px; margin-bottom:19px; overflow:hidden; text-indent:-999px;-webkit-transition: all 0.2s ease-in-out;-moz-transition: all 0.2s ease-in-out;-o-transition: all 0.2s ease-in-out;-ms-transition: all 0.2s ease-in-out;transition: all 0.2s ease-in-out;}
+
+		#share a{}
+
+		#share a#totop{background-position:0 -120px;position:absolute;bottom:0px;cursor:pointer;}
+
+		#share a#totop:hover {background-position:-30px -120px;}
+
+		/*share_end*/
+	</style>
+
+</head>
+
+<body style="background: #353535" >
+
+<!-- id=innerbox 标签外面 不放任何标签  为自适应标签   -->
+
+<div class="innerbox" id="innerbox" ng-app="scroll" ng-controller="Main" ng-cloak>
+
+	<div id="fixed" when-scrolled="loadMore()">
+
+
+
+	<div class="inner">
+
+		<div class="top top_2" style="width:100%; height:100px; background-color:#2c2c2c;">
+
+			<a class="topfan topfan2" href="/mobile.php/member/userinfo"><img src="<?php echo CSS_PATH;?>mobile/images/zjt.png" style="width: 50px;margin-top: 25px;"></a>
+
+			<h2><span style="color: #FFF;">收藏列表</span></h2>
+
+		</div>
+
+		<div class="cl"></div>
+
+
+
+
+
+		<!--<div class="xuan_ul" ng-if="{$Request.param.ishit} == '2'">-->
+
+		<div class="xuan_ul">
+
+
+
+			<div class="cl"></div>
+
+		</div>
+
+
+
+		<div class="con_item" style="background: #353535;">
+
+			<ul ng-repeat="goods in items">
+
+				<li >
+
+					<div class="leftpic fl">
+
+						<a href="/mobile.php/goods/{{goods.proid}}"><img  ng-src="{{goods.img}}" alt=""></a>
+
+					</div>
+
+					<div class="fr dinspul">
+
+						<div class="text_min">
+
+							<p style="color: white;">{{goods.proname}}</p>
+
+						</div>
+
+						<div class="cl"></div>
+
+						<div class="pric">
+
+							<p ng-if="goods.vipprice != 0 && goods.consumeintegral == 0"><em>￥</em><span>{{goods.vipprice}}元</span></p>
+
+							<p ng-if="goods.consumeintegral != 0 && goods.vipprice == 0"><span class="bifen"></span><span>{{goods.consumeintegral}}</span></p>
+
+							<!--<p ng-if="goods.vipprice != 0 && goods.consumeintegral != 0"><em>￥</em><span>{{goods.vipprice}}元+</span><span class="bifen"></span><span>{{goods.consumeintegral}}</span></p>-->
+
+                            <p ng-if="goods.vipprice != 0 && goods.consumeintegral != 0"><em>￥</em><span>{{goods.vipprice}}元</span></p>
+
+							<div class="cl"></div>
+
+							<div class="psx">市场价：{{goods.marketprice}}</div>
+
+						</div>
+
+						<div class="cl"></div>
+
+						<div class="bmai">
+
+							<span class="kanspan" style="color: white;">545人已买</span>
+
+							<a class="kana fr" href="/mobile.php/goods/{{goods.proid}}" style="border: 2px solid #fed58d;color: #fed58d;">去看看</a>
+
+							<a href="javascript:void(0)" style="font-size: 50px;float: right;margin-top: 20px;margin-right: 20px;color: red;" ng-click="delete(goods.proid)">×</a>
+
+							<div class="cl"></div>
+
+						</div>
+
+					</div>
+
+					<div class="cl"></div>
+
+				</li>
+
+			</ul>
+
+			<div class="cl"></div>
+
+		</div>
+
+	</div>
+
+	</div>
+
+</div>
+
+<div id="share">
+
+	<a id="totop" title="">返回顶部</a>
+
+</div>
+
+<!-- 底部固定导航 -->
+
+{:widget('Common/mobile_footer')}
+
+<!-- 底部固定导航end -->
+
+</body>
+
+<script type="text/javascript">
+
+    // 定义模块
+
+    var scroll = angular.module('scroll', []);
+
+    // 定义滚动指令
+
+    scroll.directive('whenScrolled', function() {
+
+        return function(scope, elm, attr) {
+
+            // body窗口的滚动加载--需要Jquery
+
+            $(window).scroll(function () {
+
+                //滚动条距离顶部的距离
+
+                var scrollTop = $(window).scrollTop();
+
+                //滚动条的高度
+
+                var scrollHeight = $(document).height();
+
+                //窗口的高度
+
+                var windowHeight = $(window).height();
+
+                if (scrollTop + windowHeight >= scrollHeight) {
+
+                    scope.$apply(attr.whenScrolled);
+
+                }
+
+            });
+
+        };
+
+    });
+
+
+
+    scroll.controller('Main', ['$scope','$http',
+
+        function ($scope, $http) {
+
+            // 当前页数
+
+            $scope.currentPage = 0;
+
+            // 总页数
+
+            $scope.totalPages = 1;
+
+            // 防止重复加载
+
+            $scope.busy = false;
+
+            // 存放数据
+
+            $scope.items = [];
+
+            // 请求数据方法
+
+            $scope.loadMore = function() {
+
+                if ($scope.currentPage < $scope.totalPages) {
+
+                    $scope.currentPage++;
+
+                    if ($scope.busy) {
+
+                        return false;
+
+                    }
+
+//                    $scope.busy = true;
+
+                    // 请求后台服务器
+
+                    $http.get("/api.php/goods/collect_list?p="+$scope.currentPage+'&ishit=1')
+
+                        .success(function(response) {
+
+                            $scope.busy = false;
+
+                            //组织数据
+
+                            for (var i in response.data.data_list) {
+
+                                var img_url=response.data.data_list[i];
+
+								img_url['proimg']=img_url['proimg'].replace('/Upload','/public/Upload');
+
+                                $scope.items.push(img_url);
+
+                            }
+
+                            $scope.totalPages = response.data.total;
+
+                        });
+
+                }
+
+            };
+
+            $scope.delete=function(proid){
+
+                $http.get("/api.php/goods/collect_del?collectId="+proid)
+
+                    .success(function(response) {
+
+                        if(response.status==1) {
+
+                            layer.msg(response.msg, {}, function () {
+
+                                window.location.href = '/mobile.php/collect';
+
+                            });
+
+                        }else{
+
+                            layer.msg(response.msg);
+
+                        }
+
+                    });
+
+			};
+
+            // 默认第一次加载数据
+
+            $scope.loadMore();
+
+        }]);
+
+
+
+    $(function(){
+
+        //首先将#back-to-top隐藏
+
+        $("#totop").hide();
+
+        //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
+
+        $(function () {
+
+            $(window).scroll(function(){
+
+                if ($(window).scrollTop()>100){
+
+                    $("#totop").fadeIn();
+
+                }
+
+                else
+
+                {
+
+                    $("#totop").fadeOut();
+
+                }
+
+            });
+
+            //当点击跳转链接后，回到页面顶部位置
+
+            $("#totop").click(function(){
+
+                $('body,html').animate({scrollTop:0},500);
+
+                return false;
+
+            });
+
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+
+
+
+</html>
+

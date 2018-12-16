@@ -1,0 +1,83 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>修改商品分类 - 商品管理</title>
+</head>
+<body>
+<article class="page-container">
+	<form method="post" class="form form-horizontal" id="form-product-category">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>现属分类：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				{:getpcnamebyid($list['categoryid'])}
+                {if condition="$list['categorycode'] neq 0"}
+                -{:getpcnamebyid($list['categorycode'])}
+                {/if}
+                {if condition="$list['categorythird'] neq 0"}
+                -{:getpcnamebyid($list['categorythird'])}
+                {/if}
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>选择分类：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<span class="select-box">
+                    <select class="select" size="1" name="pcateid" id="pcateid">
+                        <option value="0">请选择分类</option>
+                        {volist name="listone" id="voone"} <!--循环第一级别-->
+                        <option value="{$voone.pcateid}" selected>{:getpcnamebyid($voone["pcateid"])}</option>
+                       		{volist name="voone['voo']" id="votwo"} <!--循环第二级别-->
+                                <option value="{$votwo.pcateid}">&emsp;&nbsp;{:echotubiaocate(getsortbypcateid($votwo['pcateid']),$votwo['pid'])}{:getpcnamebyid($votwo["pcateid"])}</option>
+                                {volist name="votwo['boo']" id="vothree"} <!--循环第三级别-->
+                                	<option value="{$vothree.pcateid}">&emsp;&emsp;&emsp;&emsp;{:echotubiaocate(getsortbypcateid($vothree['pcateid']),$vothree['pid'])}{:getpcnamebyid($vothree["pcateid"])}</option>
+                                {/volist}
+                        <!--<option value="3">&emsp;&nbsp;└─宝宝护肤</option>-->
+                        	{/volist}
+                        {/volist}
+                    </select>
+				</span>
+			</div>
+		</div>
+        
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function(){
+	$("#form-product-category").validate({
+		rules:{
+			roleName:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$.ajax({
+			url:"{:url('Product/product_category_edit',['action'=>'edit','proid'=>$Request.param.proid])}",
+			type:"POST",
+			data:$('#form-product-category').serialize(),
+			success: function(data) {
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.msg('恭喜您修改成功！'); //父页面显示提示
+			  parent.location.reload(); //刷新父页面
+			  parent.layer.close(index); //关闭layer
+				
+			}
+			});
+		}
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

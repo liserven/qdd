@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>级别配置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 级别配置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a style="display: none"  href="javascript:;" onClick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" style="display: none"  onClick="_add('添加级别','{:url(\'member_level/memberLevelAdd\',[\'act\'=>\'show\'])}' ,'800','500')"><i class="Hui-iconfont">&#xe600;</i> 添加级别</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <form class="form form-horizontal" id="form-memberLevel-list">
+        <table class="table table-border table-bordered table-hover table-bg mt-20">
+            <thead>
+            <tr>
+                <th scope="col" colspan="16">级别管理</th>
+            </tr>
+            <tr class="text-c">
+                <th><input type="checkbox" value="" name=""></th>
+                <th>ID</th>
+                <th>级别名称</th>
+                <th>推荐名额价格</th>
+                <th>年费金额</th>
+                <th>会员折扣</th>
+                <th>赠送标准版名额</th>
+                <th>赠送尊享版名额</th>
+                <th>赠送联盟商名额</th>
+                <th>赠送营销中心名额</th>
+                <th width="70">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="memberLevelList" id="vo"}
+                <tr class="text-c">
+                    <td><input type="checkbox" value="{$vo.ID}" name="ID[]"></td>
+                    <td>{$vo.ID}</td>
+                    <td>{$vo.Name}</td>
+                    <td>{$vo.buy_price}</td>
+                    <td>{$vo.annualfee_price}</td>
+                    <td>{$vo.discount}</td>
+                    <td>{$vo.one_level_places}</td>
+                    <td>{$vo.two_level_places}</td>
+                    <td>{$vo.three_level_places}</td>
+                    <td>{$vo.four_level_places}</td>
+                    <td class="f-14"><a title="编辑" href="javascript:;" onClick="_edit('级别编辑','{:url(\'member_level/memberLevelEdit\',[\'act\'=>\'show\',\'id\'=>$vo[\'ID\']])}','800','500')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"  style=" display:none;" href="javascript:;" onClick="_del(this,'{$vo.ID}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<!--<include file="../../../Public/js_script" />-->
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    /*-添加*/
+    function _add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-编辑*/
+    function _edit(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*批量删除*/
+    function datadel(){
+        layer.confirm('确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("member_level/memberLevelDel")}',
+                type:"POST",
+                dataType:"json",
+                data:$('#form-memberLevel-list').serialize(),
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:1000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+    /*-单个删除*/
+    function _del(obj,id){
+        layer.confirm('会员级别删除须谨慎，确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("member_level/memberLevelDel")}?ID='+id,
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:1,time:1000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

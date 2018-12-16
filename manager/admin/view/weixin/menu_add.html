@@ -1,0 +1,84 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>添加商品分类 - 商品管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-menu-add">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+				<span class="select-box">
+                    <select class="select" name="pid" id="pid">
+                        <option value="0" selected>顶级</option>
+                        {volist name="list" id="vo"} <!--循环第一级别-->
+                        <option value="{$vo.id}">{$vo.name}</option>
+                        {/volist}
+                    </select>
+				</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>菜单名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="menuname" name="menuname">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>菜单类型：</label>
+            <div class="formControls col-xs-9 col-sm-10">
+                <input type="radio" class="input-radio" value="1" placeholder="" id="menutype" name="menutype">消息
+                <input type="radio" class="input-radio" value="2" placeholder="" id="menutype" name="menutype">链接
+                <!--<input type="radio" class="input-radio" value="3" placeholder="" id="menutype" name="menutype">素材-->
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>菜单值：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="menukey" name="menukey">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>排序：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="menusort" name="menusort">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button type="button" class="btn btn-success radius" id="admin-role-save" name="admin-role-save" onclick="dataSubmit()"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="./public/Public/js_script.html" /}
+
+
+<script type="text/javascript">
+function dataSubmit(){
+    $.ajax({
+        url:'{:url("Weixin/menu_add")}?type=add&accountid={$accountid}',
+        type:"POST",
+        dataType:"json",
+        data:$('#form-menu-add').serialize(),
+        success: function(rep) {
+            if(rep.status==0){
+                layer.msg(rep.msg);
+            }else{
+                var index = parent.layer.getFrameIndex(window.name);
+                layer.msg(rep.msg,{icon:1,time:1000},function(){
+                    parent.location.reload(); //刷新父页面
+                    parent.layer.close(index); //关闭layer
+                }); //父页面显示提示
+            }
+
+        }
+    });
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

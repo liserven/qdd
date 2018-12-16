@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <style>
+        /*页头样式*/
+        a{ text-decoration:none; color:#303030;}
+        body, ul, li, h1{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-family: PingFang;
+
+        }
+        .bj {
+            width: 100%;
+            height: 60px;
+            background:#c41919;
+        }
+        .zjt {
+            width: 28px;
+            height: 28px;
+            float: left;
+            margin-top: 14px;
+            position: absolute;
+            left: 10px;
+        }
+        .bt{
+            line-height:56px;
+            margin-left:40%;
+            font-size:20px;
+            color:#fff;
+        }
+    </style>
+    <meta charset="utf-8">
+    <title>购物币充值</title>
+</head>
+
+<body ng-app="orderApp" ng-controller="orderCtrl" ng-cloak>
+<!---页头--->
+<div class="bj" style="background-color: #28bebc;height: 50px;">
+  <div class="zjt" style="margin-top: 10px;"><a href="/mobile.php/member/account"><img style=" width:100%;" src="<?php echo CSS_PATH;?>mobile/images/zjt.png"/></a></div>
+  <div class="bt" style="line-height: 50px;font-family: PingFang;">购物币充值</div>
+</div>
+<form method="post" class="form form-horizontal" id="form-cart-settl">
+    <div id="con_one_3">
+        <!---进货积分--->
+        <div style="margin-top:10px;">
+            <div style="float:left;text-align:right; width:25%;font-size: 15px;font-weight: bold">会员ID：</div>
+            <div style="float:left; color:#ff6600; font-size:14px; font-family:Arial;margin-top: 3px;">{{userinfo.userid}}[{{userinfo.truename}}]</div>
+        </div>
+        <div style="clear:both;"></div>
+        <div style="margin-top:10px;">
+            <div style="float:left;text-align:right; width:25%;font-size: 15px;margin-top: 3px;font-weight: bold">充值金额：</div>
+            <div style="float:left; color:#ff6600;  font-size:14px; font-family:Arial;margin-top: 0px;"><input type="text" name="money" style="width: 118px;height: 20px;" value="" id="moneyid">（余额{{userinfo.umoney}}）</div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div style="clear: both;"></div>
+    <div id="plIsShow">
+        <ul style="width: 85%; float: left; font-size: 14px; margin-left: 7%; margin-top: 8px;
+            line-height: 26px;">
+            <li><span style="font-weight: bold">支付方式</span>
+                <div style="width: 100%; margin-left: 0px; border: solid 1px #eeeeee; border-radius: 5px;">
+                    <div style="">
+                        <input type="radio" name="pay_type" value="1" ng-click="payType($event)" style="float: left;width: 20px;height: 20px;margin-top: 5px;"/><img src="<?php echo CSS_PATH;?>mobile/images/weixinpay.png" style="width: 50px;height: 50px;float: left;margin-top: -10px;"><span style="float: left;margin-top: 3px;">微信</span>
+                        <div style="clear:both;"></div>
+                        <input type="radio" name="pay_type" value="2" ng-click="payType($event)" style="float: left;width: 20px;height: 20px;margin-top: 5px;"/><img src="<?php echo CSS_PATH;?>mobile/images/aliapay.png" style="width: 50px;height: 50px;float: left;margin-top: -10px;"><span style="float: left;margin-top: 3px;">支付宝</span>
+                        <div style="clear:both;"></div>
+                        <div style="margin-top: -10px;">
+                            <input type="hidden" id="pay_method" value="{{pay_type}}">
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!---底部按钮--->
+    <div style=" width:150px; margin:0 auto;  margin-top:135px;">
+        <img style=" width:100%;" src="<?php echo CSS_PATH;?>mobile/images/fk.jpg" onclick="orderPay()"/>
+    </div>
+    <!-- 支付 -->
+</form>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    var app = angular.module('orderApp', []);
+    app.controller('orderCtrl', function($scope, $http) {
+        $scope.payType=function(event){
+            $scope.pay_type=event.target.getAttribute('value');
+        };
+        $http.get("/api.php/member/userinfo")
+            .success(function (response) {
+                $scope.userinfo = response.data;
+            });
+    });
+
+    function orderPay(){
+        var pay_type=angular.element("#pay_method").val();
+        if(pay_type==''){
+            layer.msg('请选择支付方式');
+            return;
+        }else if(pay_type==1){
+            layer.msg('微信支付');
+            $('#form-cart-settl').attr('action','/api.php/order/wxpay?amount='+$('#moneyid').val());
+            $('#form-cart-settl').submit();
+        }else if(pay_type==2){
+            layer.msg('支付宝支付');
+            $('#form-cart-settl').attr('action','/api.php/order/alipay?amount='+$('#moneyid').val());
+            $('#form-cart-settl').submit();
+        }
+    }
+</script>
+</body>
+</html>

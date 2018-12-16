@@ -1,0 +1,59 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商家查看 - 商家管理</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="color:#fff">
+    <dt><span class="f-24">{$list.name}</span></dt>
+    <dd class="f-14"><a href="http://{$list.supnetwork}" target="_blank"><span style="color:#AFD4E2">{$list.supnetwork}</span></a></dd>
+  </dl>
+</div>
+<div class="pd-20">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th width="80" valign="top" class="text-r">经营范围：</th>
+        <td>
+            {volist name="listcate" id="voone"} <!--循环第一级别-->
+            <dl class="permission-list">
+                  <dt><label>{:getpcnamebyid($voone['pcateid'])}</label></dt>
+                  <dd>
+                      {volist name="voone['voo']" id="votwo"} <!--循环第二级别-->
+                      <dl class="cl permission-list2">
+                          <dt><font style="font-weight:bold">{:getpcnamebyid($votwo['pcateid'])}</font></dt>
+                          <dd>
+                              {volist name="votwo['boo']" id="vothree"} <!--循环第三级别-->
+                              {:getpcnamebyid($vothree['pcateid'])}
+                              {/volist}
+                          </dd>
+                      </dl>
+                      {/volist}
+                  </dd>
+            </dl>
+            {/volist}
+        </td>
+      </tr>
+      <tr>
+        <th class="text-r" valign="top">证件资质：</th>
+        <td>
+          {volist name="listhornor" id="voh"}
+          <img src="<?php echo config('IMAGE_DOMAIN_NAME');?>/Upload/supplier/licence/{$voh.imgpath}" class="img-responsive thumbnail">
+          {/volist}
+        </td>
+      </tr>
+      <tr>
+        <th class="text-r">添加时间：</th>
+        <td>{$list.adddate|strtotime|date="Y-m-d H:i:s",###}</td>
+      </tr>
+      <tr>
+        <th class="text-r" valign="top">商家介绍：</th>
+        <td>{$list.remark}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{include file="./public/Public/js_script.html" /}
+</body>
+</html>

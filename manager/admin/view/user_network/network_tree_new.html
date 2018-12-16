@@ -1,0 +1,85 @@
+{include file="./public/Public/meta.html" /}
+<link rel="stylesheet" href="<?php echo CSS_PATH;?>static/css/zTreeStyle.css" type="text/css">
+
+<meta charset="utf-8">
+<title>接点关系图</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 接点关系图 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+        <form name="sform" id="sform" action="{:url('NetworkTree/network_tree_new')}" method="get">
+             <input type="text" class="input-text" style="width:300px" placeholder="输入会员编号" id="userid" name="userid">
+             <button  type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        </form>
+    </div>
+
+    <div class="stree mt-20">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript" src="<?php echo CSS_PATH;?>static/js/jquery.ztree.core.js"></script>
+<script type="text/javascript">
+	<!--
+	var setting = {
+		view: {
+			fontCss: getFont,
+			nameIsHTML: true,
+			showTitle: false,
+		},
+		async: {
+			enable: true,
+			url:"/api.php/user/network_tree_new{$param}",
+            autoParam:["id"],
+			otherParam:{"otherParam":"zTreeAsyncTest"},
+			dataFilter: filter
+		},
+		  data: {
+			simpleData: {
+			enable: true
+			}
+		  },
+		  callback: {
+			beforeAsync: zTreeBeforeAsync,
+		  }
+	};
+	
+	function zTreeBeforeAsync(treeId, treeNode) {
+		//return (treeNode.id !== 1);
+	};
+
+	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+		}
+		return childNodes;
+	}
+	
+	function getFont(treeId, node) {
+		return node.font ? node.font : {};
+	};
+
+	$(document).ready(function(){
+		$.fn.zTree.init($("#treeDemo"), setting);
+	});
+    /*-查看*/
+    function _show(title, url, w, h) {
+//        layer_show(title, url, w, h);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+	//-->
+</script>
+<!--请在上方写此页面业务相关的脚本--> 
+
+</body>
+</html>

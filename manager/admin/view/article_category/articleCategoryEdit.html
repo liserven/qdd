@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>级别修改</title>
+    <link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 编辑资讯分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form  enctype="multipart/form-data" method="post" class="form form-horizontal" id="form_articleCategory_Edit">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>分类名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.categoryname}" placeholder="" id="categoryname" name="categoryname">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>是否显示：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <span class="select-box">
+                <select class="select" size="1" name="isshow">
+                    <option value="1" {if condition="$list.isshow eq 1"}selected{/if}>是</option>
+                    <option value="0" {if condition="$list.isshow eq 0"}selected{/if} >否</option>
+                </select>
+                </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">备注：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...最多输入100个字符" onKeyUp="textarealength(this,100)">{$list.remark}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="提交并发布" />
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $("#form_articleCategory_Edit").validate({
+            rules:{
+                categoryname:{
+                    required:true,
+                    minlength:2,
+                    maxlength:32
+                },
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(data){
+                $.ajax({
+                    url:"{:url('article_category/articleCategoryEdit',['act'=>'edit','id'=>$list['id']])}",
+                    type:"POST",
+                    dataType:"json",
+                    data:$('#form_articleCategory_Edit').serialize(),
+                    success: function(data) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.msg(data.msg,{icon:1,time:1000}); //父页面显示提示
+                        parent.location.reload(); //刷新父页面
+                        parent.layer.close(index); //关闭layer
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

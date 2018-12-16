@@ -1,0 +1,177 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei",微软雅黑;
+}
+li{
+    list-style: none;
+}
+body{
+    background: #f7f9f8;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.dj{
+    color: #ff6908;
+}
+section{
+    margin-bottom: 60px;
+}
+footer{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    z-index: 3;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #cecece;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+footer>a{
+    margin-top: 3px;
+    width: 53px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.top{
+    width: 100%;
+    height: 183px;
+    background: url(../img/bg.png) no-repeat;
+    background-size: 100% 100%;
+}
+.ewmAndSz{
+    float: right;
+    margin-top: 25px;
+    margin-right: 18px;
+}
+#sz{
+    margin-left: 35px;
+}
+.lms{
+    margin-bottom: 10px;
+}
+.grxq{
+    display: flex;
+    align-items: center;
+    float: left;
+    margin-top: 60px;
+    margin-left: 35px;
+}
+.grxq>a{
+    margin-right: 18px;
+}
+.grxq>div>p{
+    color: #fff;
+    margin-bottom: 6px;
+}
+.gtsz{
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    color: #333333;
+}
+.gtsz>div{
+    display: flex;
+    align-items: center;
+}
+.gtsz img:nth-child(1){
+    margin-left: 24px;
+    margin-top: 3px;
+}
+.gtsz img:nth-child(2){
+    margin-right: 10px;
+}
+.gtsz p{
+    margin-left: 8px;
+}
+.gtsz span{
+    margin-right: 5px;
+}
+.qygl{
+    border-bottom: 1px solid #f7f7f7;
+}
+
+
+.lmsyh{
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.lmsyhA{
+    border-right: 1px solid #f7f7f7;
+}
+.lmsStyle{
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+}
+.lmsStyle>p{
+    margin-left: 24px;
+    line-height: 40px;
+}
+.lmsStyle>div{
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+.lmsStyle>div>img{
+    margin: 4px 8px 0 24px;
+}
+.lmsStyle>div>span{
+    margin-left: 15px;
+}
+
+.MyglBox{
+    width: 90%;
+    height: 125px;
+    border-radius: 15px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 15px 0px 0 12px;
+}
+.MyglBox>p{
+    margin-bottom: 18px;
+}
+.MyglBox>div{
+    display: flex;
+    justify-content: space-around;
+}
+.MyglBox>div>div{
+
+    text-align: center;
+}
+.MyglBox>div>div>p{
+    font-size: 14px;
+    color: #333333;
+    margin-top: 6px;
+}
+.qtsz{
+    width: 100%;
+}
+.qtsz>div{
+    width: 90%;
+    height: 70px;
+    border-radius: 10px;
+    background: #fff;
+    margin: 10px auto 23px;
+    display: flex;
+    justify-content: space-around;
+}
+.qtsz>div>div{
+    text-align: center;
+    margin-top: 10px;
+}
+.qtsz>div>div>a>p{
+    font-size: 14px;
+    color: #333333;
+}

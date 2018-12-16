@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-family: 微软雅黑;
+	background-color:#fff;
+}
+img{ width:100%;}
+/* 页眉样式 */
+.bj {
+	width: 100%;
+	height: 60px;
+	background: url(../imges/bj.jpg);
+	position: relative;
+	overflow: hidden;
+}
+.zjt {
+	width: 28px;
+	height: 28px;
+	float: left;
+	margin-top: 16px;
+	position: absolute;
+	left: 10px;
+}
+.gwj{ font-size:20px; height:60px; line-height:60px; text-align:center
+; color:#FFF;}
+.fl {
+	width: 28px;
+	height: 28px;
+	float: right;
+	margin-left: 15%;
+	margin-top: 14px;
+	position: absolute;
+	right: 10px;
+}
+.ssy {
+	margin: 0 auto;
+	width: 70%;
+	height: 28px;
+	border-top-right-radius: 1px;
+	border-bottom-right-radius: 1px;
+	background-color: #fff;
+	opacity: 0.3;
+	float: left;
+	margin-top: 14px;
+}
+.fdj {
+	width: 28px;
+	height: 28px;
+	float: left;
+	margin-top: 14px;
+	border-bottom-left-radius: 3px;
+	border-top-left-radius: 3px;
+}
+.tl {
+	position: absolute;
+	left: 20%;
+	width: 70%;
+	overflow: hidden;
+}
+input {
+	width: 80%;
+	height: 20px;
+	margin-left: 5px;
+	font-size: 12px;
+	margin-top: 3px;
+	border: 0;
+	outline: none;
+}
+/* 内容样式 */
+.nr{ width:100%; height:100px; background-color:#fff;}
+.tp{ width:70px; float:left; margin-left:5%; margin-top:20px; margin-right:20px; margin-bottom:10px;}
+.mz{ float:left; margin-top:30px; font-size:14px;}
+.an{ float:right; width:40px; margin-top:35px; margin-right:20px;}
+
+/* 我的订单 */
+.wddd{ margin-left:5%; margin-top:10px;}
+.tb{ width:25px; float:left;}
+.wz{ float:left; line-height:25px; margin-left:10px; font-size:16px;}
+.xlb{ width:60px; float:left; margin-top:10px;font-size:12px; text-align:center;}
+.yjt{ float:right; line-height:28px; margin-right:10px; width:15px;}

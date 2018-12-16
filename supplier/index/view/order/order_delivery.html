@@ -1,0 +1,114 @@
+﻿{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>发货 - 订单管理</title>
+</head>
+<body>
+<article class="page-container">
+	<form method="post" class="form form-horizontal" id="form-order-delivery">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>订单号：</label>
+			<div class="formControls col-xs-10 col-sm-9"> {$Request.param.orderno}</div>
+		</div>
+		<div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发货选择：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+                <span class="select-box" style="width:150px">
+                    <select class="select" size="1" name="supptypes" onChange="javascript:test('mune_x'+this.value)">
+                        <option value="" selected>请选择</option>
+                        <option value="1">快递</option>
+                        <option value="2">物流</option>
+                    </select>
+                </span>
+                <span class="select-box permission-list permission-border" id="x1" style="display:none;width:150px">
+                    <select class="select" size="1" name="classifykd">
+                        {volist name="kd" id="vo"}
+                        	<option value="{$vo.id}">{$vo.expname}</option>
+                        {/volist}
+                    </select>
+                </span>
+                <span class="select-box permission-list permission-border" id="x2" style="display:none;width:150px">
+                    <select class="select" size="1" name="classifywl">
+                        {volist name="wl" id="voo"}
+                        	<option value="{$voo.id}">{$voo.expname}</option>
+                        {/volist}
+                    </select>
+                </span>
+			</div>
+		</div>
+  		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发货单号：</label>
+			<div class="formControls col-xs-10 col-sm-9">
+				<input type="text" class="input-text" autocomplete="off" placeholder="" name="awbno" id="awbno">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function(){
+	$("#form-order-delivery").validate({
+		rules:{
+			newpassword:{
+				required:true,
+				minlength:6,
+				maxlength:16
+			},
+			newpassword2:{
+				required:true,
+				minlength:6,
+				maxlength:16,
+				equalTo:"#password"
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+            $.ajax({
+                url:'{:url("Order/order_action")}?act=deliver&type=add&orderno={$Request.param.orderno}',
+                type:"POST",
+                dataType:'json',
+                data:$('#form-order-delivery').serialize(),
+                success: function(data) {
+                    if(data.status==0){
+                        parent.layer.msg(data.msg);
+                    }else{
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.msg(data.msg); //父页面显示提示
+                        parent.location.reload(); //刷新父页面
+                        parent.layer.close(index); //关闭layer
+                    }
+
+                }
+			});
+		}
+	});
+});
+
+//--发货选择
+function test(Names){
+	var Name
+	for (var i=1;i<3;i++){
+		var tempname="mune_x"+i
+		var NewsHot="x"+i	//  “X”是ID名称，比如：ID命名为“case1”，这里的“X”即为“case”
+		if (Names==tempname){
+			Nnews=document.getElementById(NewsHot)
+			Nnews.style.display='';
+		}else{
+			Nnews=document.getElementById(NewsHot)
+			Nnews.style.display='none';
+		}
+	}
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

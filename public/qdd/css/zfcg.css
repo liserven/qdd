@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei",微软雅黑;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+img{
+    display: block;
+    margin: 80px auto 30px;
+}
+p{
+    text-align: center;
+}
+a{
+    display: block;
+    width: 234px;
+    height: 40px;
+    background: url(../img/返回.png) no-repeat cadetblue;
+    margin: 0 auto;
+}
+.p1{
+    color: rgb(51, 51, 51);
+    font-size: 18px;
+}
+.p2{
+    color: rgb(153, 153, 153);
+    font-size: 14px;
+    margin: 15px 0 80px;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>购物币记录</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 交易管理 <span class="c-gray en">&gt;</span> 购物币记录 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+        <div class="bk-gray">
+            <div class="col-80">用户ID：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入会员编号" id="keyuserid" name="keyuserid" value="{$Request.param.keyuserid}"></div>
+             <div class="col-80">订单编号：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入会员手机号" id="orderid" name="orderid" value="{$Request.param.orderid}"></div>
+            <!-- <div class="col-90">交易类型：</div>
+            <div class="col-300">
+                <span class="select-box" style="width:120px">
+              <select class="select" size="1" name="recordType">
+                <option value="">请选择</option>
+                <option value="充值" {if condition="$Request.param.recordType eq '充值'"}selected{/if}>充值</option>
+                <option value="扣币" {if condition="$Request.param.recordType eq '扣币'"}selected{/if}>扣币</option>
+                <option value="转入">转入</option>
+                <option value="转出">转出</option>
+                <option value="返币">返币</option>
+              </select>
+            </span>
+            </div>
+            
+                    </div>
+                    <div class="bk-gray" style="border-top:0">
+            <div class="col-80">日期范围：</div>
+            <div class="col-300">
+                <div class="col-300">
+                    <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:120px;">
+                    -
+                    <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:120px;">
+                </div>
+            </div>
+            <div class="col-80">交易金额：</div>
+            <div class="col-300">
+                <input class='input-text' type="text"  id="moneystart" name="moneystart" value="{$Request.param.moneystart}"  style="width:120px;">
+                -
+                <input class='input-text' type="text"  id="moneyend" name="moneyend" value="{$Request.param.moneyend}"  style="width:120px;">
+            </div> -->
+            <div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<!-- <button name="daochu" value="daochu" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;--><button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('');$('select option').val('');"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp; </div>
+        </div>
+    </form>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$count}</strong> 条</span></div>
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg table-hover">
+        <thead>
+        <tr class="text-c">
+            <th>订单编号</th>
+            <th>用户ID</th>
+            <th>购买类型</th>
+            <th>购买数量</th>
+            <th>单价</th>
+            <th>总价</th>
+            <th>订单状态</th>
+            <th>订单类型</th>
+            <th>支付方式</th>
+            <th>支付时间</th>
+            <th>下单时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="recordlist" id="vo"}
+        <tr class="text-c va-m">
+            <td class="text-c">{$vo.orderid}</td>
+            <td class="text-c">{$vo.UserId}</td>
+
+            <td class="text-c">
+            {if condition="$vo.usertype eq 1"}
+                标准版
+            {elseif condition="$vo.usertype eq 2"}
+                尊享版
+            {elseif condition="$vo.usertype eq 3"}
+                联盟商
+            {elseif condition="$vo.usertype eq 4"}
+                营销中心
+            {/if}
+
+            </td>
+            <td class="text-c">{$vo.number}</td>
+            <td class="text-c">{$vo.price}</td>
+            <td class="text-c">{$vo.totleprice}</td>
+            <td class="text-c">
+            {if condition="$vo.status eq 1"}
+                <font style="color:red">待支付</font>
+            {elseif condition="$vo.status eq 2"}
+                <font style="color:green">已支付</font>
+            {/if}
+            </td>
+            <td class="text-c">
+            {if condition="$vo.order_type eq 1"}
+                激活订单
+            {elseif condition="$vo.order_type eq 2"}
+                购买订单
+            {/if}
+            </td>
+            <td class="text-c">{$vo.pay_way}</td>
+            <td class="text-c">{$vo.pay_time}</td>
+            <td class="text-c">{$vo.order_time}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<!--分页 begin-->
+<div class="page-bootstrap">{$page}</div>
+<br class="clear">
+<!--分页 end-->
+</div>
+</body>
+</html>

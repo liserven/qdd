@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>二维码</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+
+    <meta name="imagemode" content="force">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+    <meta name="author" content="">
+
+    <style>
+
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:14px; color:#999; font-family:"微软雅黑";font-style:normal;}
+
+        img{ width:100%; border:0;}
+
+        .body{width:100%;position:relative;}
+
+        .beijing{width: 100%; overflow: hidden; position: absolute; z-index: -1;}
+
+        .ziti{width: 65%; margin: auto; padding-top: 31%;}
+
+        .zititu{width:100%;}
+
+        .erweima{width:50%; margin: auto;}
+
+        .erweimatu{margin-top: 25%;}
+
+    </style>
+
+
+
+</head>
+
+
+
+<body>
+
+<div class="beijing">
+
+    <img src="/public/Public/static/images/beijing.png">
+
+</div>
+
+<div class="wode">
+
+    <a href="/mobile.php/member/userinfo">
+
+        <img style=" width:3%;margin-top:15px; margin-left:3%;" src="/public/Public/mobile/images/fanhui.png">
+
+    </a>
+
+    <div style=" text-align:center;color:#ffffff; font-size:15px; font-family:'微软雅黑'; margin-top:-27px;">我的二维码</div>
+
+</div>
+
+<div class="ziti"><img class="zititu" src="/public/Public/static/images/ziti.png">
+
+</div>
+
+<div class="erweima"><img class="erweimatu" src="/api.php/qrcode/user_qrcode?introduceId={$introduceId}"">
+
+</div>
+<div style="background-color:#fff;padding:10px 20px;font-size:14px;margin-top:20px;color:#000">{$url}</div>
+</body>
+
+</html>
+

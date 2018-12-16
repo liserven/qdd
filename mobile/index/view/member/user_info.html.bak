@@ -1,0 +1,1161 @@
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>我的{:otherconfig()['companyName']}</title>
+
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+
+	<meta name="viewport"  content="width=device-width,user-scalable=no">
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7;IE=edge,chrome=1">
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+
+</head>
+
+<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak>
+
+<body class="backmall">
+
+
+
+<div class="innerbox" id="innerbox">
+
+	<div class="inner">
+
+		<div class="heder_title">
+
+			<!--<a class="shezhi "href="/mobile.php/member/useredit">设置</a>-->
+
+			<div class="cl"></div>
+
+			<div class="user" style="text-align: center;padding-top: 10%;">
+
+				<!--<div class="leftuser fl">-->
+
+					<!--<a href="#"><img src="{{userinfo.avatarurl}}" alt=""></a>-->
+
+				<!--</div>-->
+
+				<div class="tew">
+
+					<h2>用户id：{{userinfo.nickname}}</h2>
+
+					<!--<a href="#">{{userinfo.usertype}}<em class="iconfont icon-youjiantou"></em></a>-->
+
+				</div>
+
+				<div class="cl"></div>
+
+			</div>
+
+		</div>
+
+		<div class="cl h20"></div>
+
+		<div class="mydin">
+
+			<h2>我的订单</h2>
+
+			<a href="/mobile.php/order/list">查看更多<em class="iconfont icon-youjiantou"></em></a>
+
+			<div class="cl"></div>
+
+		</div>
+
+		<div class="cl"></div>
+
+
+
+		<div class="kuan">
+
+			<ul>
+
+				<li class="list1"><a href="/mobile.php/order/list?status=1">待付款</a><span>{{userinfo.staymoney}}</span></li>
+
+				<li class="list2"><a href="/mobile.php/order/list?status=5">待发货</a><span>{{userinfo.stayDelive}}</span></li>
+
+				<li class="list3"><a href="/mobile.php/order/list?status=4">待收货</a><span>{{userinfo.receipt}}</span></li>
+
+				<li class="list4"><a href="/mobile.php/order/list?status=15">待退款</a><span>{{userinfo.refund}}</span></li>
+
+			</ul>
+
+			<div class="cl"></div>
+
+		</div>
+
+		<div class="cl h20"></div>
+
+
+
+		<div class="last_child">
+
+			<ul>
+
+				<!--<li class="mx1"><a href="/mobile.php/member/account"><span>账户余额</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+				<!--<li class="mx1"><a href="/mobile.php/member/infos"><span>我的资料</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+				<li class="mx10"><a href="/mobile.php/member/user_subordinate"><span>我的联盟商</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<li class="mx10"><a href="/mobile.php/member/buy_places"><span>购买推荐名额</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<li class="mx10"><a href="/mobile.php/code/user_qrcode"><span>我的二维码</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<!--<li class="mx2"><a href="/mobile.php/cart/list"><span>我的购物车</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+				<li class="mx3"><a href="/mobile.php/collect"><span>我的收藏</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<li class="mx4"><a href="/mobile.php/article/list"><span>公司公告</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<!--<li class="mx5"><a href="<?php echo config('API_URL');?>/mobile.php"><span>会员中心</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+				<!--<li class="mx5"><a href="/mobile.php/record/prize_list"><span>积分明细</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+				<li class="mx6" style="display: none;"><a href="#"><span>购物积分提现</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<!--<li class="mx7"><a href="/mobile.php/record/list"><span>电子币明细</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+				<!--<li class="mx7"><a href="/mobile.php/member/raccount"><span>收款账号</span><em class="iconfont icon-youjiantou fr"></em></a></li>-->
+
+
+
+				<li class="mx8"><a href="/mobile.php/member/address_list"><span>收货地址管理</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+				<li class="mx9"><a href="javascript:void(0)"   ng-click="loginExit()"><span>退出</span><em class="iconfont icon-youjiantou fr"></em></a></li>
+
+			</ul>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+{:widget('Common/mobile_footer')}
+
+
+
+<div class="fidinfo"></div>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+
+<!--<script type="text/javascript">-->
+
+    <!--var app = angular.module('memberApp', []);-->
+
+    <!--app.controller('memberCtrl', function($scope, $http) {-->
+
+        <!--//登录退出方法-->
+
+        <!--$scope.loginExit=function(){-->
+
+            <!--$http.get("/api.php/login/exit")-->
+
+                <!--.success(function (response) {-->
+
+                    <!--layer.msg(response.msg,{},function(){-->
+
+                        <!--location.href='/mobile.php';-->
+
+                    <!--});-->
+
+                <!--});-->
+
+        <!--};-->
+
+        <!--$http.get("/api.php/member/userinfo")-->
+
+            <!--.success(function (response) {-->
+
+                <!--var img_url=response.data;-->
+
+                <!--img_url['avatarurl']=img_url['avatarurl'].replace('/Upload','/public/Upload');-->
+
+                <!--$scope.userinfo = img_url;-->
+
+            <!--});-->
+
+    <!--});-->
+
+    <!--//所在地区选择-->
+
+<!--</script>-->
+
+</body>
+
+</html>
+
+
+
+<!--
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>会员中心</title>
+
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+
+	<meta name="viewport"  content="width=device-width,user-scalable=no">
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7;IE=edge,chrome=1">
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+
+	<style>
+
+		body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, span, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article,
+
+		aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+
+			margin: 0;
+
+			padding: 0;
+
+			border: none;
+
+		}
+
+
+
+		body{background: #f1f1f1; width:100%; position:relative;}
+
+
+
+		.zhanshi{ width:100%; height:945px; background:#FFF;}
+
+		.zhanshi ul li{width:49%;float: left;}
+
+		.zhanshi ul li img{width:100%; margin-top:20px;}
+
+		.zhanshi ul li p#biaoti{color:#000;font-size: 22px;line-height: 30px;}
+
+		.zhanshi ul li p#jiage{color:#d8320c;font-size: 20px;line-height:20px; float:left; margin-top:5px;}
+
+		.zhanshi ul li p#jiage span{color:#8e8e8e; margin-left:13px; font-family:"微软雅黑"; font-size:18px;}
+
+
+
+	</style>
+
+</head>
+
+<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak class="backmall" style=" background:#f1f1f1; position:relative;">
+
+&lt;!&ndash;<body class="backmall">&ndash;&gt;
+
+
+
+&lt;!&ndash; id=innerbox 标签外面 不放任何标签  为自适应标签   &ndash;&gt;
+
+<div class="innerbox" id="innerbox">
+
+	<div class="inner">
+
+		<div class="heder_title">
+
+			<a class="shezhi "href="/mobile.php/member/useredit">设置</a>
+
+			<div class="cl"></div>
+
+			<div class="user">
+
+				<div class="leftuser fl">
+
+					<a href="#"><img src="{{userinfo.avatarurl}}" alt=""></a>
+
+				</div>
+
+				<div class="tew">
+
+					<h2>{{userinfo.nickname}}</h2>
+
+					<a href="#">{{userinfo.usertype}}<em class="iconfont icon-youjiantou"></em></a>
+
+				</div>
+
+				<div class="cl"></div>
+
+			</div>
+
+		</div>
+
+		<div class="cl h20"></div>
+
+		<div class="mydin">
+
+			<h2>我的订单</h2>
+
+			<a href="/mobile.php/order/list">查看更多订单<em class="iconfont icon-youjiantou"></em></a>
+
+			<div class="cl"></div>
+
+		</div>
+
+		<div class="cl"></div>
+
+
+
+		<div class="kuan">
+
+			<ul>
+
+				<li class="list1"><a href="/mobile.php/order/list?status=1">待付款</a><span>{{userinfo.staymoney}}</span></li>
+
+				<li class="list2"><a href="/mobile.php/order/list?status=5">待发货</a><span>{{userinfo.stayDelive}}</span></li>
+
+				<li class="list3"><a href="/mobile.php/order/list?status=4">待收货</a><span>{{userinfo.receipt}}</span></li>
+
+				<li class="list4"><a href="/mobile.php/order/list?status=15">待退款</a><span>{{userinfo.refund}}</span></li>
+
+			</ul>
+
+			<div class="cl"></div>
+
+		</div>
+
+		<div class="cl h20" style="clear:both;"></div>
+
+
+
+		&lt;!&ndash;第一行-&ndash;&gt;
+
+		<div style=" width:100%; height:300px; background:#FFF;">
+
+			&lt;!&ndash;会员中心-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/code/user_qrcode">
+
+					<div style="width:70%;"><img style=" margin-left:26px; width:50%;" src="<?php echo CSS_PATH;?>mobile/images/huiyuanzhongxin@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center; margin-top:15px;color:#000;">二维码</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;我的资料-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/member/infos">
+
+					<div style="width:70%;"><img style=" margin-left:26px;width:50%;" src="<?php echo CSS_PATH;?>mobile/images/wodeziliao@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center;margin-top:15px;color:#000;">我的资料</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;我的收藏-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/collect">
+
+					<div style="width:70%;"><img style=" margin-left:26px;width:50%;"src="<?php echo CSS_PATH;?>mobile/images/wodeshouc@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center;margin-top:15px;color:#000;">我的收藏</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;浏览记录-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/history">
+
+					<div style="width:70%;"><img style=" margin-left:26px;width:50%;"src="<?php echo CSS_PATH;?>mobile/images/liulanjilu@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center;margin-top:15px;color:#000;">浏览记录</div>
+
+				</a>
+
+			</div>
+
+		</div>
+
+		<div style="clear:both;"></div>
+
+
+
+		&lt;!&ndash;第二行-&ndash;&gt;
+
+		<div style=" margin-top:-140px;">
+
+			&lt;!&ndash;账户明细-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/record/list">
+
+					<div style="width:70%;"><img style=" margin-left:26px;" src="<?php echo CSS_PATH;?>mobile/images/zhanghumingxi@2x.png"></div>
+
+					<div style="font-size:26px; width:78%; text-align:center;margin-top:15px;color:#000;">账户明细</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;积分-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/record/prize_list">
+
+					<div style="width:70%;"><img style=" margin-left:26px;" src="<?php echo CSS_PATH;?>mobile/images/jifen@2x.png"></div>
+
+					<div style="font-size:26px; width:78%; text-align:center;margin-top:15px;color:#000;">积分</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;余额明细-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/member/account">
+
+					<div style="width:70%;"><img style=" margin-left:26px;" src="<?php echo CSS_PATH;?>mobile/images/yuemingxi@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center;margin-top:15px;color:#000;">余额明细</div>
+
+				</a>
+
+			</div>
+
+			&lt;!&ndash;我的地址-&ndash;&gt;
+
+			<div style="width:20%; float:left; margin:2% 0 5% 5%;">
+
+				<a href="/mobile.php/member/address_list">
+
+					<div style="width:70%;"><img style=" margin-left:26px;" src="<?php echo CSS_PATH;?>mobile/images/wodedizhi@2x.png"></div>
+
+					<div style="font-size:26px; width:70%; text-align:center;margin-top:15px;color:#000;">我的地址</div>
+
+				</a>
+
+			</div>
+
+		</div>
+
+		<div style="clear:both;"></div>
+
+
+
+		&lt;!&ndash;为你推荐-&ndash;&gt;
+
+		<div style="width:100%; height:60px; background-color:#f1f1f1;">
+
+			<div style="width:100%; margin-top:20px; text-align:center; line-height:60px;margin-bottom:10px; background-color:#f1f1f1;"><img src="<?php echo CSS_PATH;?>mobile/images/weinituijian.png"></div>
+
+		</div>
+
+
+
+
+
+		<div class="zhanshi">
+
+			<ul>
+
+				{volist name="recommend" id='vr'}
+
+				<li >
+
+					<a href="/mobile.php/goods/{$vr['proid']}">
+
+						<img src="{$vr['proimg']}" style="width: 98%;">
+
+						<p id="biaoti">{$vr['proname']}</p>
+
+						<p id="jiage">{$vr['vipprice']} <span>3804人付款</span></p>
+
+					</a>
+
+				</li>
+
+				{/volist}
+
+			</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+
+</div>
+
+&lt;!&ndash; 底部固定导航 &ndash;&gt;
+
+	<div style="width:100%; height:98px; background-color:#f9f9f9; position:fixed; bottom:0; margin:auto;">
+
+		&lt;!&ndash;首页-&ndash;&gt;
+
+		<a href="/mobile.php"><div style="margin-top:5px; margin-left:5%; width:19%; float:left;">
+
+			<div style="width:30px;"><img style="" src="<?php echo CSS_PATH;?>mobile/images/shouye.png"></div>
+
+			<div style="font-size:22px;color:#666666; margin-top:0px; font-family:'微软雅黑'; margin-left:4px;">首页</div>
+
+		</div></a>
+
+
+
+		&lt;!&ndash;分类-&ndash;&gt;
+
+		<a href="/mobile.php/category"><div style="margin-top:5px; margin-left:0px; width:19%; float:left;">
+
+			<div style="width:30px;"><img style="" src="<?php echo CSS_PATH;?>mobile/images/fenlei.png"></div>
+
+			<div style="font-size:22px;color:#666;  font-family:'微软雅黑'; margin-left:4px;">分类</div>
+
+		</div></a>
+
+
+
+		&lt;!&ndash;消息-&ndash;&gt;
+
+		<a href="/mobile.php/member/message"><div style="margin-top:8px; margin-left:0px; width:19%; float:left;">
+
+			<div style="width:30px;"><img style="" src="<?php echo CSS_PATH;?>mobile/images/xiaoxi.png"></div>
+
+			<div style="font-size:22px;color:#666; font-family:'微软雅黑'; margin-top:-2px;margin-left:4px;">消息</div>
+
+		</div></a>
+
+
+
+		&lt;!&ndash;购物车-&ndash;&gt;
+
+		<a href="/mobile.php/cart/list"><div style="margin-top:10px; margin-left:0px; width:19%; float:left;">
+
+			<div style="width:30px;"><img style="" src="<?php echo CSS_PATH;?>mobile/images/gouwuche.png"></div>
+
+			<div style="font-size:22px;color:#666; font-family:'微软雅黑';margin-top:2px; margin-left:-4px;">购物车</div>
+
+		</div></a>
+
+
+
+		&lt;!&ndash;我的-&ndash;&gt;
+
+		<a href="/mobile.php/member/userinfo"><div style="margin-top:6px; margin-left:0px; width:19%; float:left;">
+
+			<div style="width:30px; margin-left:12px;"><img style="" src="<?php echo CSS_PATH;?>mobile/images/wodebaiyou1.png"></div>
+
+			<div style="font-size:22px;color:#28bebc;font-family:'微软雅黑';margin-top:0px; margin-left:-4px;">我的豆豆</div>
+
+		</div>
+
+		</a>
+
+		<div>
+
+		</div>
+
+
+
+		<div class="cl"></div>
+
+	</div>
+
+&lt;!&ndash; 底部固定导航end &ndash;&gt;
+
+
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+
+<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+
+<script>
+
+	$(function(){
+
+	    var imgWidth = $('.zhanshi ul li img').eq(0).width();
+
+        $('.zhanshi ul li img').height(imgWidth);
+
+	})
+
+</script>
+
+&lt;!&ndash;请在下方写此页面业务相关的脚本&ndash;&gt;
+
+<script type="text/javascript">
+
+    var app = angular.module('memberApp', []);
+
+    app.controller('memberCtrl', function($scope, $http) {
+
+        //登录退出方法
+
+        $scope.loginExit=function(){
+
+            $http.get("/api.php/login/exit")
+
+                .success(function (response) {
+
+                    layer.msg(response.msg,{},function(){
+
+                        location.href='/mobile.php';
+
+                    });
+
+                });
+
+        };
+
+        $http.get("/api.php/member/userinfo")
+
+            .success(function (response) {
+
+                var img_url=response.data;
+
+                img_url['avatarurl']=img_url['avatarurl'].replace('/Upload','/public/Upload');
+
+                $scope.userinfo = img_url;
+
+            });
+
+    });
+
+    //所在地区选择
+
+</script>
+
+
+
+</body>
+
+</html>-->
+
+
+
+
+
+
+
+<!--<!doctype html>-->
+
+<!--<html>-->
+
+<!--<head>-->
+
+	<!--<meta charset="utf-8">-->
+
+	<!--<title>我的{:otherconfig()['companyName']}</title>-->
+
+	<!--<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport">-->
+
+	<!--<link href="<?php echo CSS_PATH;?>mobile/css/style7.css" rel="stylesheet" type="text/css">-->
+
+	<!--<link href="<?php echo CSS_PATH;?>mobile/css/reset4.css" rel="stylesheet" type="text/css">-->
+
+	<!--<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.8.3.js"></script>-->
+
+	<!--<script src="<?php echo CSS_PATH;?>mobile/js/mobile.js"></script>-->
+
+	<!--<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>-->
+
+	<!--<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>-->
+
+<!--</head>-->
+
+
+
+<!--<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak>-->
+
+	<!--<div class="top">-->
+
+		<!--<div class="zhuangtai"></div>-->
+
+		<!--<div class="neirong">-->
+
+			<!--<p>{{userinfo.nickname}}</p>-->
+
+		<!--</div>-->
+
+	<!--</div>-->
+
+	<!--<div class="dingdan">-->
+
+		<!--<div class="biaoti">-->
+
+			<!--<span>我的订单</span>-->
+
+			<!--<a href="/mobile.php/order/list">查看更多订单 ></a>-->
+
+		<!--</div>-->
+
+
+
+		<!--<ul class="tubiao01">-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/order/list?status=1">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/daifukuan.png" alt="">-->
+
+					<!--<p>待付款</p>-->
+
+					<!--<span>{{userinfo.staymoney}}</span>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/order/list?status=5">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/daifahuo.png" alt="">-->
+
+					<!--<p>待发货</p>-->
+
+					<!--<span>{{userinfo.stayDelive}}</span>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/order/list?status=4">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/daishouhuo.png" alt="">-->
+
+					<!--<p>待收货</p>-->
+
+					<!--<span>{{userinfo.receipt}}</span>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/order/list?status=15">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/daituikuan.png" alt="">-->
+
+					<!--<p>待退款</p>-->
+
+					<!--<span>{{userinfo.refund}}</span>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+		<!--</ul>-->
+
+	<!--</div>-->
+
+
+
+	<!--<div class="ziliao">-->
+
+		<!--<ul class="tubiao01">-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/code/user_qrcode">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/huiyuanzhongxin@2x.png" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p>二维码</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/member/infos">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/wodeziliao@2x.png" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p>我的资料</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/collect">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/wodeshouc@2x.png" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p>我的收藏</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/history">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/liulanjilu@2x.png" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p>浏览记录</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/record/list">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/zhanghumingxi@2x.png" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p>账户明细</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/article/list">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/liulanjilu@2x.png" alt="">-->
+
+					<!--<p>公司公告</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<a href="/mobile.php/member/account">&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/yuemingxi@2x.png" alt="">&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<p>账户余额</p>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/member/address_list">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/wodedizhi@2x.png" alt="">-->
+
+					<!--<p>我的地址</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--<li ng-if="userinfo.show == 1">-->
+
+				<!--<a href="<?php echo config('API_URL');?>/mobile.php">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/yuemingxi@2x.png" alt="">-->
+
+					<!--<p>会员中心</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+          	<!--<li>-->
+
+				<!--<a  href="javascript:void(0)"   ng-click="loginExit()">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/wodeziliao@2x.png" alt="">-->
+
+					<!--<p>退出登陆</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+		<!--</ul>-->
+
+	<!--</div>-->
+
+
+
+
+
+<!--&lt;!&ndash;为你推荐&ndash;&gt;-->
+
+	<!--&lt;!&ndash;<div class="weinin">&ndash;&gt;-->
+
+		<!--&lt;!&ndash;<img src="<?php echo CSS_PATH;?>mobile/images/weinituijian.png" alt="">&ndash;&gt;-->
+
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+	<!--&lt;!&ndash;<div class="shangpin">&ndash;&gt;-->
+
+		<!--&lt;!&ndash;<ul>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;{volist name="recommend" id='vr'}&ndash;&gt;-->
+
+			<!--&lt;!&ndash;<li>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;<a href="/mobile.php/goods/{$vr['proid']}">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<img src="{$vr['proimg']}" alt="">&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p style="height:32px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{$vr['proname']}</p>&ndash;&gt;-->
+
+					<!--&lt;!&ndash;<p id="jiage">{$vr['vipprice']}</p>&ndash;&gt;-->
+
+				<!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+			<!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+
+
+			<!--&lt;!&ndash;{/volist}&ndash;&gt;-->
+
+
+
+		<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+
+
+
+
+
+<!--&lt;!&ndash;底部固定导航&ndash;&gt;-->
+
+	<!--<div class="bottom">-->
+
+		<!--<ul>-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/shouye.png" alt="">-->
+
+					<!--<p>首页</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/category">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/fenlei.png" alt="">-->
+
+					<!--<p>分类</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+		<!--&lt;!&ndash;	<li>-->
+
+				<!--<a href="/mobile.php/member/message">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/xiaoxi.png" alt="">-->
+
+					<!--<p>消息</p>-->
+
+				<!--</a>-->
+
+			<!--</li>&ndash;&gt;-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/cart/list">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/gouwuche.png" alt="">-->
+
+					<!--<p>购物车</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+			<!--<li>-->
+
+				<!--<a href="/mobile.php/member/userinfo">-->
+
+					<!--<img src="<?php echo CSS_PATH;?>mobile/images/wodebaiyou1.png" alt="">-->
+
+					<!--<p id="tebie">我的</p>-->
+
+				<!--</a>-->
+
+			<!--</li>-->
+
+		<!--</ul>-->
+
+	<!--</div>-->
+
+
+
+<!--</body>-->
+
+<!--&lt;!&ndash;-->
+
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>-->
+
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>-->
+
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>-->
+
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>&ndash;&gt;-->
+
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>-->
+
+
+
+<!--&lt;!&ndash;请在下方写此页面业务相关的脚本&ndash;&gt;-->
+
+<script type="text/javascript">
+
+    var app = angular.module('memberApp', []);
+
+    app.controller('memberCtrl', function($scope, $http) {
+
+		 //登录退出方法
+
+		 $scope.loginExit=function(){
+
+            $http.get("/api.php/login/exit")
+
+                .success(function (response) {
+
+                    layer.msg(response.msg,{},function(){
+
+                        location.href='/mobile.php';
+
+                    });
+
+                });
+
+        };
+
+        $http.get("/api.php/member/userinfo?ishit=1")
+
+            .success(function (response) {
+
+                var img_url=response.data;
+
+                $scope.userinfo = img_url;
+
+            });
+
+    });
+
+    //所在地区选择
+
+</script>
+
+<script>
+
+	$(function(){
+
+	    var proNum = $('.shangpin li').size();
+
+	    var num = Math.ceil(proNum/2);
+
+        $('.shangpin').height(4.8*num+1.2+'rem');
+
+	})
+
+</script>
+
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

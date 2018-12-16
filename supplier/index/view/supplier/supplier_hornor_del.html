@@ -1,0 +1,51 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>供应商资质 - 供应商管理</title>
+</head>
+<body>
+
+{volist name="listhornor" id="voh"}
+    <div class="maskWraper" style="float:left; width:250px; height:300px; border:solid 1px #ddd; padding:2px; margin:0 20px 20px 0">                          
+        <div class="msKeimgBox">
+            <img src="/Upload/supplier/licence/{$voh.imgpath}" width="250" height="300">
+            <span class="hide pic100"><img src="/Upload/supplier/licence/{$voh.imgpath}" /></span>
+        </div>
+        <div class="maskBar text-c"><a href="javascript:;" onClick="_del(this,'{$voh.id}')" class="c-white">删除</a></div>
+    </div>
+{/volist}
+
+<!--图库弹出层 开始-->
+<div class="mskeLayBg"></div>
+<div class="mskelayBox">
+  <div class="mske_html"></div>
+  <img class="mskeClaose" src="<?php echo CSS_PATH;?>static/supplier/images/mke_close.png" width="27" height="27" />
+</div>
+<!--图库弹出层 结束-->
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript"> 
+//图片遮罩条
+$(function(){
+	$.Huihover('.maskWraper');
+});
+
+//点击放大图片
+jQuery(function(){
+    $(".mskeLayBg").height($(document).height());
+    $(".mskeClaose").click(function(){
+		$(".mskeLayBg,.mskelayBox").hide()
+	});
+    $(".msKeimgBox").click(function(){
+		$(".mske_html").html($(this).find(".hide").html());
+		$(".mskeLayBg").show(); 
+		$(".mskelayBox").fadeIn(300)
+	});
+})
+</script> 
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

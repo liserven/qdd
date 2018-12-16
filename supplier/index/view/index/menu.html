@@ -1,0 +1,87 @@
+<aside class="Hui-aside">
+	<input runat="server" id="divScrollValue" type="hidden" value="" />
+	<div class="menu_dropdown bk_2" id="lnav">
+        <dl id="menu-product">
+            <dt><i class="f-16 skinico Hui-iconfont">&#xe620;</i> 商品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="{:url('Product/productList')}" data-title="商品列表" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>商品列表</a></li>
+                    {if condition="$Think.session.supplierid neq '1'"}
+                    <li><a _href="{:url('Product/productAdd')}" data-title="添加商品" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>添加商品</a></li>
+                    {/if}
+                </ul>
+            </dd>
+        </dl>
+        <dl id="menu-stock">
+            <dt><i class="f-16 skinico Hui-iconfont">&#xe692;</i> 库存管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="{:url('Stock/stock_list')}" data-title="库存列表" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>库存列表</a></li>
+                    {if condition="$Think.session.supplierid neq '1'"}
+                    <li><a _href="{:url('Stock/stock_list_record')}" data-title="库存记录" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>库存记录</a></li>
+                    {/if}
+                </ul>
+            </dd>
+        </dl>
+        <dl id="menu-order">
+			<dt><i class="f-16 skinico Hui-iconfont">&#xe681;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+                    <li><a _href="{:url('Order/order_list')}" data-title="订单列表" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>订单列表</a></li>
+					<li><a _href="{:url('Order/order_list',['deliver'=>'no'])}" data-title="未发货订单" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>未发货订单</a></li>
+                    <li><a _href="{:url('Order/order_list',['deliver'=>'yes'])}" data-title="已发货订单" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>已发货订单</a></li>
+                    <li><a _href="{:url('Order/order_express')}" data-title="快递单号导入" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>快递单号导入</a></li>
+                    <!--<li><a _href="__MODULE__/Order/order_express" data-title="快递/物流" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>快递/物流</a></li>-->
+				</ul>
+			</dd>
+		</dl>
+        <!--<dl id="menu-sales">
+			<dt><i class="f-16 skinico Hui-iconfont">&#xe6bf;</i> 销量统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+                    <li><a _href="__MODULE__/Sales/sales_record" data-title="销售记录" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>销售记录</a></li>
+					<li><a _href="__MODULE__/Sales/sales_statistics" data-title="销量统计" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>销量统计</a></li>
+				</ul>
+			</dd>
+		</dl>-->
+        <dl id="menu-count">
+			<dt><i class="f-16 skinico Hui-iconfont">&#xe61a;</i> 结算记录<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="{:url('Supplier/supplier_count_record')}" data-title="结算记录" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>结算记录</a></li>
+                    <li><a _href="{:url('Supplier/supplier_withdraw')}" data-title="商家提现" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>商家提现</a></li>
+                    <li><a _href="{:url('Supplier/supplier_withdraw_record')}" data-title="提现记录" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>提现记录</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<!--
+        <dl id="menu-article">
+			<dt><i class="f-16 skinico Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="__MODULE__/Article/article_list" data-title="资讯列表" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>资讯列表</a></li>
+				</ul>
+			</dd>
+		</dl>
+		-->
+        <dl id="menu-wuliu">
+            <dt><i class="f-16 skinico Hui-iconfont">&#xe61a;</i> 物流管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="{:url('Freight/index')}" data-title="配送方式" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>配送方式</a></li>
+                    <li><a _href="{:url('Freight/freight')}" data-title="运费设置" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>运费设置</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="menu-supplier">
+			<dt><i class="f-16 skinico Hui-iconfont">&#xe62c;</i> 供应商信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+                    <li><a _href="{:url('Supplier/supplier_admin')}" data-title="商家信息" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>商家信息</a></li>
+					<li><a _href="{:url('Supplier/supplier_password')}" data-title="修改密码" href="javascript:void(0)"><i class="f-12 Hui-iconfont">&#xe67e;</i>修改密码</a></li>
+				</ul>
+			</dd>
+		</dl>
+	</div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

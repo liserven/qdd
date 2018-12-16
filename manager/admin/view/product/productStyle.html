@@ -1,0 +1,21 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>编辑商品 - 商品管理</title>
+</head>
+<body>
+
+{volist name="plist" id="vo"}
+<div style="height:45px">
+<form name="form{$vo.styleid}" id="form{$vo.styleid}" method="post" action="{:url('Product/productStyle',['action'=>'edit','proid'=>$vo['proid'],'supid'=>$vo['supplierid'],'styleid'=>$vo['styleid']])}">
+    颜色 <input type="text" class="input-text" value="{$vo.stylename1}" placeholder="" id="pcoler{$vo.styleid}" name="pcoler{$vo.styleid}" style="width:20%">
+    规格 <input type="text" class="input-text" value="{$vo.stylename}" placeholder="" id="psize{$vo.styleid}" name="psize{$vo.styleid}" style="width:20%">&emsp;商品编码 <input type="text" class="input-text" value="{$vo.txm}" placeholder="" id="txm{$vo.styleid}" name="txm{$vo.styleid}" style="width:30%">&emsp;<input type="submit" class="btn btn-default" value="修改">&emsp;<a href="{:url('Product/productStyle',['action'=>'del','proid'=>$vo['proid'],'supid'=>$vo['supplierid'],'styleid'=>$vo['styleid']])}">删除</a>
+ </form>
+</div>
+{/volist}
+
+{include file="./public/Public/js_script.html" /}
+
+
+</body>
+</html>

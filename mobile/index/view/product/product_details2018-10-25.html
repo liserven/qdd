@@ -1,0 +1,729 @@
+<!--
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <link href="<?php echo CSS_PATH;?>mobile/css/common.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo CSS_PATH;?>mobile/css/search.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <style>
+        body,ul,li{ margin:0; padding:0; font-family: PingFang;	font-style:normal; background-color:
+
+                #FFF;}
+        a {border:0; text-decoration:none; color:#303030;}
+        img{ width:100%; border:0;}
+        input{
+            background:transparent;
+        }
+
+        .banner-slider img{
+            width:100%;
+            max-width:750px;
+        }
+        .focus div{
+            width:50%;
+            position:absolute;
+            left:50%;
+            bottom:0px;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .focus span {
+            margin:0px 5px 0px 5px;
+            display:inline-block;
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background:#fff;
+            font-size:0
+        }
+        .focus span.current {
+            background:#e61739;
+        }
+
+    </style>
+<title>商品详情</title>
+</head>
+
+<body style='height: 100%' ng-app="scroll" ng-controller="Product" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+&lt;!&ndash;-页头-&ndash;&gt;
+<div style=" width:100%; height:50px; background-color:#D9330D;">
+	&lt;!&ndash;-分类-&ndash;&gt;
+	<div style="padding-top:3px; padding-left:2%; float:left; line-height:50px;">
+    	<div style="width:25px; float:left; margin-top:4px;"><a href="javascript:history.back(-1);"><img src="<?php echo CSS_PATH;?>mobile/images/zjt.png"></a></div>
+    </div>
+	&lt;!&ndash;标题&ndash;&gt;
+    <div style=" width:25%; margin-left:30%;  color:#FFF; font-size:17px; line-height:50px; float:left;">商品详情</div>
+    &lt;!&ndash;-信息-&ndash;&gt;
+        <div style="padding-top: 8px; padding-right: 5%; float: right;">
+        <div style="width: 30px;">
+            <a href="/mobile.php/cart/list">
+                <img src="<?php echo CSS_PATH;?>mobile/images/gwc22.png">
+                <div style="width: 20px; height: 20px; background-color: #FFF; color: #F00; font-size: 12px;
+                    border-radius: 50%; text-align: center; line-height: 20px; position: absolute;
+                    top: 7px; right: 10px;">
+                    <label id="proCount">{{goods.cartnum}}</label>
+                </div>
+            </a>
+        </div>
+        </div>
+</div>
+    <div style="clear:both;"></div>
+&lt;!&ndash;-内容-&ndash;&gt;
+<div id="slideBox" class="slideBox" >
+    <div class="bd">
+        <ul>
+            {volist name="albums" id='vo'}
+            <li><img src="{$vo['imgpath']}" alt=""></li>
+            {/volist}
+        </ul>
+    </div>
+    &lt;!&ndash; 小圆点 &ndash;&gt;
+    <div class="hd">
+        <ul></ul>
+    </div>
+</div>
+<div ></div>
+&lt;!&ndash;-名字-&ndash;&gt;
+<div style="width:90%; color:#303030; margin:0 auto; font-size:16px; margin-top:10px;">{{goods.proname}}</div>
+<div style="width:65%; margin-left:5%; color:#303030; font-size:14px;margin-top:5px; float:left; " ng-if="goods.vipprice != 0 && goods.consumeintegral == 0">
+    会员价：<span style="color:#F00;"><span style="font-weight:bold;">{{goods.vipprice}}</span>元</span>
+</div>
+    <div style="width:65%; margin-left:5%; color:#303030; font-size:14px;margin-top:5px; float:left; " ng-if="goods.vipprice == 0 && goods.consumeintegral != 0">
+        会员价：<span style="color:#F00;"><span style="font-weight:bold;">{{goods.consumeintegral}}</span>积分</span>
+    </div>
+    <div style="width:65%; margin-left:5%; color:#303030; font-size:14px;margin-top:5px; float:left; " ng-if="goods.vipprice != 0 && goods.consumeintegral != 0">
+        会员价：<span style="color:#F00;"><span style="font-weight:bold;">{{goods.vipprice}}</span>元+<span style="font-weight:bold;">{{goods.consumeintegral}}</span>积分</span>
+    </div>
+&lt;!&ndash;-加减-&ndash;&gt;
+<div style="float:right; margin-top:5px; margin-right:5%;">
+    <div style="width:20px; height:20px; background:#f6f6f6; border:solid 1px #d3d3d3; text-align:center; line-height:20px; float:left;" ng-click="reduce()">-</div>
+    <div style="width:30px; height:20px; border-top:solid 1px #d3d3d3; border-bottom:solid 1px #d3d3d3; float:left;"><input style=" width:30px;border:0; outline:none; text-align:center;" type="text" value="{{goods.minpurchase}}" id="goodsnum" disabled></div>
+    <div style="width:20px; height:20px; background:#f6f6f6; border:solid 1px #d3d3d3; text-align:center; line-height:20px; float:left;" ng-click="increase()">+</div>
+</div>
+    <div style="clear:both;"></div>
+    <div style="width:60%; margin-left:5%; color:#303030; font-size:14px;margin-top:5px;margin-bottom: 10px;" ng-if="goods.giveintegral > 0">赠积分：<span id="marketpriceid" style="color:#F00;font-weight:bold;">{{goods.giveintegral}}</span></div>
+<div style="clear:both;"></div>
+<div style="width:60%; margin-left:5%; color:#303030; font-size:14px;margin-top:5px; text-decoration: line-through; ">市场价：<span id="marketpriceid">{{goods.marketprice}}</span>元</div>
+
+<div style="margin-left:5%;">
+    <div style=" float:left; font-size:14px; color:#666; margin-right:15px; margin-top:5px;">请选择商品规格:</div>
+    &lt;!&ndash;库存&ndash;&gt;
+    <div style="float:right; font-size:14px; margin-right:5%; color:#999; margin-top:5px;display:none;" id="kucundivid">库存：<span style=" color:#F00;">{{kucun}}</span>件</div>
+    <div style=" clear:both;"></div>
+    &lt;!&ndash;产品规格&ndash;&gt;
+    <div style=" margin-bottom:10px; float:left;" id='stylediv'>
+        <span ng-repeat="vo in goodsstyle">
+            <div id='{{vo.styleid}}' style="border:solid 1px #333333; height:20px;width: 64px; line-height:20px; text-align:center; margin-top:4px; float:left; margin-right:3px;" ng-click="styleSelect($event,vo.kucun)">{{vo.stylename}}</div>
+        </span>
+    </div>
+    <input type="hidden" value="" id='styleId'>
+</div>
+
+<div style=" clear:both;"></div>
+<div style=" margin-left:5%;margin-bottom:10px;margin-top:10px; float:left;font-size: 15px;">
+    运费政策：{{goods.peisong}}
+</div>
+
+&lt;!&ndash;分隔线&ndash;&gt;
+<div style="width:100%; height:10px; background-color:#f6f6f6; clear:both; margin-top:10px;"></div>
+&lt;!&ndash;商品详情&ndash;&gt;
+<div style="margin-top:5px;"><img src="<?php echo CSS_PATH;?>mobile/images/spxq.png"></div>
+&lt;!&ndash;内容&ndash;&gt;
+<a href="/mobile.php/search?supid={{goods.supplierid}}"><div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:10px;">商家名称：{{goods.suppliername}}</div></a>
+
+<div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:10px;">商品名称：{{goods.title}}</div>
+<div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:5px;">品牌：{{goods.keywords}}</div>
+<div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:5px;">单位：{{goods.unit}}</div>
+<div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:5px;">包装规格：{{goods.productsizedetail}}</div>
+<div style="width:90%; color:#303030; margin:0 auto; font-size:15px; margin-top:5px;">产品描述：{{goods.description}}</div>
+<div style="width:95%; margin:0 auto;" >
+    <div id='contentid' style="margin-top: 20px;"></div>
+    <div style="height:70px;"></div>
+</div>
+&lt;!&ndash; 底部菜单&ndash;&gt;
+<div style="width:100%; height:60px; background-color:#000; opacity:0.7; position:fixed; bottom:0;"></div>
+<div style="position:fixed; bottom:10px; width:80%;left:50%; margin-left:-40%;">
+    <div style="float:left; width:30%; margin-right:3%;"><img src="<?php echo CSS_PATH;?>mobile/images/dianjishoucang.png" ng-click="addToCollect(1)"></div>
+
+    <div style="float:left; width:30%; margin-right: 1px;%;"><img src="<?php echo CSS_PATH;?>mobile/images/jrgwc.png" ng-click="addToCart('add')"></div>
+    <div style="float:right; width:30%; margin-left:1%;"><img src="<?php echo CSS_PATH;?>mobile/images/ljgm.png" ng-click="addToCart('settle')"></div>
+</div>
+
+</div>
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载&#45;&#45;需要Jquery
+            $(window).scroll(function () {
+
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Product', ['$scope','$http',
+        function ($scope, $http) {
+            // 防止重复加载
+            $scope.ordernumber=0;//定义商品的订购数量
+            $scope.busy = false;
+            $scope.loadMore = function() {
+                if ($scope.busy) {
+                    return false;
+                }
+                $scope.busy = true;
+                // 请求后台服务器
+                $http.get("/api.php/goods/detail?proid={$Request.param.proid}")
+                    .success(function(response) {
+                        $scope.busy = false;
+                        angular.element("#contentid").html(response.data.datails.procontent);
+                    });
+            };
+            /**
+             * 商品规格的选择
+             */
+            $scope.styleSelect=function(event,kucun){
+                angular.element('#stylediv div').attr('style','border:solid 2px #d3d3d3; height:20px; line-height:20px; text-align:center; margin-top:4px; float:left; margin-right:3px;');
+                event.target.setAttribute('style','border:solid 1px #C41919; height:20px;width:64px; line-height:20px; text-align:center; margin-top:4px; float:left; margin-right:3px;');
+                angular.element("#styleId").val(event.target.getAttribute('id'));
+
+                $scope.kucun = kucun;
+                angular.element('#kucundivid').attr('style','float:right; font-size:14px; margin-right:5%; color:#999; margin-top:5px;');
+            };
+            /**
+             * 添加商品到收藏
+             */
+            $scope.addToCollect=function(type)
+            {
+                $http.get('/api.php/goods/collect?collectId={$Request.param.proid}&collectType='+type)
+                    .success(function(response) {
+                        if(response.status==0) {
+                            layer.msg(response.msg, {}, function () {
+                                location.href = '/mobile.php/login';
+                            });
+                        }else{
+                            layer.msg(response.msg);
+                        }
+                    });
+            }
+            /**
+             * 添加商品到购物车
+             */
+            $scope.addToCart=function(type){
+                var styleid=angular.element("#styleId").val();
+                var goodsnum=angular.element("#goodsnum").val();
+                if(styleid==''){
+                    layer.msg("请选择商品规格");
+                    return;
+                }
+                if(goodsnum>$scope.kucun){
+                    layer.msg('购买数量不能大于库存！');
+                    return;
+                }
+                $http.get("/api.php/cart/add?proid={$Request.param.proid}&styleid="+styleid+"&pronum="+goodsnum)
+                    .success(function(response) {
+                        if(response.status==1){
+                            layer.msg(response.msg);
+                            if(type=='add'){
+                                $scope.goods.cartnum=response.data.cartno;
+                            }else if(type=='settle'){
+                                location.href='/mobile.php/cart/list';
+                            }
+                        }else{
+                            if(response.msg=='未登录'){
+                                layer.msg(response.msg,{},function(){
+                                    location.href='/mobile.php/login';
+                                });
+                            }else{
+                                layer.msg(response.msg);
+                            }
+                        }
+                    });
+            };
+            /**
+             * 订购商品数量的减少
+             */
+            $scope.reduce=function(){
+                if(($scope.goods.minpurchase - $scope.ordernumber)>0) {
+                    $scope.goods.minpurchase = $scope.goods.minpurchase - $scope.ordernumber;
+                }
+            };
+            /**
+             * 订购商品数量的增加
+             */
+            $scope.increase=function(){
+                $scope.goods.minpurchase=$scope.goods.minpurchase+$scope.ordernumber;
+            };
+            // 默认第一次加载数据
+            $http.get("/api.php/goods/detail?proid={$Request.param.proid}")
+                .success(function(response) {
+                    $scope.goods = response.data.datails;
+                    $scope.ordernumber=response.data.datails.minpurchase;
+                    $scope.goodsstyle = response.data.goodsstyle;
+                    angular.element("#contentid").html(response.data.datails.procontent);
+                });
+        }]);
+</script>
+</body>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+</html>
+-->
+
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <!--<link href="<?php echo CSS_PATH;?>mobile/css/common.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo CSS_PATH;?>mobile/css/search.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+    <link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />-->
+
+    <link href="<?php echo CSS_PATH;?>mobile/css/style2.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo CSS_PATH;?>mobile/css/reset.css" rel="stylesheet" type="text/css">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.8.3.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/mobile.js"></script>
+
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <!--<style>
+        body,ul,li{ margin:0; padding:0; font-family: PingFang;	font-style:normal; background-color:
+
+                #FFF;}
+        a {border:0; text-decoration:none; color:#303030;}
+        img{ width:100%; border:0;}
+        input{
+            background:transparent;
+        }
+
+        .banner-slider img{
+            width:100%;
+            max-width:750px;
+        }
+        .focus div{
+            width:50%;
+            position:absolute;
+            left:50%;
+            bottom:0px;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .focus span {
+            margin:0px 5px 0px 5px;
+            display:inline-block;
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background:#fff;
+            font-size:0
+        }
+        .focus span.current {
+            background:#e61739;
+        }
+
+    </style>-->
+    <title>商品详情</title>
+</head>
+
+<body style='height: 100%'  ng-app="scroll" ng-controller="Product" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+    <div class="banner" id="image">
+        <div id="slideBox" class="slideBox" >
+            <div class="bd">
+                <ul>
+                    {volist name="albums" id='vo'}
+                    <li><img src="{$vo['imgpath']}" alt=""></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="hd" style="display: none">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+    <div class="banner" id="video" style="display: none">
+        <video poster="{$albums[0]['imgpath']}" src="{{productvideo.videopath}}" id="heightone" controls style="width: 100%;height: 6.4rem;"></video>
+    </div>
+    <p style="text-align: center" ng-if="isvideo==1"><span id="images" style="color: gold" onclick="changeshare()">图片</span>|<span id="videos" onclick="changeshares()">视频</span></p>
+
+    <div class="neirong" >
+        <p style="    font-size: 0.28rem;margin-top: 0.1rem;color: white">{{goods.proname}}</p>
+        <p id="jiage" ng-if="goods.vipprice != 0 ">￥{{goods.vipprice}}</p>
+    </div>
+
+
+    <div class="neirong01" >
+        <p style="color: white">请选择产品规格
+        </p>
+        <div style="float:right; font-size:14px; margin-right:5%; color:#999; margin-top:5px;visibility:hidden;" id="kucundivid">库存：<span style=" color:#fed58d;" id="kucun"></span>件</div>
+        <div style=" clear:both;"></div>
+        <!--产品规格-->
+        <div style="margin-bottom:0;float:left;" id='stylediv1'>
+            <p  style="font-size:0.3rem;color:white;padding:5px; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" >颜色：</p>
+            <span ng-repeat="vo in goodsstyle1">
+            <div ng-if="vo.stylename1 == selectname" id="333" style="font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #fed58d; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" ng-click="styleSelect1($event)">{{vo.stylename1}}</div>
+            <div ng-if="vo.stylename1 != selectname" id="222" style="font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" ng-click="styleSelect1($event)">{{vo.stylename1}}</div>
+        </span>
+        </div>
+        <input type="hidden" id="selectname" value="{{selectname}}">
+        <div style="clear: both"></div>
+        <div style="margin-bottom:0;float:left;" id='stylediv'>
+            <p  style="font-size:0.3rem;color:white;padding:5px; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" >规格：</p>
+            <span ng-repeat="vo in goodsstyle">
+            <div id="{{vo.styleid}}"  style="font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" ng-click="styleSelect($event)">{{vo.stylename}}</div>
+        </span>
+        </div>
+        <input type="hidden" value="" id='styleId'>
+    </div>
+    <div class="neirong" style="auto;font-size:18px;height: 0.6rem;">
+        购买数量：
+        <button type="button" style="font-style:bold;font-size:18px;width:30px;height:30px;text-align:center;background: #fed58d" onclick="redu();">-</button>
+        <input type="number" id="number" value="1" style="font-style:bold;background: #1f1f1f;color:white;font-size:18px;width:40px;height:30px;text-align:center;"/>
+        <button type="button" style="background: #fed58d;font-style:bold;font-size:18px;width:30px;height:30px;text-align:center;" onclick="add();">+</button>
+    </div>
+    <p class="pingjia01"><span><img src="<?php echo CSS_PATH;?>mobile/images/tu.png" alt=""></span>&nbsp;&nbsp;详情</p>
+    <div style="width:95%; margin:0 auto;" >
+        <div id='contentid' style="margin-top: 20px;"></div>
+        <div style="height:70px;"></div>
+    </div>
+    <div class="dibu">
+        <ul>
+            <li>
+                <a href="/mobile.php/cart/list">
+                    <img src="<?php echo CSS_PATH;?>mobile/img/gouwuche1.png" alt="" style="width: 45%">
+                    <p>购物车</p>
+                </a>
+            </li>
+            <li>
+                <a href="" ng-click="addToCollect(1)">
+                    <img src="<?php echo CSS_PATH;?>mobile/img/shoucang.png" alt="" style="width: 40%">
+                    <p>收藏</p>
+
+                </a>
+            </li>
+        </ul>
+        <a href="##" id="jiaru" ng-click="addToCart('add')">加入购物车</a>
+        <a href="##" id="goumai" ng-click="nowBuy()">立即购买</a>
+    </div>
+    <div class="back"><a href="javascript:history.back(-1);"><img src="<?php echo CSS_PATH;?>mobile/images/fanhui3.png" alt=""></a></div>
+
+
+
+</div>
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Product', ['$scope','$http',
+        function ($scope, $http) {
+            // 防止重复加载
+            $scope.ordernumber=0;//定义商品的订购数量
+            $scope.busy = false;
+            $scope.loadMore = function() {
+                if ($scope.busy) {
+                    return false;
+                }
+                $scope.busy = true;
+                // 请求后台服务器
+                $http.get("/api.php/goods/detail?proid={$Request.param.proid}")
+                    .success(function(response) {
+                        $scope.busy = false;
+                        angular.element("#contentid").html(response.data.datails.procontent);
+                    });
+            };
+            /**
+             * 商品颜色的选择
+             */
+            $scope.styleSelect1=function(event){
+                angular.element('#stylediv1 div').attr('style','font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+                angular.element('#stylediv1 div').attr('id','222');
+                event.target.setAttribute('style','font-size:0.3rem;padding:5px;color:white;background: #2a2a2a;border: 1px solid #fed58d; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+                event.target.setAttribute('id','333');
+                var selectname=$('#333').text();
+                $('#selectname').val(selectname);
+                $.ajax({
+                    url:'/api.php/index/product/product_stylename1?stylename1='+selectname+'&proid={$Request.param.proid}',
+                    type:"GET",
+                    dataType:"json",
+                    success: function(data) {
+                        var str='<p  style="font-size:0.3rem;color:white;padding:5px; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" >规格：</p>';
+                        $.each(data,function(i,item){
+                            str+='<div id="'+data[i].styleid+'" style="font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;" onclick="styleSelect('+data[i].styleid+')">'+data[i].stylename+'</div>';
+                        });
+                        $('#stylediv').empty();
+                        $('#stylediv').append(str);
+                    }
+                });
+            };
+            /**
+             * 商品规格的选择
+             */
+            $scope.styleSelect=function(event){
+                angular.element('#stylediv div').attr('style','font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+                event.target.setAttribute('style','font-size:0.3rem;padding:5px;color:white;background: #2a2a2a;border: 1px solid #fed58d; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+                $.ajax({
+                    url:'/api.php/index/product/product_stock?styleid='+event.target.getAttribute('id')+'&proid={$Request.param.proid}',
+                    type:"GET",
+                    dataType:"json",
+                    success: function(data) {
+                        var kucun = data.kucun;
+                        $('#kucundivid').attr('style','float:right; font-size:14px; margin-right:5%; color:#999; margin-top:5px;');
+                        $('#kucun').text(kucun);
+                        $("#styleId").val(event.target.getAttribute('id'));
+                    }
+                });
+            };
+            /**
+             * 添加商品到收藏
+             */
+            $scope.addToCollect=function(type)
+            {
+                $http.get('/api.php/goods/collect?collectId={$Request.param.proid}&collectType='+type)
+                    .success(function(response) {
+                        if(response.status==0) {
+                            layer.msg(response.msg, {}, function () {
+                                location.href ='<?php echo config("API_URL");?>/mobile.php/login';
+                            });
+                        }else{
+                            layer.msg(response.msg);
+                        }
+                    });
+            }
+            /**
+             * 添加商品到购物车
+             */
+            $scope.addToCart=function(type){
+                var styleid=angular.element("#styleId").val();
+                var selectname=angular.element("#selectname").val();
+                //var goodsnum=angular.element("#goodsnum").val();
+                if(selectname==''){
+                    layer.msg("请选择商品颜色");
+                    return;
+                }
+                var goodsnum=$('#number').val();
+//                var goodsnum=1;
+                if(styleid==''){
+                    layer.msg("请选择商品规格");
+                    return;
+                }
+                if(Number(goodsnum)>Number($scope.kucun)){
+                    layer.msg('购买数量不能大于库存！');
+                    return;
+                }
+                $http.get("/api.php/cart/add?proid={$Request.param.proid}&styleid="+styleid+"&pronum="+goodsnum)
+                    .success(function(response) {
+                        if(response.status==1){
+                            layer.msg(response.msg);
+                            if(type=='add'){
+                                $scope.goods.cartnum=response.data.cartno;
+                            }else if(type=='settle'){
+                                location.href='/mobile.php/cart/list';
+                            }
+                        }else{
+                            if(response.msg=='未登录'){
+                                layer.msg(response.msg,{},function(){
+                                    location.href='<?php echo config("API_URL");?>/mobile.php/login';
+                                });
+                            }else{
+                                layer.msg(response.msg);
+                            }
+                        }
+                    });
+            };
+            $scope.nowBuy=function(){
+                var styleid=angular.element("#styleId").val();
+                var selectname=angular.element("#selectname").val();
+                //var goodsnum=angular.element("#goodsnum").val();
+                if(selectname==''){
+                    layer.msg("请选择商品颜色");
+                    return;
+                }
+                var goodsnum=$('#number').val();
+//                var goodsnum=1;
+                if(styleid==''){
+                    layer.msg("请选择商品规格");
+                    return;
+                }
+                if(Number(goodsnum)>Number($scope.kucun)){
+                    layer.msg('购买数量不能大于库存！');
+                    return;
+                }
+                location.href="/mobile.php/order/affirmnew?proid={$Request.param.proid}&styleid="+styleid+"&pronum="+goodsnum;
+            };
+            /**
+             * 订购商品数量的减少
+             */
+            $scope.reduce=function(){
+                if(($scope.goods.minpurchase - $scope.ordernumber)>0) {
+                    $scope.goods.minpurchase = $scope.goods.minpurchase - $scope.ordernumber;
+                }
+            };
+            /**
+             * 订购商品数量的增加
+             */
+            $scope.increase=function(){
+                $scope.goods.minpurchase=$scope.goods.minpurchase+$scope.ordernumber;
+            };
+            // 默认第一次加载数据
+            $http.get("/api.php/goods/detail?proid={$Request.param.proid}")
+                .success(function(response) {
+                    $scope.goods = response.data.datails;
+                    $scope.ordernumber=response.data.datails.minpurchase;
+                    $scope.goodsstyle = response.data.goodsstyle;
+                    $scope.goodsstyle1 = response.data.goodsstyle1;
+                    $scope.selectname = response.data.selectname;
+                    $scope.productvideo = response.data.productvideo;
+                    $scope.isvideo = response.data.isvideo;
+                    angular.element("#contentid").html(response.data.datails.procontent);
+                });
+        }]);
+    function styleSelect(styleid) {
+        $('#stylediv div').attr('style','font-size:0.3rem;color:white;padding:5px;background: #2a2a2a;border: 1px solid #2a2a2a; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+        $('#'+styleid).attr('style','font-size:0.3rem;padding:5px;color:white;background: #2a2a2a;border: 1px solid #fed58d; border-radius:4px;height:20px; line-height:20px; text-align:center; float:left; margin:2px;');
+        $.ajax({
+            url:'/api.php/index/product/product_stock?styleid='+styleid+'&proid={$Request.param.proid}',
+            type:"GET",
+            dataType:"json",
+            success: function(data) {
+                var kucun = data.kucun;
+                $('#kucundivid').attr('style','float:right; font-size:14px; margin-right:5%; color:#999; margin-top:5px;');
+                $('#kucun').text(kucun);
+                $("#styleId").val(styleid);
+            }
+        });
+
+    }
+    function add() {
+        var num=$('#number').val();
+        var kuncun=$('#kucun').text();
+        var styleid=$("#styleId").val();
+        var selectname=$("#selectname").val();
+        if(selectname==''){
+            layer.msg("请选择商品颜色");
+            return;
+        }
+        if(styleid==''){
+            layer.msg("请选择商品规格");
+            return;
+        }
+        if(Number(num)>=Number(kuncun)){
+            layer.msg('库存不足');
+        }else{
+            var nums=Number(num)+1;
+            $('#number').val(nums);
+        }
+    }
+
+    function redu() {
+        var num=$('#number').val();
+        var styleid=$("#styleId").val();
+        var selectname=$("#selectname").val();
+        if(selectname==''){
+            layer.msg("请选择商品颜色");
+            return;
+        }
+        if(styleid==''){
+            layer.msg("请选择商品规格");
+            return;
+        }
+        if(num>1){
+            var nums=Number(num)-1;
+            $('#number').val(nums);
+        }else{
+            layer.msg('选择数量必须大于1');
+        }
+
+    }
+    $('img').error(function() {
+        $(this).attr('src', "/public/Public/mobile/img/logos.png");
+    });
+    function changeshare() {
+        $('#image').css('display','block');
+        $('#video').css('display','none');
+        $('#images').css('color','gold');
+        $('#videos').css('color','#000');
+    }
+    function changeshares() {
+        $('#image').css('display','none');
+        $('#video').css('display','block');
+        $('#images').css('color','#000');
+        $('#videos').css('color','gold');
+    }
+</script>
+<script>
+</script>
+</body>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>
+</html>
+

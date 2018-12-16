@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<style>
+body{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-family: 微软雅黑;
+	background-color:#fff;
+}
+img{ width:100%;}
+/* 页眉样式 */
+.bj {
+	width: 100%;
+	height: 60px;
+	background:#ff0000;
+	position: relative;
+	overflow: hidden;
+}
+.zjt {
+	width: 28px;
+	height: 28px;
+	float: left;
+	margin-top: 16px;
+	position: absolute;
+	left: 10px;
+}
+.gwj{ font-size:20px; height:60px; line-height:60px; text-align:center
+; color:#FFF; }
+</style>
+<meta charset="utf-8">
+<title>交易记录</title>
+</head>
+
+<body>
+<!---页头--->
+<div class="bj">
+<a href="/mobile.php/member/userinfo"><div class="zjt"><img style=" width:100%;" src="<?php echo CSS_PATH;?>wap/images/zjt.png"/></div></a>
+  <div class="gwj">交易记录</div>
+</div>
+<div style="clear:both;"></div>
+<!---菜单1--->
+
+<div style="width:100%; height:50px; line-height:50px;">
+	<a href="/mobile.php/record/list">
+		<div style=" margin-left:15px; float:left;color:black;">购物币记录</div>
+	    <div style="float:right; padding-top:4px;margin-right:15px; width:5%;"><img src="<?php echo CSS_PATH;?>wap/images/images/yjt.png"></div>
+	    <div style="width:100%; height:1px; background:#d3d3d3; clear:both;"></div>
+	</a>
+</div>
+
+<div style="clear:both;"></div>
+
+<!---菜单1--->
+<div style="width:100%; height:50px; line-height:50px;">
+	<a href="/mobile.php/record/integral_list">
+		<div style=" margin-left:15px; float:left; color:black;">消费积分记录</div>
+	    <div style="float:right; padding-top:4px;margin-right:15px; width:5%;"><img src="<?php echo CSS_PATH;?>wap/images/images/yjt.png"></div>
+	    <div style="width:100%; height:1px; background:#d3d3d3; clear:both;"></div>
+	</a>
+</div>
+</body>
+</html>

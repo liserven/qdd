@@ -1,0 +1,244 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.dj{
+    color: #ff6501;
+}
+li{
+    list-style: none;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction:column;
+}
+section{
+    flex: 1;
+    margin: 50px 0 60px;
+    position: relative;
+}
+footer,header{
+    width: 100%;
+    height: 50px;
+    background: #ff6501;
+    position: fixed;
+    left: 0;
+    z-index:2
+}
+header{
+    top: 0;
+}
+footer{
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #cecece;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+footer>a{
+    margin-top: 3px;
+    width: 53px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+header a{
+    position: absolute;
+}
+header p{
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+}
+#jsfh{
+    left: 15px;
+    top: 50%;
+    margin-top: -11px;
+}
+#jsxx{
+    right: 12px;
+    top: 50%;
+    margin-top: -12px;
+}
+
+
+.jsbj{
+    height: 50px;
+    font-size: 18px;
+    color: #666666;
+    background: #fafafa;
+    line-height: 50px;
+}
+.jsbj a{
+    margin-left: 15px;
+    color: #666666;
+}
+.jsbj span{
+    margin-left: 16px;
+}
+.jsbj a img{
+    margin-top: 10px;
+}
+#jsbj{
+    float: right;
+    margin-right: 16px;
+}
+.spxx{
+    height: 132px;
+    display: flex;
+    align-items: center;
+}
+#spxz{
+    margin-left: 15px;
+}
+#zpck{
+    margin-left: 15px;
+}
+.spxq{
+    margin-left: 23px;
+}
+.spxq p{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 5px;
+}
+.spbj{
+    float: left;
+    width: 75px;
+    height: 22px;
+    background: #ffe4e9;
+    border-radius: 13px;
+    line-height: 22px;
+    font-size: 14px;
+    text-align: center;
+    position: relative;
+}
+.spbj span{
+    margin-left: 20px;
+}
+.spbj img{
+    position: absolute;
+    left: 0 ;
+    top: 0;
+}
+.biao{
+    margin-left: 15px;
+}
+.biao span{
+    color: #00a1f1;
+}
+.zun span{
+    color: #ff0035;
+}
+.spsl{
+    float: left;
+    margin-top: 10px;
+}
+.spsl span{
+    display: block;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #f5f5f5;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: center;
+    float: left;
+    margin-right: 3px;
+}
+.spsl input{
+    float: left;
+    width: 30px;
+    height: 25px;
+    border: 1px solid #f5f5f5;
+    text-align: center;
+    margin-right: 3px;
+    outline:none;
+}
+.spps>div{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.psdz{
+    display: flex;
+    align-items: center;
+}
+.psdz span{
+    font-size: 14px;
+    color: #333333;
+    margin-left: 8px;
+}
+.psdz>img{
+    margin-left: 45px;
+
+}
+.psdz a img{
+    margin-top: 5px;
+}
+.psdz a{
+    margin-left: 5px;
+}
+.psfs p{
+    font-size: 14px;
+    color: #333333;
+    line-height: 50px;
+    margin-left:45px;
+}
+.spjq{
+    line-height: 50px;
+    font-size: 14px;
+    color: #333333;
+}
+.spjq p{
+    float: right;
+    margin: 0 30px;
+}
+.spps>p{
+    line-height: 50px;
+    float: right;
+    font-size: 14px;
+    color: #666666;
+    margin-right: 25px;
+}
+.spps>p>span{
+    color: red;
+}
+.jiesuan{
+    width: 100%;
+    height: 55px;
+    position: fixed;
+    left: 0;
+    bottom: 50px;
+    line-height: 55px;
+    border-top: 1px solid #dddddd;
+    color: #666666;
+    font-size: 14px;
+    background: #fff;
+}
+.jiesuan>p{
+    margin-left: 70px;
+    float: left;
+}
+.jsqx{
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    float: left;
+    color: #666666;
+}
+#jsBtn{
+    display: block;
+    float: right;
+    width: 108px;
+    height: 55px;
+    background: url(../img/jiesuan.png) no-repeat cadetblue;
+    float: right;
+
+}

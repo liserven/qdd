@@ -1,0 +1,35 @@
+{include file="./public/Public/web_meta.html" /}
+<link href="<?php echo CSS_PATH;?>static/css/He.login.css" rel="stylesheet" type="text/css" />
+
+<meta charset="utf-8">
+<title>跳转提示</title>
+</head>
+
+<body class="pos-r">
+<div class="system-message">
+	<div class="tip"></div>
+	<h1 class="c-blue"><?php echo(strip_tags($msg));?></h1>
+	<p class="detail"></p>
+	<p class="jump text-c"><b id="wait"><?php echo($wait); ?></b> 秒后页面将自动跳转</p>
+	<div class="text-c">
+        <a id="href" class="btn btn-success radius" href="<?php echo($url); ?>">立即跳转</a>&emsp;
+	</div>
+</div>
+<script type="text/javascript">
+(function(){
+ var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+ var interval = setInterval(function(){
+     	var time = --wait.innerHTML;
+     	if(time <= 0) {
+     		location.href = href;
+     		clearInterval(interval);
+     	};
+     }, 1000);
+  window.stop = function (){
+         console.log(111);
+            clearInterval(interval);
+ }
+ })();
+</script>
+</body>
+</html>

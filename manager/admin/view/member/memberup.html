@@ -1,0 +1,226 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>会员升级 - 会员管理</title>
+<head>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-member-up">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">会员ID：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-red">{$list['userid']}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">用户名：</label>
+            <div class="formControls col-xs-10 col-sm-9">{$list['truename']}&emsp;(当前注册广告费：{$list['regadfee']})</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">手机：</label>
+            <div class="formControls col-xs-10 col-sm-9">{$list['mobile']}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">状态：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-blue">
+                {if condition="$list['isaudit'] eq 0"}
+                    未激活
+                    {elseif condition="$list['isaudit'] eq 1" /}
+                    已启用
+                    {else /}
+                    已锁定
+                {/if}
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">原级别：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-error">{:getusertypebytid($list['usertype'])}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">新级别：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="uplevel" id="uplevel" size="1" >
+                        <option value="" selected>请选择升级级别</option>
+                        {volist name="usertypelist" id="vo"}
+                        <option value="{$vo.ID}">{$vo.Name}</option>
+                        {/volist}
+                    </select>
+                </span>
+                &ensp;<cite id="upneednotice"></cite>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;确认升级&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-up").validate({
+            rules:{
+                uplevel:{
+                    required:true
+                },
+                ordermoney:{
+                    number:true,
+                },
+                regadfee:{
+                    number:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $.ajax({
+                    url:'__CONTROLLER__/memberup/action/up/userid/{$list.userid}/oldadfee/{$list.regadfee}/oldregmoney/{$list.regmoney}',
+                    type:"POST",
+                    data:$('#form-member-up').serialize(),
+                    //error: function(){ //失败
+                    //alert('Error loading document');
+                    //},
+                    success: function(data) {
+                        var res = String($.trim(data));
+                        if(res=="uplevelempty"){
+                            alert("请选择需要升级的级别！");
+                        }else if(res=="ordermoneynotenough"){
+                            alert("您输入的订单金额不够！");
+                        }else if(res=="recmoneynotenough"){
+                            alert("会员的注册币不足！");
+                        }else if(res=="umoneynotenough"){
+                            alert("会员的购物币不足！");
+                        }else if(res=="noservicer"){
+                            alert("您输入的服务人不存在！");
+                        }else if(res=="servicerisnotreg"){
+                            alert("您输入的服务人没有报单权限！");
+                        }else if(res=="usernotfind"){
+                            alert("查询不到要升级的会员或者此会员还未激活！");
+                        }else{
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('升级成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        }
+
+                    }
+                });
+            }
+        });
+    });
+
+    function upneed(uplevelvalue)
+    {
+        if(uplevelvalue==4){
+            document.getElementById("ddje").style.display="none";
+            document.getElementById("ggf").style.display="none";
+            document.getElementById("fwr").style.display="none";
+        }else{
+            document.getElementById("ddje").style.display="";
+            document.getElementById("ggf").style.display="";
+            document.getElementById("fwr").style.display="";
+        }
+        $.ajax({
+            type:"GET",
+            url:'__CONTROLLER__/memberup/action/upneed/userid/{$list.userid}/usertype/{$list.usertype}/oldadfee/{$list.regadfee}/oldregmoney/{$list.regmoney}/uplevelvalue/'+uplevelvalue,
+            dataType:"html",
+            //data:"userName="+$("#txtName").val(),
+            beforeSend:function(XMLHttpRequest)
+            {
+                $("#upneednotice").text("正在查询");
+                //Pause(this,100000);
+            },
+            success:function(msg)
+            {
+                $("#upneednotice").html(msg);
+                $("#upneednotice").css("color","red");
+            },
+            complete:function(XMLHttpRequest,textStatus)
+            {
+                //隐藏正在查询图片
+            },
+            error:function()
+            {
+                //错误处理
+            }
+        });
+    }
+    function chkordermoney()
+    {
+        if(document.getElementById("ordermoney").value!=""){
+            ordermoney=document.getElementById("ordermoney").value;
+        }else{
+            ordermoney=0;
+        }
+        if(document.getElementById("uplevel").value!=""){
+            uplevelvalue=document.getElementById("uplevel").value;
+        }else{
+            uplevelvalue=0;
+        }
+
+        $.ajax({
+            type:"GET",
+            url:'__CONTROLLER__/memberup/action/chkordermoney/userid/{$list.userid}/usertype/{$list.usertype}/oldadfee/{$list.regadfee}/oldregmoney/{$list.regmoney}/uplevelvalue/'+uplevelvalue+'/ordermoney/'+ordermoney,
+            dataType:"html",
+            //data:"userName="+$("#txtName").val(),
+            beforeSend:function(XMLHttpRequest)
+            {
+                $("#chkordermoneyxx").text("正在查询");
+                //Pause(this,100000);
+            },
+            success:function(msg)
+            {
+                $("#chkordermoneyxx").html(msg);
+                $("#chkordermoneyxx").css("color","red");
+            },
+            complete:function(XMLHttpRequest,textStatus)
+            {
+                //隐藏正在查询图片
+            },
+            error:function()
+            {
+                //错误处理
+            }
+        });
+    }
+    function chkservicer()
+    {
+        $.ajax({
+            type:"GET",
+            url:"__CONTROLLER__/memberup/action/chkservicer/servicerid/"+document.getElementById("servicer").value,
+            dataType:"html",
+            //data:"userName="+$("#txtName").val(),
+            beforeSend:function(XMLHttpRequest)
+            {
+                $("#chkservicerxx").text("正在查询");
+                //Pause(this,100000);
+            },
+            success:function(msg)
+            {
+                $("#chkservicerxx").html(msg);
+                $("#chkservicerxx").css("color","red");
+            },
+            complete:function(XMLHttpRequest,textStatus)
+            {
+                //隐藏正在查询图片
+            },
+            error:function()
+            {
+                //错误处理
+            }
+        });
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

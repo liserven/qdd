@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>级别修改</title>
+    <link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 添加修改 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form  enctype="multipart/form-data" method="post" class="form form-horizontal" id="form_memberLevel_Edit">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>级别名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.name}" placeholder="" id="name" name="Name">
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">推荐名额价格：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.buy_price}" placeholder="" id="annualfee_price" name="buy_price" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">年费金额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.annualfee_price}" placeholder="" id="annualfee_price" name="annualfee_price" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">会员折扣：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.discount}" placeholder="" id="discount" name="discount" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">赠送标准版名额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.one_level_places}" placeholder="" id="one_level_places" name="one_level_places" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">赠送尊享版名额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.two_level_places}" placeholder="" id="two_level_places" name="two_level_places" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">赠送联盟商名额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.three_level_places}" placeholder="" id="three_level_places" name="three_level_places" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl" >
+            <label class="form-label col-xs-2 col-sm-2">赠送营销中心名额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.four_level_places}" placeholder="" id="four_level_places" name="four_level_places" style="width:80%"> <span class="c-999">数值</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="提交并发布" />
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $("#form_memberLevel_Edit").validate({
+            rules:{
+                name:{
+                    required:true,
+                    minlength:2,
+                    maxlength:32
+                },
+                lessmoney:{
+                    required:true,
+                    minlength:2,
+                    maxlength:10
+                },
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(data){
+                $.ajax({
+                    url:"{:url('member_level/memberLevelEdit',['act'=>'edit','id'=>$list['id']])}",
+                    type:"POST",
+                    dataType:"json",
+                    data:$('#form_memberLevel_Edit').serialize(),
+                    success: function(data) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.msg(data.msg); //父页面显示提示
+                        parent.location.reload(); //刷新父页面
+                        parent.layer.close(index); //关闭layer
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

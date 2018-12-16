@@ -1,0 +1,71 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>用户查看 - 会员管理</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    {if condition="$userinfo.avatarurl eq null"}
+        <img class="avatar size-XL l" src="<?php echo CSS_PATH;?>static/images/user.png">
+        {else /}
+        <img class="avatar size-XL l" src="<?php echo config('IMAGE_DOMAIN_NAME')?>/Upload/userimg/{$userinfo['avatarurl']}">
+    {/if}
+    <dl style="margin-left:80px; color:#fff">
+        <dt><span class="f-18">{$userinfo.truename}</span></dt>
+        <dd class="pt-10 f-12" style="margin-left:0">会员ID：{$userinfo.userid}</dd>
+    </dl>
+</div>
+<div class="pd-20">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th class="text-r">手机：</th>
+                <td>{$userinfo.mobile}</td>
+            </tr>
+            <tr>
+                <th class="text-r" width="80">法人姓名：</th>
+                <td>{$userinfo.truename}</td>
+            </tr>
+            <tr>
+                <th class="text-r">身份证号：</th>
+                <td>{$userinfo.idcardno}</td>
+            </tr>
+            <tr>
+                <th class="text-r">公司名称：</th>
+                <td>{$userinfo.company_name}</td>
+            </tr>
+            <tr>
+                <th class="text-r">执照编号：</th>
+                <td>{$userinfo.company_license}</td>
+            </tr>
+            <tr>
+                <th class="text-r" width="80">开户行：</th>
+                <td>{$userinfo.bank_name}</td>
+            </tr>
+            <tr>
+                <th class="text-r">账户类型：</th>
+                <td>{$userinfo.account_type}</td>
+            </tr>
+            <tr>
+                <th class="text-r">持卡人：</th>
+                <td>{$userinfo.bank_user_name}</td>
+            </tr>
+            <tr>
+                <th class="text-r">账号：</th>
+                <td>{$userinfo.bank_account}</td>
+            </tr>
+           <!--  <tr>
+               <th class="text-r">地址：</th>
+               <td>{$userinfo.province}{$userinfo.city}{$userinfo.county}{$userinfo.address}</td>
+           </tr> -->
+            <tr>
+                <th class="text-r">注册时间：</th>
+                <td>{$userinfo.adddate|strtotime|date="Y-m-d",###}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+{include file="./public/Public/js_script.html" /}
+</body>
+</html>

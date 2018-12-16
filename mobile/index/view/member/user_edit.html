@@ -1,0 +1,216 @@
+{include file="./public/Public/meta.html" /}
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>个人资料 - 会员管理</title>
+</head>
+<body ng-app="memberApp" ng-controller="memberCtrl" ng-cloak>
+<div style="width: 100%; height: 50px; background-color: #28bebc;">
+ <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+<a href="/mobile.php/member/userinfo">
+<img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;"></a></div>
+<div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;">
+</div>
+	<a href="javascript:void(0)"   ng-click="loginExit()">
+		<div style="float: left;color:white; font-size:14px;margin-top:4%;border:solid 1px white; padding:0 3px 0 3px; line-height:20px; border-radius:3px;">退出登录</div>
+	</a>
+	<div style="width:30%; margin-left: 16%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">个人资料</div>
+	<a href="/mobile.php/member/password_reset">
+		<div style="float: right;color:white; margin-right:4%;font-size:14px;margin-top:4%;border:solid 1px white; padding:0 3px 0 3px; line-height:20px; border-radius:3px;">修改密码</div>
+	</a>
+</div>
+<div style="clear: both;">
+</div>
+<article class="page-container">
+	<form method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data" action="/api.php/member/useredit">
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0"><span class="c-red">*</span>个人图片：</label>
+			<div class="formControls col-xs-9 col-sm-9 c-red">
+				<div class="maskWraper f-l" style="width:150px; height:150px; border:solid 1px #ddd; padding:2px; text-align:center"><img id="imgPre" ng-src="{{userinfo.avatarurl}}" style="display:black; border:0 #FFFFFF solid; height:100%; max-width:150px; margin:0 auto"></div>
+				<div class="mt-50 ml-10 f-l">
+
+				</div>
+			</div>
+			<span class="btn-upload form-group" style="margin-left: 35%;margin-top: 20px;">
+				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+				<input type="file" name="memberpic" id="memberpic" class="input-file" onchange="preImg(this.id,'imgPre');">
+			</span>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0">会员ID：</label>
+			<div class="formControls col-xs-9 col-sm-9 c-red" id="lbuserID"><input type="text" class="input-text" style="border:0px; color:#F80307" value="{{userinfo.userid}}" placeholder="" id="userid" name="userid" readonly></div>
+        </div>
+        
+        <div class="row cl">
+            <label class="form-label col-xs-3 col-sm-2 pr-0"><span class="c-red"></span>公司：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<input type="text" class="input-text" style="border:0px; color:#F80307" value="{{userinfo.truename}}" placeholder="" id="truename" name="truename" readonly>
+			</div>
+		</div>
+        
+		<div class="row cl" style="display: none">
+			<label class="form-label col-xs-3 col-sm-2 pr-0"><span class="c-red">*</span>性别：</label>
+			<div class="formControls col-xs-9 col-sm-9 skin-minimal">
+				<div class="radio-box" >
+					<input name="sex" type="radio" id="sex-1" value="0" ng-checked="man">
+					<label for="sex-2">男</label>
+				</div>
+				<div class="radio-box">
+					<input  name="sex" type="radio" id="sex-2" value="1" ng-checked="woman" checked="checked">
+					<label for="sex-2">女</label>
+				</div>
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<input type="text" class="input-text" value="{{userinfo.mobile}}" placeholder="" id="mobile" name="mobile">
+			</div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0">身份证号：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<input type="text" class="input-text" value="{{userinfo.idcardno}}" placeholder="" id="idcardno" name="idcardno">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0">QQ：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<input type="text" class="input-text" placeholder="" name="qq" id="qq" value="{{userinfo.qq}}">
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0">所在地区：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<select id="cmbProvince" style="border-radius: 5px;background-color: white" class="select select-box" name="province" style="width:150px"></select>
+                <select id="cmbCity" style="border-radius: 5px;background-color: white;margin-top: 5px;" class="select select-box" name="city" style="width:200px"></select>
+                <select id="cmbArea" style="border-radius: 5px;background-color: white;margin-top: 5px;" class="select select-box" name="county" style="width:120px"></select>
+				<!--省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份&nbsp;：<input type="text" id="cmbProvince" class="select select-box" name="province" style="width: 195px;margin-bottom:5px;">-->
+				<!--市（县）：<input type="text" id="cmbCity" class="select select-box" name="city" style="width: 196px;margin-bottom:5px;">-->
+				<!--国&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家&nbsp;：<input type="text" id="cmbArea" class="select select-box" name="county" style="width: 195px;">-->
+            </div>
+		</div>
+        <div class="row cl">
+			<label class="form-label col-xs-3 col-sm-2 pr-0">详细地址：</label>
+			<div class="formControls col-xs-9 col-sm-9"> 
+                    <input type="text" class="input-text" value="{{userinfo.address}}" placeholder="" id="address" name="address">
+            </div>
+		</div>
+        <div class="row cl">
+			<div class="col-xs-9 col-sm-9 col-xs-offset-3 col-sm-offset-2">
+				<input class="btn btn-primary radius size-S" type="button" onClick="formsubmit();" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file="./public/Public/js_script_m.html" /}
+<script src="<?php echo CSS_PATH;?>static/js/provinces.Cxselect.js"></script>
+<script src="<?php echo CSS_PATH;?>static/js/provincesData.js"></script>
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+
+
+    //上传图片
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+    });
+
+
+    //将本地图片 显示到浏览器上
+    function preImg(sourceId, targetId) {
+        var url = getFileUrl(sourceId);
+        var imgPre = document.getElementById(targetId);
+        imgPre.src = url;
+    }
+
+    //从 file 域获取 本地图片 url
+    function getFileUrl(sourceId) {
+        var url;
+        if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+            url = document.getElementById(sourceId).value;
+        } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }else{
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+		}
+        return url;
+    }
+
+    function formsubmit(){
+        var form=new FormData(document.getElementById('form-member-add'));
+        $.ajax({
+            url:'/api.php/member/useredit',
+            type:"post",
+			dataType:"json",
+//            data:$('#form-member-add').serialize(),
+            data:form,
+            async: false,
+            cache: false,
+            processData:false,
+            contentType:false,
+            success: function(data) {
+
+                if(data.status==1){
+                    layer.msg(data.msg,{time:2000},function(){
+                        window.location.href='/mobile.php/member/userinfo';
+                    });
+                }else{
+                    layer.msg(data.msg);
+                }
+//                var index = parent.layer.getFrameIndex(window.name);
+//                parent.layer.msg("信息修改成功",{time:3000}); //父页面显示提示
+//                location.replace("/mobile.php/member/userinfo"); //刷新父页面
+//
+//                parent.layer.close(index); //关闭layer
+
+            }
+        });
+    }
+
+    //图片遮罩条
+    $(function(){
+        $.Huihover('.maskWraper');
+    });
+
+</script>
+<script type="text/javascript">
+    var app = angular.module('memberApp', []);
+    app.controller('memberCtrl', function($scope, $http) {
+        //登录退出方法
+        $scope.loginExit=function(){
+            $http.get("/api.php/login/exit")
+                .success(function (response) {
+                    layer.msg(response.msg,{},function(){
+                        location.href='/mobile.php';
+                    });
+                });
+        };
+        $http.get("/api.php/member/userinfo")
+            .success(function (response) {
+                var img_url=response.data;
+                img_url['avatarurl']=img_url['avatarurl'].replace('/Upload','/public/Upload');
+                $scope.userinfo = img_url;
+                cxSelect('cmbProvince', 'cmbCity', 'cmbArea', $scope.userinfo.province, $scope.userinfo.city, $scope.userinfo.county);
+
+            });
+    });
+    //所在地区选择
+    // cxSelect('cmbProvince', 'cmbCity', 'cmbArea');
+    // cxSelect('cmbProvince', 'cmbCity', 'cmbArea', $scope.userinfo.province, $scope.userinfo.city, $scope.userinfo.county);
+
+</script>
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

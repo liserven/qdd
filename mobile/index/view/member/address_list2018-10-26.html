@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="<?php echo CSS_PATH;?>mobile/css/main.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta name="imagemode" content="force">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" type="image/x-icon" href="">
+	<link rel="apple-touch-icon-precomposed" href="">
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+</head>
+<body style="background: #2f2f2f" ng-app="addressApp" ng-controller="addressCtrl" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+<div class="top-nav" style="background-color:#1f1f1f;">
+	<div class="top-left">
+		<a href="javascript:history.go(-1);">
+		<img src="/public/Public/wap/images/zjt.png" alt=""></a>
+	</div>
+	<h3>收货地址管理</h3>
+	<div class="top-right"><a href="javascript:;" ng-click="mesShow('添加收货地址','/mobile.php/member/address?type=add')"><img src="<?php echo CSS_PATH;?>mobile/img/add.png" alt=""></a></div>
+</div>
+<div class="h50"></div>
+
+<div class="page10b">
+	<div style="background: #1f1f1f" class="addr" ng-repeat="(key,val) in items" >
+		<h3 class="address" >
+			<span ng-click="confirm(val.id,val.receivename,val.province,val.city,val.county,val.address,val.mobile)"><span class="sp1" style="color: white">{{val.receivename}}</span>
+			<span class="sp2" style="color: white">{{val.mobile}}</span>
+                </span>
+			<span style="color: #fed58d" class="sp3" ng-click="setDefault(key,val.id)">设为默认</span>
+		</h3>
+		<p style="color: white">{{val.province}}{{val.city}}{{val.county}}{{val.address}}</p>
+		<div class="btm">
+			<img src="/public/Public/mobile/img/location.png" alt="" style="width: 20px;height: 20px;margin-bottom: 5px;margin-right: 10px;" ng-if="val.isdefault==1">
+			<a href="" class="a1" ng-click="delAddress(key,val.id)"></a>
+			<a href="" ng-click="mesShow('修改收货地址','/mobile.php/member/address?type=edit&id='+val.id)"  class="a2"></a>
+		</div>
+	</div>
+</div>
+	{:widget('Common/mobile_footer')}
+	{include file="./public/Public/js_script.html" /}
+	<script src="<?php echo CSS_PATH;?>mobile/js/slide.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/main.js"></script>
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('addressApp', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('addressCtrl', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/member/address_list?p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.addresslist) {
+                                $scope.items.push(response.data.addresslist[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            //设置默认首页
+            $scope.setDefault=function(key,id){
+                $http.get("/api.php/member/address_action?type=set_default&id="+id)
+                    .success(function(response) {
+                        layer.msg(response.msg);
+                        location.href=location.href;
+                    });
+			};
+            $scope.confirm=function(id,receivename,province,city,county,address,mobile){
+                var type="{$Request.param.return}";
+                if(type=='nowbuy'){
+                    location.href='{$url}&id='+id+'&receivename='+receivename+'&address='+province+city+county+address+'&mobile='+mobile;
+				}else{
+                    location.href='{$url}?id='+id+'&receivename='+receivename+'&address='+province+city+county+address+'&mobile='+mobile;
+                }
+			};
+            $scope.mesShow=function(title,url){
+                var index = layer.open({
+                    type: 2,
+                    content: url,
+                    title:title
+                });
+                layer.full(index);
+            };
+            $scope.delAddress=function (key,id) {
+                layer.confirm('确认要删除吗？',function(){
+                    $http.get("/api.php/member/address_action?type=del_default&id="+id)
+                        .success(function(response) {
+                            layer.msg(response.msg);
+                            location.href=location.href;
+                        });
+				});
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+</script>
+</body>
+</html>

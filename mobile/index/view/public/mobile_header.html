@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        function openScan() {
+            var ua = navigator.userAgent.toLowerCase();
+            //alert(ua);
+            if (ua.indexOf("linux; android") > 0 && ua.indexOf("chrome/") > 0) {
+                imagelistner.openScan();
+            } else if (ua.indexOf("iphone;") > 0 && ua.indexOf("mobile/") > 0) {
+                //if (ua.indexOf("safari/") > 0) {
+                //    alert("需下载app版方可进行扫码");
+                //} else {
+                imagelistner.openScan();
+                //}
+            } else {
+                //alert("需下载app版方可进行扫码");
+                if (confirm("需下载app版方可进行扫码,是否下载？")) {
+                    //如果是true ，那么就把页面转向thcjp.cnblogs.com
+                    location.href = "http://www.hc2688.com/Public/appload/AppLoad.html";
+                }
+            }
+
+        }
+        function fsubmit(obj){
+            $('#form1').submit();
+        }
+    </script>
+
+    <style>
+        body,ul,li{ margin:0; padding:0; font-family:微软雅黑;	font-style:normal;
+        }
+        a {border:0; text-decoration:none; color:#303030;}
+
+        img{ width:100%; border:0;}
+        input{
+            background:transparent;
+        }
+
+        .banner-slider{
+            max-width:750px;
+            min-width:307px;
+            margin:0 auto;
+
+        }
+        .banner-slider img{
+            width:100%;
+            max-width:750px;
+        }
+        .focus{
+            width:100%;
+            position:relative;
+            max-width:720px;
+            text-align:center;
+        }
+        .focus div{
+            width:50%;
+            position:absolute;
+            left:50%;
+            bottom:0px;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .focus span {
+            margin:0px 5px 0px 5px;
+            display:inline-block;
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background:#fff;
+            font-size:0
+        }
+        .focus span.current {
+            background:#e61739;
+        }
+
+        /*share_start*/
+        #share {position:fixed;_position:absolute;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)-34+"px");bottom:34px;left:50%;width:30px;zoom:1;}
+        #share a{background-image:url(/Public/mobile/images/share.png); background-repeat:no-repeat; display:block; width:30px; height:30px; margin-bottom:2px; overflow:hidden; text-indent:-999px;-webkit-transition: all 0.2s ease-in-out;-moz-transition: all 0.2s ease-in-out;-o-transition: all 0.2s ease-in-out;-ms-transition: all 0.2s ease-in-out;transition: all 0.2s ease-in-out;}
+        #share a{}
+        #share a#totop{background-position:0 -120px;position:absolute;bottom:0px;cursor:pointer;}
+        #share a#totop:hover {background-position:-30px -120px;}
+        /*share_end*/
+    </style>
+    <title>{$title}</title>
+    <script type="text/javascript">
+        function fsubmit(){
+            $('#searchform').submit();
+        }
+    </script>
+</head>
+
+<body>
+<!---页头--->
+<div style=" width:100%; height:50px; background-color:#c41919;">
+    {if condition="$Request.action eq 'index'"}
+    <div style="padding-top:3px; padding-left:4%; float:left;"onclick="openScan();">
+        <div style="width:25px;"><img src="<?php echo CSS_PATH;?>mobile/images/sm.png"></div>
+        <div style="color:#FFF; margin-top:-3px; font-size:14px;">扫码</div>
+    </div>
+    <!---扫码--->
+    {else /}
+    <div style="padding-top:10px; padding-left:4%; float:left; line-height:42px;">
+        <div style="width:25px; float:left; margin-top:0px;">
+            <a href="/mobile.php"><img src="<?php echo CSS_PATH;?>mobile/images/zjt.png" style="margin-left: -10px;">
+            </a>
+        </div>
+    </div>
+    {/if}
+    <!---搜索--->
+    <form id="searchform" method="post" action="/mobile.php/search">
+        <div style="float:left; width:65%; height:35px; border-radius:4px; background-color:#FFF; opacity:0.5; margin-top:7px;  position:relative;left:7%;"></div>
+        <div style=" float:left; position:absolute;left:19%; top:6px;">
+            <input name="keyword" style=" color:#FFF; line-height:20px; border:0;outline:none; margin-top:8px; font-size:14px; z-index:999; font-weight:bold; margin-left:5px;" type="text" onfocus="javascript:if(this.value=='请输入商品关键字')this.value='';" value="请输入商品关键字"></div>
+        <div style="float:left; width:22px; position:absolute; right:19%; top:13px;z-index:99;">
+            <img src="<?php echo CSS_PATH;?>mobile/images/fdj.png" onclick="fsubmit()">
+        </div>
+    </form>
+    <!---信息--->
+    <a href="/mobile.php/login">
+        <div style="padding-top:3px; padding-right:4%; float:right;" id="authloginid">
+        </div>
+    </a>
+</div>
+
+<div style="clear:both;"></div>
+<!--banner--->
+<div class="banner-slider">
+    <ul>
+        {volist name="adlist" id='vo'}
+            <li><a href="{$vo['adlinkurl']}"><img src="{$vo['adpicture']}"></a></li>
+        {/volist}
+    </ul>
+</div>
+<script>
+    $(".banner-slider").MobileSlider({width:750,height:307,during:3000})
+</script>

@@ -1,0 +1,179 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #fafafa;
+}
+a{
+    text-decoration: none;
+}
+i{
+    list-style: none;
+}
+li{
+    list-style: none;
+}
+header{
+    width:100%;
+    height: 50px;
+    background: #333333;
+    font-size: 20px;
+    color: #fff;
+    line-height: 50px;
+    position: relative;
+}
+header>a>i{
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    font-size: 20px;
+    color: #fff;
+}
+header>span{
+    display: block;
+    text-align: center;
+}
+#rzfher{
+    font-size: 20px;
+    margin-left: 10px;
+
+}
+.rzxz{
+    background: #fff;
+    margin-bottom: 20px;
+}
+.rzxz>div{
+    display: flex;
+    align-items:center;
+    height: 45px;
+}
+.rzxz>div>img{
+    margin-left: 16px;
+}
+.rzxz>div>span{
+    font-size: 18px;
+    margin-left: 22px;
+}
+.rzxz>div>a{
+   margin-left: 130px;
+}
+
+
+
+.khhxx{
+    background: #fff;
+    margin-bottom: 20px;
+}
+.khhxx>p{
+    line-height: 45px;
+    text-align: center;
+    font-size: 16px;
+    color: rgb(153, 153, 153);
+    border-bottom: 1px solid #eeeeee;
+}
+.khhxxTit{
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+
+}
+.khhxxTit>img{
+    margin: 0 9px;
+}
+.formStyle{
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+.formStyle>span{
+    line-height: 45px;
+    margin-left: 18px;
+    font-size: 18px;
+}
+.formStyle>input{
+    width: 200px;
+    height: 45px;
+    border: none;
+    outline:none;
+    font-size: 16px;
+    color: #666666;
+    margin-left: 20px;
+}
+.BankAccount{
+    background: #fff;
+    margin-bottom: 20px;
+}
+.khhxz{
+    background: #fff;
+}
+.khhxz>div{
+    position: relative;
+
+}
+.khhxz>div>select{
+    width: 200px;
+    height: 45px;
+    border: none;
+    outline:none;
+    font-size: 16px;
+    margin-left: 20px;
+    background: url("../img/多边形1.png") no-repeat;
+    background-size:14px 6px;
+    background-position: 183px 19px;
+    color: #666666;
+}
+.tip{
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    color: #999999;
+}
+.AccountType{
+    background: #fff;
+    margin-bottom: 20px;
+}
+.AccountType>a{
+    display: flex;
+    align-items: center;
+    color: #000000;
+    margin-left: 30px;
+}
+.AccountType>a>img{
+    margin-right: 7px;
+}
+.zpsc{
+    background: #fff;
+}
+.sczp>p{
+    margin-left: 3px;
+    font-size: 14px;
+    color: #999999;
+}
+.scBtn a{
+    margin-left: 18px;
+    display: block;
+    width: 106px;
+    height: 30px;
+    background: url(../img/shangchuan.png) no-repeat cadetblue;
+}
+.tjBtn>a{
+    display: block;
+    width: 336px;
+    height: 45px;
+    background: url(../img/tijiaoshenhe.png) no-repeat cadetblue;
+    margin: 25px auto;
+}
+
+.show_img{
+    width: 70%;
+    margin:auto;
+}
+.show_img img{
+    width: 100%;
+}
+.show_img{
+    display: none;
+}

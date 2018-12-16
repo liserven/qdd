@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="<?php echo CSS_PATH;?>mobile/css/main.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+	<meta name="imagemode" content="force">
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" type="image/x-icon" href="">
+	<link rel="apple-touch-icon-precomposed" href="">
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <style>
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body style="background: #1f1f1f"  ng-app="addressApp" ng-controller="addressCtrl" ng-cloak>
+<div class="page10a" style="background: #2f2f2f">
+	<form method="post" class="form form-horizontal" id="form-addres-add">
+	<ul style="background: #1f1f1f;color: white">
+		<li style="border-bottom:1px solid #2c2c2c"><span>姓名：</span><input type="text" style="background: #2f2f2f;border: 0" placeholder="收货人姓名" id="selectReceiveName" name="receivename" value="{{detail.receivename}}"></li>
+		<li style="border-bottom:1px solid #353535"><span>手机：</span><input type="text" style="background: #2f2f2f;border: 0" placeholder="收货人手机号" id="selectMobile" name="mobile" value="{{detail.mobile}}"></li>
+        <li style="border-bottom:1px solid #353535">
+			<span>地址：</span>
+			<select class="ml5" name="province" style="width: 50%;color: black"   id="province1">
+				{volist name="province" id="vo"} <!--循环第一级别-->
+				<option value="{$vo.Code}" {if condition="$vo.Code eq $addxx.province"}selected{/if}>{$vo.AreaName}</option>
+				{/volist}
+			</select>
+			<select class="ml5" name="city" style="width: 40%;margin-top: 10px;margin-left: 10%;color: black"  id="city1">
+				{volist name="city" id="voc"} <!--循环第一级别-->
+				<option value="{$voc.Code}" {if condition="$voc.Code eq $addxx.city"}selected{/if}>{$voc.AreaName}</option>
+				{/volist}
+			</select>
+			<select class="ml5" name="county" style="width: 40%;color: black"   id="county1">
+				{volist name="county" id="voa"} <!--循环第一级别-->
+				<option value="{$voa.Code}" {if condition="$voa.Code eq $addxx.county"}selected{/if}>{$voa.AreaName}</option>
+				{/volist}
+			</select>
+		</li>
+		<li style="border-bottom:1px solid #353535"><span class="sp4">街道：</span><textarea  cols="30" rows="10" placeholder="街道详细地址" style="background: #2f2f2f;border: 0" id="selectAddress" name="address">{{detail.address}}</textarea></li>
+	</ul>
+	</form>
+</div>
+<input type="button" class="btn btn-center" onclick="addressSubmit()" value="提交" style="width: 80px;margin-left: 40%;background-color:#fed58d;"></input>
+{include file="./public/Public/js_script.html" /}
+<script src="<?php echo CSS_PATH;?>static/js/provinces.Cxselect.js"></script>
+<script src="<?php echo CSS_PATH;?>static/js/provincesData.js"></script>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+    var app = angular.module('addressApp', []);
+    app.controller('addressCtrl', function($scope, $http) {
+        $http.get("/api.php/member/address_detail?id={$Request.param.id}")
+            .success(function (response) {
+                $scope.detail = response.detail;
+                //所在地区选择
+                cxSelect('cmbProvince', 'cmbCity', 'cmbArea', $scope.detail.province, $scope.detail.city, $scope.detail.county);
+            });
+    });
+
+    $(function(){
+        $("#qian").on("change","input[type='file']",function(){
+            var file = this.files[0];
+            var r = new FileReader();
+            r.readAsDataURL(file);
+            $(r).load(function() {
+                $('#codephotoqian').html('<img src="' + this.result + '" alt="" />');
+            })
+        });
+        $("#bei").on("change","input[type='file']",function(){
+            var file = this.files[0];
+            var r = new FileReader();
+            r.readAsDataURL(file);
+            $(r).load(function() {
+                $('#codephotobei').html('<img src="' + this.result + '" alt="" />');
+            })
+        });
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-addres-add").validate({
+            rules:{
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                var form=new FormData(document.getElementById("form-addres-add"));
+                $.ajax({
+                    url: '/api.php/member/address_edit?id={$Request.param.id}',
+                    type: "post",
+                    dataType:"json",
+                    data: form,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if(data.status==1){
+                            layer.msg(data.msg,{},function(){
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.msg('信息添加成功！'); //父页面显示提示
+                                parent.location.reload(); //刷新父页面
+                                parent.layer.close(index); //关闭layer
+							});
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function addressSubmit(){
+        $("#form-addres-add").submit();
+	}
+    //所在地区选择
+</script>
+<script>
+    $('#province1').change(function () {
+        var code=$('#province1').val();
+        $.ajax({
+            url: '/api.php/index/getcity',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#city1').empty();
+                    $('#city1').append(' <option value="">请选择</option>');
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#city1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+    $('#city1').change(function () {
+        var code=$('#city1').val();
+        $.ajax({
+            url: '/api.php/index/getcity',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#county1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

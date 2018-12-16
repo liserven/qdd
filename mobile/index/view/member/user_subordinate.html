@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>联盟商信息</title>
+    <link rel="stylesheet" href="/public/qdd/css/lianmengshang.css">
+</head>
+<body>
+    <header>
+        <a href="/mobile.php/member/userinfo" id="lmsfh">
+            <img src="/public/qdd/img/juxing.png" alt="">
+        </a>
+        {if condition="$userinfo['userType'] eq 4"}
+            <p>联盟商信息</p>
+        {/if}
+        {if condition="$userinfo['userType'] eq 3"}
+            <p>企业信息</p>
+        {/IF}
+    </header>
+    <section>
+        <div class="gmlms">
+            {if condition="$userinfo['userType'] eq 4"}
+            <img src="/public/qdd/img/duobianxing.png" alt="">
+            <p>剩余可开通联盟商 <span>{$userinfo['three_level_places']}</span></p>
+            <a href="/mobile.php/member/buy_places" class="gm"></a>
+            {/if}
+            {if condition="$userinfo['userType'] eq 3"}
+            <img src="/public/qdd/img/duobianxing.png" alt="">
+            <p>剩余可开通尊享版 <span>{$userinfo['two_level_places']}</span></p>
+            <a href="/mobile.php/member/buy_places" class="gm2"></a>
+            {/if}
+          <!--  <a href="#" class="cj"></a> -->
+        </div>
+        <ul>
+        {foreach item="list" name="list"}
+        <li>
+            <div class="lmsTit">
+                <p>{$list['company_name']}</p>
+                <span>{$list['TrueName']}</span>
+            </div>
+            <div class="lmsxq lmsxx">
+                <p>{$list['company_name']}</p>
+                <span>{$list['Mobile']}</span>
+                <a href="#">
+                    <img src="/public/qdd/img/you.png" alt="">
+                </a>
+            </div>
+            <div class="lmszt lmsxx">
+                <p>{$list['AddDate']}</p>
+                {if condition="$list['IsAudit'] eq 1"}
+                <span class="not_actived">{:getTypenameByUserId($list["userType"])}</span>
+                {elseif condition="$list['IsAudit'] eq 2 || $list['IsAudit'] eq 4 "}
+                <span class="not_actived">未实名认证</span>
+                {elseif condition="$list['IsAudit'] eq 3"}
+                <button onclick="change_user('{$list["UserId"]}')">激活</button>
+                {/if}
+            </div>
+        </li>
+        {/foreach}
+    </ul>
+</section>
+</body>
+
+
+ <!--  <a href="/mobile.php/member/buy_places">购买联盟商</a>
+ <a href="javascript:void();" onclick="change_user('13011111130')">激活</a> -->
+ <div class="chose_type">
+    <p class="chose_type_title">选择激活类型 <span class="close_icon" onClick="close_chose_type()">X</span></p>
+    {if condition="$userinfo['userType'] eq 3"}
+    <p class="type1 chosed_type" onClick=change_type(2)>尊享版 <span class="remain_number">剩余数量：{$userinfo['two_level_places']}</span></p>
+    {/if}
+    {if condition="$userinfo['userType'] eq 4"}
+    <p class="type2" onClick=change_type(3)>联盟商 <span class="remain_number">剩余数量：{$userinfo['three_level_places']}</span></p>
+    {/if}
+    <button class="confirm_btn" onClick="active_member()"> 确 定</button>
+</div>
+</body>
+{include file="./public/Public/js_script.html" /}
+<script>
+var active_member_type = {$userinfo['userType'] -1};
+var userid;
+// 更改激活的类型
+function change_type(type){
+    if(type == 2){
+        active_member_type = 2;
+        $('.type1').addClass('chosed_type');
+        $('.type2').removeClass('chosed_type');
+    }
+    if(type == 3){
+        active_member_type = 3;
+        $('.type2').addClass('chosed_type');
+        $('.type1').removeClass('chosed_type');
+    }
+}
+// 更改激活的用户
+function change_user(id){
+    userid = id;
+    $('.chose_type').show();
+}
+// 关闭选择用户类型的框
+function close_chose_type(){
+    $('.chose_type').hide();
+}
+function active_member(){
+    if(userid == ''){
+        layer.msg('');
+    }
+   
+    $.post(
+        "/mobile.php/member/active_member",
+        {usertype:active_member_type,UserId:userid},
+        function(data){
+            if(data.status == 1){
+                  layer.msg(data.msg,{time:2000},function(){
+                    location.reload();
+                })
+                }else{
+                      layer.msg(data.msg,{time:2000})
+                }
+            }
+        )
+}
+
+</script>
+</html>
+
+
+
+
+

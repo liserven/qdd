@@ -1,0 +1,114 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>会员充值 - 会员管理</title>
+</head>
+<body>
+<article class="page-container">
+    <form method="post" class="form form-horizontal" id="form-member-recharge">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">会员ID：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-red">{$list.userid}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">手机：</label>
+            <div class="formControls col-xs-10 col-sm-9">{$list.mobile}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">姓名：</label>
+            <div class="formControls col-xs-10 col-sm-9">{$list.truename}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">购物币余额：</label>
+            <div class="formControls col-xs-10 col-sm-9 c-red">{:addzero($list['umoney'])}</div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">操作类型：</label> <!--1 充值 2 扣币-->
+            <div class="formControls col-xs-10 col-sm-9 skin-minimal c-red">
+
+
+                <input type="hidden" name="stylename" id="radio_1" value="{$Request.param.type}">
+                {if condition="$Request.param.type eq 1"}
+                <label >充值</label>
+                {elseif condition="$Request.param.type eq 2" /}
+                <label >扣币</label>
+                {/if}
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>金额：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="umoney" name="umoney">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">充值备注：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...最多输入100个字符" onKeyUp="textarealength(this,100)"></textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        var flag1=true;
+        $type=$("#radio_1").val();
+        $("#form-member-recharge").validate({
+            rules:{
+                umoney:{
+                    required:true,
+                    number:true
+                },
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                if (flag1) {
+                    flag1 = false;
+                    $.ajax({
+                        url:'/admin.php/admin/member/member_recharge_Umoney//UserId/{$list.userid}/rechagetype/'+$type,
+                        type:"POST",
+                        data:$('#form-member-recharge').serialize(),
+                        success: function(data) {
+                            var res = String($.trim(data));
+                            if(res=="umoneyzero"){
+                                alert("请提交大于0的值！");
+                            }else if(res=="memmoneyenough"){
+                                alert("会员的购物币不足，无法扣币！");
+                            }else{
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.msg('操作成功！'); //父页面显示提示
+                                parent.location.reload(); //刷新父页面
+                                parent.layer.close(index); //关闭layer
+                            }
+
+                        }
+                    });
+                }
+                else{
+                    layer.msg('请不要重复提交',{icon:1,time:1000});
+                }
+
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

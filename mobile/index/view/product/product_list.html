@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$name}</title>
+	<meta charset="utf-8">
+	<meta name="viewport"  content="width=device-width,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/reset.css" type="text/css" />
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/font-awesome.min.css" type="text/css" />
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/fonts/iconfont.css" type="text/css" />
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/style/index.css" type="text/css" />
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo CSS_PATH;?>mobile/css/reset.css" type="text/css" />
+	<link href="<?php echo CSS_PATH;?>mobile/css/style1.css" rel="stylesheet" type="text/css">
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.8.3.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/mobile.js"></script>
+
+
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+	<script type="text/javascript">
+        function fsubmit(){
+            $('#searchform').submit();
+        }
+	</script>
+	<style>
+
+		/*share_start*/
+		#share {position:fixed;_position:absolute;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)-34+"px");bottom:34px;left:50%;width:30px;zoom:1;z-index: 100}
+		#share a{background-image:url(/Public/mobile/images/share.png); background-repeat:no-repeat; display:block; width:30px; height:30px; margin-bottom:19px; overflow:hidden; text-indent:-999px;-webkit-transition: all 0.2s ease-in-out;-moz-transition: all 0.2s ease-in-out;-o-transition: all 0.2s ease-in-out;-ms-transition: all 0.2s ease-in-out;transition: all 0.2s ease-in-out;}
+		#share a{}
+		#share a#totop{background-position:0 -120px;position:absolute;bottom:0px;cursor:pointer;}
+		#share a#totop:hover {background-position:-30px -120px;}
+		/*share_end*/
+	</style>
+</head>
+<body class="" >
+<div class="top">
+	<div class="zhuangtai"></div>
+	<!--<form id="searchform" method="get" action="/mobile.php/search">
+	<div class="neirong">
+		<a href="javascript:history.back(-1);" id="fanhui"><img src="<?php echo CSS_PATH;?>mobile/images/fanhui.png" alt=""></a>
+		<input type="text" name="keyword" onfocus="javascript:if(this.value=='黑胶遮阳伞') this.value='';" value="黑胶遮阳伞" >
+		<div style="margin-left:10px; float:left;" onclick="fsubmit()"><img style=" width:20px; margin-top:0.31rem; margin-left:75%; position:absolute; z-index:1;" src="<?php echo CSS_PATH;?>mobile/images/search.png"></div>
+	</div>
+	</form>-->
+	<div class="neirong">
+		<a href="javascript:history.back(-1);" id="fanhui"><img src="<?php echo CSS_PATH;?>mobile/images/fanhui.png" alt=""></a>
+		<input type="text" name="keyword" value="" onfocus="javascript:location.href='/mobile.php/search?ishit={$Request.param.ishit}';">
+		<div style="margin-left:10px; float:left;" onclick="javascript:location.href='/mobile.php/search';"><img style=" width:20px; margin-top:0.31rem; margin-left:75%; position:absolute; z-index:1;" src="<?php echo CSS_PATH;?>mobile/images/search.png"></div>
+	</div>
+
+</div>
+<!--<div class="leibie">
+	<ul>
+		<li><a href="##">综合</a></li>
+		<li><a href="##">销量</a></li>
+		<li><a href="##">价格&nbsp;<span><img style=" width:10px;" src="<?php echo CSS_PATH;?>mobile/images/icon01.png" alt=""></span></a></li>
+		<li><a href="##">筛选&nbsp;<span><img style=" width:12px;"src="<?php echo CSS_PATH;?>mobile/images/icon02.png" alt=""></span></a></li>
+	</ul>
+</div>-->
+<!-- id=innerbox 标签外面 不放任何标签  为自适应标签   -->
+<div class="innerbox" id="innerbox" style="padding-bottom:0;" ng-app="scroll" ng-controller="Main" ng-cloak>
+	<div id="fixed" when-scrolled="loadMore()">
+		<!--<div class="xuan_ul" ng-if="{$Request.param.ishit} == '2'">-->
+		<div class="zhanshi">
+			<ul ng-repeat="goods in items">
+				<li >
+					<a href="/mobile.php/goods/{{goods.proid}}">
+						<img  ng-src="{{goods.img}}" alt="">
+						<p id="biaoti" style="  display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2; overflow: hidden;">{{goods.proname}}</p>
+						<p ng-if="goods.vipprice != 0 && goods.consumeintegral == 0" style="color:red;"><em>￥</em><span>{{goods.vipprice}}元</span></p>
+						<p ng-if="goods.consumeintegral != 0 && goods.vipprice == 0" style="color:red;"><span>{{goods.consumeintegral}}</span>积分</p>
+						<p ng-if="goods.vipprice != 0 && goods.consumeintegral != 0" style="color:red;"><em>￥</em><span>{{goods.vipprice}}元+</span><span>{{goods.consumeintegral}}</span>积分</p>
+					</a>
+				</li>
+
+
+			</ul>
+		</div>
+
+	</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+//                                alert('支持屏幕滚动');
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/goods/list?ishit={$Request.param.ishit}&p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                var img_url = response.data.data_list[i];
+                                img_url["proimg"]=img_url["proimg"].replace('/Upload','/public/Upload');
+                                $scope.items.push(img_url);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+
+    $(function(){
+        //首先将#back-to-top隐藏
+        $("#totop").hide();
+        //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
+        $(function () {
+            $(window).scroll(function(){
+                if ($(window).scrollTop()>100){
+                    $("#totop").fadeIn();
+                }
+                else
+                {
+                    $("#totop").fadeOut();
+                }
+            });
+            //当点击跳转链接后，回到页面顶部位置
+            $("#totop").click(function(){
+                $('body,html').animate({scrollTop:0},500);
+                return false;
+            });
+        });
+
+    });
+</script>
+<!--<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/global.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/index.js"></script>-->
+
+</html>

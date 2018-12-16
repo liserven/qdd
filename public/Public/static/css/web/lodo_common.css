@@ -1,0 +1,41 @@
+/* 通用 */
+.w{ width: 1200px; margin: 0 auto; margin-bottom: 10px}
+.w:after{content:"";display:block;clear:both;visibility:hidden}
+.fr {float: right}
+.fl {float: left}
+/* 分页 */
+#bottom_pager{text-align:center;padding: 35px 0}
+.pagin{ display:inline-block}
+.pagin a,.pagin span { float:left; height:20px; padding:4px 15px; border:1px solid #ccc; margin-left:5px; font-family:arial; line-height:20px; font-size:14px; overflow:hidden; background: #fff}
+.pagin .text,.pagin .current { padding:4px 15px; background-color:#E5E5E5}
+.pagin a:link,.pagin a:visited { color: #ff0000}
+.pagin a:hover,.pagin a:active { background:#EEE; color: #c9033b; text-decoration:none
+}
+.pagin .current,.pagin .current:link,.pagin .current:visited { color:#c9033b; font-weight:700}
+
+.pagin .prev,.pagin .next,.pagin .prev-disabled,.pagin .next-disabled { position:relative; padding-top:5px; height:18px; line-height:18px}
+.pagin .prev-disabled,.pagin .next-disabled { color:#ccc; cursor:default}
+.pagin .prev,.pagin .prev-disabled { padding-left:25px}
+.pagin .prev b { left: 5px; background-position:-68px -608px}
+.pagin .prev-disabled b { left:3px; background-position:-80px -608px}
+.pagin .next,.pagin .next-disabled { padding-right:25px}
+.pagin .next b { right: 5px; background-position:-62px -608px}
+.pagin .next-disabled b { right:3px; background-position:-74px -608px}
+.pagin-m a,.pagin-m span { height:24px; line-height:24px; font-size:14px}
+.pagin-m b { top:11px}
+.pagin-m .prev,.pagin-m .next,.pagin-m .prev-disabled,.pagin-m .next-disabled { padding-top:3px; height:24px; line-height:24px; *line-height:26px}
+
+/*跳转框*/
+.input-jump { float:left; font-size:14px;height:34px;line-height:1.42857;padding:4px; margin-left:5px}
+.input-jump {box-sizing:border-box;border:solid 1px #ccc;width:50px;-webkit-transition:all .2s linear 0s;-moz-transition:all .2s linear 0s;-o-transition:all .2s linear 0s;transition:all .2s linear 0s}
+.input-jump:hover {border:solid 1px #3bb4f2}
+
+/* 上部分页 */
+.top-page .pagin>*{display:none; border:0}
+.top-page .pagin .text,.top-page .pagin .prev,.top-page .pagin .next,.top-page .pagin .first,.top-page .pagin .end{display:block;}
+.top-page .pagin .text{padding: 0;background: transparent;}
+.top-page .pagin .prev,.top-page .pagin .next,.top-page .pagin .first,.top-page .pagin .end{font-size: 12px;height: 22px;padding: 0;line-height: 22px;width: 60px;text-align: center;border-radius: 5px;}
+.top-page .pagin .prev b{left: -5px; top:6px;}
+.top-page .pagin .next b{right: -5px; top:6px;}
+
+.top-page-view{border-top:0px solid #ddd; height:26px; padding:5px;display:none;}

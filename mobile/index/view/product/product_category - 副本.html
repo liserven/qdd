@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>分类</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        dd,dt,body,div,a,span,img,h1,h2,h3,h4,h5,h6,p,ul,li,ol,dl,input{ margin:0; padding:0; list-style:none; text-decoration: none; font-size:16px; color:#333; font-family:"微软雅黑";font-style:normal;}
+        body{background: #1f1f1f;}
+        img{width: 100%;}
+        input::-webkit-input-placeholder {color:#999;}
+        input:-moz-placeholder {color:#999;}
+        input::-moz-placeholder {color:#999;}
+        input:-ms-input-placeholder {color:#999;}
+
+        .toubu{width: 100%; background:#2c2c2c; padding: 15px 0;}
+        .sousuo {width: 80%;margin: 0 auto;height: 35px; position: relative;background: #fff;border-radius:25px;}
+        .iconfont {float: left; margin-left: 5%;margin-top: 7px; display: inline-block;}
+        .sousuo input {display: inline-block;line-height: 35px;border: none;outline: none;float: left; margin-left: 3%; font-family:"微软雅黑";font-size: 16px;color: #000;}
+
+        .qiebox {width: 100%; height: 500px; background: #1f1f1f; margin-bottom: 20px;}
+
+        .left {width: 25%; height: 500px; background: #1f1f1f; float: left;}
+        .left ul {width: 100%; height: 500px;background: #353535;}
+        .left ul li {text-align: center;font-size:18px;height:55px;line-height: 55px;color: rgba(255,255,255,0.9);background: #353535;}
+        .left ul li.cur{ color:#000; background: #fed58d;}
+
+        .right{float: right; width: 75%; height: 500px; background: #1f1f1f;}
+        .qie_ulbox.cur {display: block;}
+        .title_text {font-size: 16px;color:rgba(255,255,255,0.9); margin-left: 5%; margin-top: 15px;}
+        .zhanbox {width: 97%; height:450px; margin-left: 3%;}
+        .zhanbox ul li {float: left;text-align: center;}
+        .past_m { margin-top: 20px;}
+        .past_m span img {width: 85px;height:85px;}
+
+        .zhanbox ul li p {font-size: 16px;color:rgba(255,255,255,0.8);margin-top: 10px;    overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;}
+        .zhanbox ul li {width: 33%;float: left;text-align: center;}
+    </style>
+    <script type="text/javascript" src="<?php echo CSS_PATH;?>mobile/script/jquery-1.11.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+    <script type="text/javascript">
+        function fsubmit(){
+            $('#searchform').submit();
+        }
+    </script>
+</head>
+
+<body onmousemove=/HideMenu()/ oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+<div  class="toubu" >
+    <div class="sousuo">
+        <form id="searchform" method="get" action="/mobile.php/search_list">
+            <span onclick="fsubmit()"><img class="iconfont" style="width: 20px;" src="<?php echo CSS_PATH;?>mobile/img/sousuo.png"></span>
+            <input type="text" style="outline: none" autocomplete="off"  placeholder="输入您要搜索的商品名称" name="keyword">
+        </form>
+        <div class="cl"></div>
+    </div>
+</div>
+
+
+<div class="qiebox">
+    <div class="left">
+        <ul>
+            <!--<li class="">推荐分类</li>-->
+            {foreach name="leftCate" item="vo"}
+            {if condition="$vo['cid'] eq $cid "}
+            <li class="cur">{$vo.name}</li>
+            {else /}
+            <li class="" onclick="selectone({$vo['cid']})">{$vo.name}</li>
+            {/if}
+            {/foreach}
+        </ul>
+    </div>
+
+    <div class="right">
+        <div class="qie_ulbox cur">
+
+            <!--<div class="title_text">女装推荐</div>-->
+
+            <div class="zhanbox">
+                <ul>
+                    {foreach name="mainCate" item="voo"}
+                    <li>
+                        <a href="{$voo['url']}">
+                            <div class="past_m">
+                                <span><img  src="{$voo['img']}"></span>
+                            </div>
+                            <p>{$voo['name']}</p>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div class="cl"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{:widget('Common/mobile_footer')}
+
+<script>
+    function  selectone(ccid) {
+        window.location.href='/mobile.php/category?cid='+ccid;
+    }
+    $('img').error(function() {
+        $(this).attr('src', "/public/Public/mobile/img/logos.png");
+    });
+</script>
+</body>
+</html>

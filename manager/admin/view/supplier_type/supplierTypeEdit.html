@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>分类修改</title>
+    <link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 修改分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form  enctype="multipart/form-data" method="post" class="form form-horizontal" id="form_supplierType_Edit" enctype="multipart/form-data" action="{:url('supplier_type/supplierTypeEdit',['act'=>'edit','id'=>$list['id']])}" method="post">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>分类名称：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <input type="text" class="input-text" value="{$list.suppliertypename}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">分类图片：</label>
+            <div class="formControls col-xs-10 col-sm-9">
+                <div class="maskWraper f-l" style="width:150px; height:150px; border:solid 1px #ddd; padding:2px"><img id="imgPre" src="{$list.suppliertypeimg}" width="150" height="150"></div>
+                <div class="mt-50 ml-10 f-l">
+                    <span class="btn-upload form-group">
+                        <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                        <input type="file" multiple name="proimg" id="proimg" class="input-file" onchange="preImg(this.id,'imgPre');">
+                    </span>
+                    <br><label class="c-999">图片大小60×60像素</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-9 col-xs-offset-2 col-sm-offset-2">
+                <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function(){
+        $("#form_supplierType_Edit").validate({
+            rules:{
+                name:{
+                    required:true,
+                    minlength:2,
+                    maxlength:32
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit();
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);
+            }
+        });
+    });
+
+    //从 file 域获取 本地图片 url
+    function getFileUrl(sourceId) {
+        var url;
+        if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+            url = document.getElementById(sourceId).value;
+        } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }
+        return url;
+    }
+
+    //将本地图片 显示到浏览器上
+    function preImg(sourceId, targetId) {
+        var url = getFileUrl(sourceId);
+        var imgPre = document.getElementById(targetId);
+        imgPre.src = url;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{include file="./public/Public/meta.html" /}
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>资讯列表</title>
+</head>
+<body ng-app="scroll" ng-controller="Main" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+<div style="width: 100%; height: 50px; background-color: #28bebc;">
+    <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+        <a href="javascript:history.back(-1);">
+            <img src="/public/Public/wap/images/zjt.png" style="margin-top:-15px;"></a>
+    </div>
+    <div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;"></div>
+    <div style="width:50%; margin-left: 32%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">资讯列表</div>
+    <div style="padding-top: 9px; margin-right: 3%; float: right;"></div>
+</div>
+<div style="clear: both;"></div>
+<div class="page-container">
+    <!--<form name="memsearch" id="memsearch" method="post" >-->
+        <!--<div class="bk-gray">-->
+            <!--<div class="col-90" style="width:25%">资讯名称：</div>-->
+            <!--<div class="col-400" style="width:65%"><input type="text" name="keywords" id="keywords" value="{$Request.param.keywords}" placeholder="输入新闻名称"  class="input-text"></div>-->
+            <!--<div class="col-80" style="width:25%">新闻分类：</div>-->
+            <!--<div class="col-200" style="width:65%">-->
+            <!--<span class="select-box" style="width:120px">-->
+              <!--<select class="select" size="1" name="articleCate">-->
+                <!--<option value="" selected>全部分类</option>-->
+
+                <!--</volist>-->
+              <!--</select>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--<div class="col-80" style="width:25%">日期范围：</div>-->
+            <!--<div class="col-300" style="width:65%">-->
+                <!--<input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:90px;">-->
+                <!-- - -->
+                <!--<input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:90px;">-->
+            <!--</div>-->
+            <!--<div class="f-r mt-5"><button type="submit" class="btn btn-success size-S" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="" id="" class="btn btn-success size-S" type="submit" onClick="javascript:$('input:text').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>-->
+        <!--</div>-->
+    <!--</form>-->
+
+    <div style="margin-bottom:5px;clear:both;"> </div>
+    <div class="mt-20">
+
+            <div   style="height:30%;" ng-repeat="vo in items">
+                <a href="/mobile.php/article/show?id={{vo.id}}"><div style="color: blue;">{{vo.articletitle}}</div></a>
+                <div style="height: 25px;margin-top:10px;"> {{vo.name.categoryname}}
+                    <div style="float:right;">{{vo.addtime}}</div>
+                </div>
+                <hr>
+            </div>
+
+
+    </div>
+</div>
+</div>
+
+{include file="./public/Public/js_script.html" /}
+
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('Main', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/index/article_list?p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.data_list) {
+                                $scope.items.push(response.data.data_list[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+</script>
+</body>
+</html>
+
+

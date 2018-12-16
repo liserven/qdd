@@ -1,0 +1,193 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商品分类 - 商品管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 商品分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray"> <span class="l"><a class="btn btn-primary radius" href="javascript:;" onClick="_add('添加商品分类','productCategoryAdd','','500')"><i class="Hui-iconfont">&#xe600;</i> 添加商品分类</a></span> <span class="r"></span> </div>
+    <div class="mt-20">
+        <form action="categoryList/action/sort/id/{listone.Id}" name="paixu" id="paixu" method="post">
+            <div id="DataTables_Table_0_length" class="dataTables_length">
+            </div><br>
+            <table class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                <tr class="text-c">
+                    <th width="60">排序</th>
+                    <th width="50">ID</th>
+                    <th class="text-l">分类名称</th>
+                    <th width="50">状态</th>
+                    <th width="60">操作</th>
+                </tr>
+                </thead>
+                <div id="content">
+                    <tbody>
+                    {volist name="listone" id="voone"} <!--循环第一级别-->
+                    <tr class="text-c va-m">
+                        <td><input type="text" class="input-text" value="{$voone.sort}" placeholder="0" id="sort_{$voone.Id}" name="sort[]" style="width:50px">
+                            <input type="hidden" value="{$voone.Id}" id="{$voone.Id}" name="id[]">
+                        </td>
+                        <td>{$voone.Id}</td>
+                        <td class="text-l"><strong>{$voone.name}</strong></td>
+                        <td class="td-homeshow">
+                            <if condition='$voone.disable eq 0'>
+                                <a style="text-decoration:none" onClick="_start(this,{$voone.Id})" href="javascript:;" title="显示"><i class="f-18 Hui-iconfont">&#xe706;</i></a>
+                                <elseif condition='$voone.disable eq 1' />
+                                <a style="text-decoration:none" onClick="_stop(this,'{$voone.Id}')" href="javascript:;" title="隐藏"><i class="f-18 c-green Hui-iconfont">&#xe676;</i></a>
+                            </if>
+                        </td>
+                        <td class="f-14 td-manage"><a style="text-decoration:none" class="ml-5" onClick="_edit('编辑','productCategoryEdit/pcateid/{$voone.Id}','10001','','500')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_del(this,'{$voone.Id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+                    {volist name="voone['voo']" id="votwo"}<!--循环第二级别-->
+                    <tr class="text-c va-m">
+                        <td><input type="text" class="input-text" value="{$votwo.sort}" placeholder="0" id="sort_{$votwo.Id}" name="sort[]" style="width:50px">
+                            <input type="hidden" value="{$votwo.Id}" id="{$votwo.Id}" name="id[]">
+                        </td>
+                        <td>{$votwo.Id}</td>
+                        <td class="text-l"><span class="ml-20">{$votwo.sort,$votwo.pid}{$votwo.name} </span></td>
+                        <td class="td-homeshow">
+                            {if condition='$votwo.disable eq 0'}
+                            <a style="text-decoration:none" onClick="_start(this,{$votwo.Id})" href="javascript:;" title="显示"><i class="f-18 Hui-iconfont">&#xe706;</i></a>
+                            {elseif condition='$votwo.disable eq 1' /}
+                            <a style="text-decoration:none" onClick="_stop(this,'{$votwo.Id}')" href="javascript:;" title="隐藏"><i class="f-18 c-green Hui-iconfont">&#xe676;</i></a>
+                            {/if}
+                        </td>
+                        <td class="f-14 td-manage"><a style="text-decoration:none" class="ml-5" onClick="_edit('编辑','productCategoryEdit/pcateid/{$votwo.Id}','10001','','500')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_del(this,'{$votwo.Id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+                    {volist name="votwo['boo']" id="vothree"} <!--循环第三级别-->
+                    <tr class="text-c va-m">
+                        <td><input type="text" class="input-text" value="{$vothree.sort}" placeholder="0" id="sort_{$vothree.Id}" name="sort[]" style="width:50px">
+                            <input type="hidden" value="{$vothree.Id}" id="{$vothree.Id}" name="id[]">
+                        </td>
+                        <td>{$vothree.Id}</td>
+                        <td class="text-l"><span class="ml-50">&emsp;{$vothree.sort,$vothree.pid}{$vothree.name}</span></td>
+                        <td class="td-homeshow">
+                            {if condition='$vothree.disable eq 0'}
+                            <a style="text-decoration:none" onClick="_start(this,{$vothree.Id})" href="javascript:;" title="显示"><i class="f-18 Hui-iconfont">&#xe706;</i></a>
+                            {elseif condition='$vothree.disable eq 1' /}
+                            <a style="text-decoration:none" onClick="_stop(this,'{$vothree.Id}')" href="javascript:;" title="隐藏"><i class="f-18 c-green Hui-iconfont">&#xe676;</i></a>
+                            {/if}
+                        </td>
+                        <td class="f-14 td-manage"><a style="text-decoration:none" class="ml-5" onClick="_edit('编辑','productCategoryEdit/pcateid/{$vothree.Id}','10001','','500')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_del(this,'{$vothree.Id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+                    {/volist}
+                    {/volist}
+                    {/volist}
+
+                    </tbody>
+                </div>
+                <thead>
+                <tr class="text-c">
+                    <th width="60"><input type="submit" class="btn btn-warning radius" value="排序"></th>
+                    <th width="50">ID</th>
+                    <th class="text-l">分类名称</th>
+                    <th width="50">状态</th>
+                    <th width="60">操作</th>
+                </tr>
+                </thead>
+            </table>
+
+        </form>
+    </div>
+</div>
+{include file="./public/Public/js_script.html" /}
+<!--分页 begin-->
+
+<br class="clear">
+<!--分页 end-->
+<script type="text/javascript">
+    $(function(){
+        $('.table-sort').dataTable({
+            "aaSorting": [],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+//                {"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,1,2,3,4]}// 制定列不参与排序
+            ]
+        });
+        $('.table-sort tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+    });
+
+    /*停用*/
+    function _stop(obj,id){
+        layer.confirm('确定隐藏？隐藏后，栏目下的所有产品都将不在显示！',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("ProductCategory/categoryList")}?action=enable&&status=stop&&id='+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg('已隐藏!', {icon: 6,time:1000});
+                }
+            });
+        });
+    }
+
+    /*启用*/
+    function _start(obj,id){
+        layer.confirm('确认要显示吗？显示后，栏目下所有的产品都将显示！',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("ProductCategory/categoryList")}?action=enable&&status=start&&id='+id,
+                type:"GET",
+                //data:$('#form-sales-add').serialize(),
+                error: function(){ //失败
+                    alert('Error loading document');
+                },
+                success: function(data) {
+                    location.href=location.href;
+                    layer.msg('已显示!', {icon: 6,time:1000});
+                }
+            });
+
+//		$(obj).parents("tr").find(".td-status").html('<a onClick="_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><span class="label label-success radius">已启用</span></a>');
+//		$(obj).remove();
+//		layer.msg('已启用!', {icon: 6,time:1000});
+        });
+    }
+
+
+    /*-增加*/
+    function _add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-编辑*/
+    function _edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*-删除*/
+    function _del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url:'{:url("ProductCategory/categoryList")}?action=delete&&pcateid='+id,
+                type:"GET",
+                success: function(data) {
+                    var res = String($.trim(data));
+                    if(res=="thirderror"){
+                        alert("您要删除的二级分类下面有三级分类，不能删除！");
+                    }else if(res=="twoerror"){
+                        alert("您要删除的一级分类下面有二级分类，不能删除！");
+                    }else{
+                        location.href=location.href;
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }
+                }
+            });
+
+        });
+    }
+</script>
+
+</body>
+</html>

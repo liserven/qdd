@@ -1,0 +1,11 @@
+<script type="text/javascript">
+    $(function(){
+        $.get("/api.php/login/auth",{},function(res){
+            if(res.status=='1'){
+                $('#authloginid').html('<div style="width:31px;margin-top:17%"><img src="<?php echo config('IMAGE_DOMAIN_NAME').CSS_PATH;?>mobile/images/wdw.png"></div>');
+            }else{
+                $('#authloginid').html('<div style="color:#FFF; margin-top:45%; font-size:14px; margin-left:-1px;">登录</div>');
+            }
+        },'json');
+    });
+</script>

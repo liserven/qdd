@@ -1,0 +1,137 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>菜单列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 微信管理 <span class="c-gray en">&gt;</span> 菜单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" href="javascript:;" onClick="_add('添加菜单','{:url('Weixin/menu_add',['accountid'=>$accountid])}')"><i class="Hui-iconfont">&#xe600;</i> 添加菜单</a> </span>  <span class="l"><a class="btn btn-primary radius" href="javascript:;" style="margin-left: 20px;" onclick="setMenu()"><i class="Hui-iconfont">&#xe6c4;</i> 应用菜单</a> </span></div>
+    <div class="mt-20">
+        <form class="form form-horizontal" id="form-admin-list">
+            <table class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                <tr class="text-c">
+                    <th><input type="checkbox" name="" value=""></th>
+                    <th>ID</th>
+                    <th>菜单名称</th>
+                    <th>菜单类型</th>
+                    <th>菜单值</th>
+                    <th>父菜单</th>
+                    <th>排序</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="menulist" id="vo"}
+                    <tr class="text-c">
+                        <td><input type="checkbox" value="{$vo.id}" name="id[]"></td>
+                        <td>{$vo.id}</td>
+                        <td >{$vo.name}</u></td>
+                        <td>
+                            {if condition="$vo['type'] eq 1"}
+                            消息
+                            {elseif condition="$vo['type'] eq 2" /}
+                            链接
+                            {elseif condition="$vo['type'] eq 3" /}
+                            素材
+                            {/if}
+                        </td>
+                        <td>{$vo.value}</td>
+                        <td>{$vo.pid}</td>
+                        <td>{$vo.sort}</td>
+                        <td class="f-14 td-manage"> <a style="text-decoration:none" class="ml-5" onClick="_edit('菜单编辑','{:url('Weixin/menu_edit',['id'=>$vo['id'],'accountid'=>$vo['accountid']])}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_del(this,'{$vo.id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+                    {volist name="vo['sub']" id="voo"}
+                <tr class="text-c">
+                    <td><input type="checkbox" value="{$voo.id}" name="id[]"></td>
+                    <td>{$voo.id}</td>
+                    <td >{$voo.name}</u></td>
+                    <td>
+                        {if condition="$voo['type'] eq 1"}
+                        消息
+                        {elseif condition="$voo['type'] eq 2" /}
+                        链接
+                        {elseif condition="$voo['type'] eq 3" /}
+                        素材
+                        {/if}
+                    </td>
+                    <td>{$voo.value}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$voo.sort}</td>
+                    <td class="f-14 td-manage"> <a style="text-decoration:none" class="ml-5" onClick="_edit('菜单编辑','{:url('Weixin/menu_edit',['id'=>$voo['id'],'accountid'=>$voo['accountid']])}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_del(this,'{$voo.id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                </tr>
+                    {/volist}
+                {/volist}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{include file="./public/Public/js_script.html" /}
+<script>
+    /*-删除*/
+    function _del(obj,id){
+        layer.confirm('删除须谨慎，确认要删除吗？',function(index){
+            $.ajax({
+                url:'{:url("Weixin/del_menu")}?id='+id,
+                type:"GET",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:3000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time:3000});
+                        }
+                    }
+                }
+            });
+
+        });
+    }
+
+
+    /*菜单的设置*/
+    function setMenu(){
+        layer.confirm('确认要重新设置菜单吗？',function(index){
+            $.ajax({
+                url:'{:url("Weixin/set_menu",["accountid"=>$accountid])}',
+                type:"GET",
+                dataType:"json",
+                success: function(data) {
+                    if(typeof(data.code)!= "undefined"&&data.code==1){
+                        layer.alert(data.msg);
+                    }
+                    if(typeof(data.status)!= "undefined"){
+                        if(data.status==1){
+                            layer.msg(data.msg,{icon:1,time:3000},function(){
+                                location.href=location.href;
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time:3000});
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+
+    /*-编辑*/
+    function _edit(title,url){
+        layer_show(title,url,900,600);
+    }
+
+    /*-增加*/
+    function _add(title,url){
+        layer_show(title,url,900,600);
+    }
+</script>
+
+</body>
+</html>

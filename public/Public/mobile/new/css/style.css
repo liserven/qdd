@@ -1,0 +1,46 @@
+ body{background: #f9f9f9; width:100%; position:relative;}
+.top{
+	height:60px;
+	background:white;
+	width:100%;
+	position: fixed;
+	top: 0;
+}
+.top img{width: 10px; position: absolute; margin-top: 20px; margin-left: 5%;}
+.top p{
+	text-align: center;
+	line-height: 60px;
+	font-size: 20px;
+}
+
+.leibie{width: 100%;height: 60px;background: white;position: fixed;top: 60px;}
+.leibie ul li{width: 33%;height: 60px;float: left;color:#28bebc;font-size: 16px;text-align: center;line-height:60px;}
+.leibie ul li a{color:black;font-size: 18px;text-align: center;line-height:60px;}
+.leibie ul li .quanbu{color: red;}
+.zhanshi{width:100%;}
+.zhanshi ul li{width:49%;float: left;}
+/*.zhanshi ul li img{width:100%;}*/
+.zhanshi ul li p.biaoti{color:black;font-size: 16px;line-height: 20px; margin-left: 3%;}
+.zhanshi ul li p.jiage{color:red;font-size:16px;line-height: 18px; float:left; margin-top: 10px;margin-bottom: 10px; margin-left: 3%;}
+.zhanshi ul li p.jiage span{color:blue; margin-left:60px; font-family:"微软雅黑"; font-size:14px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

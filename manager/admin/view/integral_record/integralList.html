@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="./public/Public/meta.html" /}
+{include file="./public/Public/js_script.html" /}
+<head>
+    <meta charset="UTF-8">
+    <title>购物积分记录</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 交易管理 <span class="c-gray en">&gt;</span> 积分记录 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+        <div class="bk-gray">
+            <div class="col-80">会员编号：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入会员编号" id="keyuserid" name="keyuserid" value="{$Request.param.keyuserid}"></div>
+            <div class="col-90">交易类型：</div>
+            <div class="col-300">
+                <span class="select-box" style="width:120px">
+              <select class="select" size="1" name="typeName">
+                <option value="">请选择</option>
+                <option value="充值" {if condition="$Request.param.typeName eq '充值'"}selected{/if}>充值</option>
+                  <option value="扣积分" {if condition="$Request.param.typeName eq '扣积分'"}selected{/if}>扣积分</option>
+                <!--<option value="扣币">扣币</option>-->
+                <!--<option value="转入">转入</option>-->
+                <!--<option value="转出">转出</option>-->
+                <!--<option value="返币">返币</option>-->
+              </select>
+            </span>
+            </div>
+
+        </div>
+        <div class="bk-gray" style="border-top:0">
+            <div class="col-80">日期范围：</div>
+            <div class="col-300">
+                <div class="col-300">
+                    <input type="text" onFocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" style="width:120px;">
+                    -
+                    <input type="text" onFocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" style="width:120px;">
+                </div>
+            </div>
+            <div class="col-80">交易金额：</div>
+            <div class="col-300">
+                <input class='input-text' type="text"  id="moneystart" name="moneystart" value="{$Request.param.moneystart}"  style="width:120px;">
+                -
+                <input class='input-text' type="text"  id="moneyend" name="moneyend" value="{$Request.param.moneyend}"  style="width:120px;">
+            </div>
+            <div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="daochu" value="daochu" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('');$('select option').val('');"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+        </div>
+    </form>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$count}</strong> 条</span></div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover">
+            <thead>
+            <tr class="text-c">
+                <th>ID</th>
+                <th>会员编号</th>
+                <th>交易类别</th>
+                <th>交易金额</th>
+                <th>账户余额</th>
+                <th>金额来源</th>
+                <th>备注</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="integralList" id="vo"}
+            <tr class="text-c va-m">
+                <td class="text-l">{$vo.ID}</td>
+                <td class="text-l">{$vo.UserId}</td>
+                <td class="text-l">{$vo.TypeName}</td>
+                <td class="text-l">{$vo.Amount}</td>
+                <td class="text-l">{$vo.BalancePv}</td>
+                <td class="text-l">{$vo.FromWho}</td>
+                <td class="text-l">{$vo.Memo}</td>
+                <td class="text-l">{$vo.AddDate}</td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+
+        <table class="table table-border table-bordered table-hover table-bg mt-20">
+            <foot>
+                <tr class="text-c success">
+                    <th class="text-l" colspan="3">当前页小计：</th>
+                    <th>{$staticPageArr[0]['TypeName']} : {$staticPageArr[0]['Amount']}</th>
+                    <th>{$staticPageArr[1]['TypeName']} : {$staticPageArr[1]['Amount']}</th>
+                    <!--<th>{$staticPageArr[2]['TypeName']} : {$staticPageArr[2]['Amount']}</th>-->
+                    <!--<th>{$staticPageArr[3]['TypeName']} : {$staticPageArr[3]['Amount']}</th>-->
+                </tr>
+                <tr class="text-c success">
+                    <th class="text-l" colspan="3">数据总计</th>
+                    <th>{$staticArr[0]['TypeName']} : {$staticArr[0]['Amount']}</th>
+                    <th>{$staticArr[1]['TypeName']} : {$staticArr[1]['Amount']}</th>
+                    <!--<th>{$staticArr[2]['TypeName']} : {$staticArr[2]['Amount']}</th>-->
+                    <!--<th>{$staticArr[3]['TypeName']} : {$staticArr[3]['Amount']}</th>-->
+                </tr>
+            </foot>
+        </table>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+</body>
+</html>

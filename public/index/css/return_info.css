@@ -1,0 +1,486 @@
+.bigBox {
+	background: #fff;
+	width: 980px;
+}
+.is_a_refund {
+    background: #fff;
+    overflow: hidden;
+    padding: 35px 28px 30px;
+}
+.is_a_refund span {
+    color: #757575;
+    font-size:30px;
+}
+.is_a_refund p {
+    color: #545454;
+    font-size: 20px;
+}
+.order_details {
+}
+
+.order_details .style {
+	width: 924px;
+	height: 44px;
+	background-color: #eeeeee;
+	margin: 0 auto;
+	line-height: 44px;
+}
+.order_details .style li {
+	float: left;
+}
+.order_details .style li:first-child {
+	margin-left: 111px;
+}
+.order_details .style li:nth-child(2n){
+	margin-left: 123px;
+}
+.order_details .style li:nth-child(3n){
+	margin-left: 80px;
+}
+.order_details .style li:nth-child(4n){
+	margin-left: 80px;
+}
+.order_details .style li:nth-child(5n){
+	margin-left: 80px;
+}
+.order_details .style li:last-child{
+	margin-right: 80px;
+}
+
+
+.order_info {
+	margin: 0 auto;
+	margin-top: 8px;
+	width: 924px;
+	
+}
+.order_info .order_num {
+	background-color: #eeeeee;
+	height: 44px;
+	line-height: 44px;
+}
+.order_info .order_num p {
+	color: #a8a8a8;
+	float: left;
+	margin-left: 20px;
+}
+.order_info .order_num span {
+	float: left;
+	margin-left: 40px;	
+}
+.order_info ul {
+	border: solid 1px #d2d2d2;
+}
+.order_info li {
+	padding: 16px 20px;
+	overflow: hidden;
+	border-bottom: solid 1px #d2d2d2;
+}
+.order_info li:last-child{border-bottom: none!important;}
+.order_info li img {
+	width: 80px;
+	height: 80px;
+	float: left;
+}
+.order_info li h3 {
+	font-size: 14px;
+	color: #545454;
+	float: left;
+	width: 104px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	margin-left: 12px;
+    margin-top: 15px;
+}
+.order_info li p {
+	color: #e00000;
+	font-size: 14px;
+	line-height: 80px;
+	float: left;
+    width: 140px;
+    text-align: center;
+}
+.order_info li span {
+	float: left;
+	color: #545454;
+	font-size: 14px;
+	line-height: 80px;
+    width: 135px;
+    text-align: center;
+}
+.order_info li n {
+	float: left;
+	color: #545454;
+	font-size: 14px;
+	line-height: 80px;
+    text-align: center;
+    width: 115px;
+}
+.order_info li i {
+	float: left;
+	color: #e00000;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 80px;
+    width: 180px;
+    text-align: center;
+}
+.order_info li b {
+	float: left;
+	color: #666;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 80px;
+	width: 80px;
+    text-align: center;
+}
+
+/*退货进度*/
+.return_schedule {
+	background: #fff;
+	margin-top: 40px;
+	padding: 0 28px;
+}
+.return_schedule h3 {
+	font-size: 26px;
+	color: #545454;
+	padding: 0.2rem 0.24rem 0;
+}
+.return_schedule ul {
+	margin-top: -0.4rem;
+	padding: 0.4rem 0.24rem;
+}
+.return_schedule li {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #dadada;
+	margin-top: 20px
+}
+.return_schedule li:last-child{border-bottom:none;}
+.return_schedule li .time {
+	overflow: hidden;
+}
+.return_schedule li .time n {
+	font-size: 20px;
+	color: #999999;
+	float: right;
+}
+.return_schedule li p {
+	font-size: 22px;
+	color: #545454;
+}
+.return_schedule li span {
+	font-size: 20px;
+	float: left;
+	color: #545454;
+	font-family: "微软雅黑";
+}
+
+
+/*退换货申请记录*/
+.is_titile {
+    width: 924px;
+    height: 85px;
+    margin: 0 auto;
+	border-bottom: 1px solid #e0e0e0;
+}
+.is_titile span {
+    line-height: 80px;
+    color: #757575;
+    font-size: 30px;
+}
+.mt20 {
+	margin-top: 20px;
+}
+.order_info li .blue {
+	color: #2daaeb!important;
+}
+
+/*翻页*/
+.pageBox {
+	overflow: hidden;
+	padding: 20px 0;
+	margin-left: 220px;
+}
+.pageBox .page_num {
+	float: left;
+	overflow: hidden;
+	cursor: pointer;
+}
+.pageBox .page_num p {
+	float: left;
+	color: #a8a8a8;
+	font-size: 16px;
+	margin-left: 27px;
+	
+}
+.pageBox .page_num span {
+	float: left;
+	color: #a8a8a8;
+	font-size: 16px;
+	margin-left: 27px;
+}
+.pageBox .page_num .active {
+	color: #e00000;
+}
+.pageBox .page_num p:first-child {
+	margin-right: 36px;
+}
+.pageBox .page_num p:last-child {
+	margin-left: 36px;
+}
+.page {
+	margin-left: 39px;
+	float: left;
+	margin-top: -2px;
+}
+.page span {
+	color: #a8a8a8;
+	font-size: 14px;
+}
+.page input {
+	text-align: center;
+	width: 27px;
+	height: 27px;
+	border: solid 1px #d2d2d2;
+}
+.page button {
+	margin-left: 20px;
+	width: 44px;
+	height: 26px;
+	border: solid 1px #d2d2d2;
+	background: #fff;
+	color: #a8a8a8;
+	cursor: pointer;
+	font-size: 14px; 
+}
+
+/*退换货申请*/
+.content {
+	padding: 36px 127px;
+}
+.return_goods {
+	font-size: 20px;
+	color: #545454;
+	overflow: hidden;
+}
+.return_goods p {
+	color: #545454;
+	font-size: 20px;
+	float: left;
+	line-height: 100px;
+}
+.return_goods .goods_info {
+	float: left;
+}
+.return_goods .goods_info img {
+	width: 100px;
+	height: 100px;
+	margin-left: 20px;
+	float: left;
+}
+.return_goods .goods_attribute {
+	float: left;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+.return_goods .goods_attribute h3 {
+	font-size: 20px;
+	color: #222;	
+	width: 100%;
+}
+.return_goods .goods_attribute span {
+	color: #999;
+	font-size: 16px;
+}
+.return_goods .goods_attribute n {
+	margin-left: 10px;
+}
+
+.service_type {
+	margin-top: 65px;
+	overflow: hidden;
+}
+.service_type p {
+	font-size: 20px;
+	color: #545454;
+	float: left;
+	margin-left: 28px;
+}
+.service_type .select {
+	float: left;
+}
+.service_type .select input {
+	margin-left: 20px;
+}
+/*input[type='radio']{-webkit-appearance:none;}​
+*/
+
+/*input[type="radio"]:checked{
+	 background:url(../images/radio.png) no-repeat center center #fff;
+}*/
+
+.service_type .select input[type="radio"] {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background:#fff; 
+	border:0; 
+	float:left;
+	border: solid 1px #bfbfbf;
+	margin-top: 5px;
+}
+
+.service_type .select label {
+	margin-left: 20px;
+	font-size: 22px;
+}
+.select .active {
+    background-color: #2DAAEB;   
+}
+.why {
+	margin-top: 45px;
+	overflow: hidden;
+}
+.why label {
+	line-height: 44px;
+	font-size: 20px;
+	color: #545454;
+	float: left;
+}
+.why select {
+	margin-left: 20px;
+	float: left;
+	width: 240px;
+	height: 44px;
+	border-radius: 2px;
+	border: solid 1px #bfbfbf;
+	text-indent: 1rem;
+	color: #999999;
+	
+}
+.why select option {
+	font-size: 20px;
+}
+.instructions {
+	margin-top: 45px;
+	overflow: hidden;
+}
+.instructions label {
+	float: left;
+	margin-top: 12px;
+	color: #545454;
+	font-size: 20px;
+    margin-left: 25px;
+}
+textarea {
+	background: #fff;
+}
+.instructions textarea {
+	width: 520px;
+	height: 140px;
+	border-radius: 2px;
+	border: solid 1px #bfbfbf;
+	float: left;
+	outline: none;
+    resize: none;
+	text-align: left;
+	margin-left: 24px;
+	text-indent: 0.5rem;
+    line-height: 24px;
+}
+
+.credentials {
+	overflow: hidden;
+	margin-top: 60px;
+}
+.credentials label {
+	float: left;	
+	color: #545454;
+	font-size: 20px;
+    margin-left: 25px;
+}
+
+/*上传图片*/
+.cft_btn {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+	height: 100px;
+}
+.cft_btn img {
+    width: 100px;
+	height: 100px;
+    margin: 0 6px 6px 0;
+}
+.closebtn {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    z-index: 800;
+    width: 40px;
+    height: 40px;
+    background: url("../images/err.png") no-repeat;
+}
+.sc_bot {
+	padding: 0 24px;
+}
+.uploadlabel {
+    display: inline-block;
+    overflow: hidden;
+    width: 100px;
+	height: 100px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 2px;
+	border: solid 1px #d2d2d2;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../images/up_add.png");
+    cursor: pointer;
+}
+#form-data-productImages {
+	padding: 106px;
+}
+.layui-upload-file {
+    display: none!important;
+    opacity: .01;
+    filter: Alpha(opacity=1);
+}
+#upload {
+	width: 330px;
+	height: 44px;
+	background-color: #2daaeb;
+	border-radius: 2px;
+	font-size: 18px;
+	
+	margin-top: 45px;
+	margin-left: 130px;
+}
+#upload a {
+	color: #fff;
+}
+
+/*申请成功*/
+
+.success {
+	margin-top: 94px;
+	text-align: center;
+}
+.success img {
+	width: 121px;
+	height: 121px;
+}
+.success p {
+	color: #6ceb2d;
+	font-size: 20px;
+	margin-top: 10px;
+	margin-bottom: 35px;
+}
+.success span {
+	font-size: 18px;
+	color: #a8a8a8;
+}

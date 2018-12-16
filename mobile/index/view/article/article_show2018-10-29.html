@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <link href="<?php echo CSS_PATH;?>mobile/css/common.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo CSS_PATH;?>mobile/css/search.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Public/static/css/He.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/Public/static/css/He.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/Public/lib/He-iconfont/1.0.7/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/Public/lib/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/Public/lib/icheck/icheck.css"/>
+    <link rel="stylesheet" type="text/css" href="/Public/static/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/Public/static/css/style.css"/>
+
+    <script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+    <script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+
+
+<title>查看资讯</title>
+</head>
+<body style='height: 100%' ng-app="scroll" ng-controller="Index" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+<div style="width: 100%; height: 50px; background-color: #28bebc;">
+    <div style="width: 25px; float: left; margin-top: 20px;margin-left: 5px;">
+        <a href="javascript:history.back(-1);">
+            <img src="<?php echo CSS_PATH;?>mobile/images/zjt.png" style="margin-top:-15px;"></a>
+    </div>
+    <div style="padding-top: 3px; padding-left: 2%; float: left; line-height: 50px;"></div>
+    <div style="width:50%; margin-left: 32%; color: #FFF; font-size: 17px; line-height: 50px;float: left;">资讯详情</div>
+    <div style="padding-top: 9px; margin-right: 3%; float: right;"></div>
+</div>
+<div style="clear: both;"></div>
+<div class="content ml-20 mr-20">
+    <h4><b>{{article.ArticleTitle}}</b><span class="f-r f-12 c-999 pt-10">分类：&emsp;创建人：{{article.creater}}&emsp;;最后一次编辑：{{article.editor}}&emsp;时间：{{article.addtime}}</span></h4>
+    <div class="line mb-20"></div>
+
+    <p ng-bind-html="article.ArticleContent | trustHtml">
+    </p>
+</div>
+</div>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    scroll.controller('Index',['$scope','$http',
+        function ($scope, $http) {
+            // 默认第一次加载数据
+            $http.get("/api.php/index/article?id={$Request.param.id}")
+                .success(function(response) {
+                    $scope.article = response.data;
+                });
+
+        }]);
+        scroll.filter('trustHtml',function($sce){
+            return function(input){
+                return $sce.trustAsHtml(input);
+            }
+        });
+</script>
+</body>
+</html>

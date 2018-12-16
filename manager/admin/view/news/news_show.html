@@ -1,0 +1,13 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>查看资讯</title>
+</head>
+<body>
+<div class="content ml-20 mr-20">
+    <h4><b>{$list.title}</b><span class="f-r f-12 c-999 pt-10">分类：{:getcatenamebycid($list['id'])}&emsp;创建人：{$list.creater}&emsp;;最后一次编辑：{$list.editor}&emsp;时间：{$list.addtime}</span></h4>
+    <div class="line mb-20"></div>
+    <p>{$list.content|contentReplace}</p>
+</div>
+</body>
+</html>

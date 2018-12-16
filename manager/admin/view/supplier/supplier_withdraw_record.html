@@ -1,0 +1,173 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商家结算记录 - 商家管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家结算记录 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+        <div class="bk-gray">
+            <div class="col-80">商家ID：</div>
+            <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入商家ID" id="supid" name="supid" value="{$Request.param.supid}"></div>
+            <div class="col-90">商家名称：</div>
+            <div class="col-300"><input type="text" class="input-text" style="width:240px" placeholder="输入商家名称" id="supname" name="supname" value="{$Request.param.supname}"></div>
+            <div class="col-90">处理状态：</div>
+            <div class="col-200">
+                <span class="select-box" style="width:120px">
+                  <select class="select" size="1" name="isdeal">
+                    <option value="">请选择</option>
+                    <option value="0" {if condition="$Request.param.isdeal eq '0'"}selected{/if}>未处理</option>
+                    <option value="1" {if condition="$Request.param.isdeal eq '1'"}selected{/if}>已通过</option>
+                      <option value="2" {if condition="$Request.param.isdeal eq '2'"}selected{/if}>未通过</option>
+                  </select>
+                 </span>
+            </div>
+            </div>
+    <div class="bk-gray" style="border-top:0">
+            <div class="col-90">日期范围：</div>
+            <div class="col-300">
+                <input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" placeholder="开始时间" style="width:120px;">
+                -
+                <input type="text" onfocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" placeholder="结束时间" style="width:120px;">
+            </div>
+            <div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="daochu" value="daochu" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 导出</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('');$('select option').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+        </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">  <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+    <div class="mt-20">
+        <form class="form form-horizontal" id="form-admin-list">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th>商家</th>
+                    <th>手机号码</th>
+                    <th>银行账号</th>
+                    <th>银行信息</th>
+                    <th>可提现金额</th>
+                    <th>实际到账余额</th>
+                    <th>处理状态</th>
+                    <th>处理方式</th>
+                    <th>提现审核</th>
+                    <th>提现时间</th>
+                    <th>处理时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="cashrecord" id="vo"}
+                <tr class="text-c">
+                    <td>{$vo.supplierid}({:getsupnamebysupid($vo['supplierid'])})</td>
+                    <td >{:getMobileByTypeId($vo['supplierid'])})</td>
+                    <td >{$vo.bankaccount}({$vo.banksupname})</td>
+                    <td>{$vo.bankinfo}</td>
+                    <td>{$vo.withdrawalamount}</td>
+                    <td>{$vo.actualcreditedamount}</td>
+                    <td>
+                        {if condition="$vo['isdeal'] eq 0"}
+                        未处理
+                        {elseif condition="$vo['isdeal'] eq 1" /}
+                        已通过
+                        {elseif condition="$vo['isdeal'] eq 2" /}
+                        未通过
+                        {/if}
+                    </td>
+                    <td>
+                        <span class="select-box">
+                        {if condition="$vo['isdeal'] eq 0"}
+                        <select class="select" size="1" id="dealtype_{$vo.id}">
+                            <option value="1">银行转账</option>
+                            <option value="2">现金结款</option>
+                        </select>
+                        {else /}
+                            {$vo['dealtype']}
+                        {/if}
+                        </span>
+                    </td>
+                    <td>
+                        {if condition="$vo['isdeal'] eq 0"}
+                        <a href="javascript:;" onClick="_withdrawok(this,'{$vo.id}')" class="btn btn-success-outline radius size-MINI">通过</a>&ensp;<a href="javascript:;" onClick="_withdrawno(this,'{$vo.id}')" class="btn btn-success-outline radius size-MINI">取消</a>
+                        {elseif condition="$vo['isdeal'] eq 2" /}
+                        审核取消
+                        {else /}
+                        审核通过
+                        {/if}
+                    </td>
+                    <td>{$vo.adddate}</td>
+                    <td>{$vo.dealdate}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <!--分页 begin-->
+    <div class="page-bootstrap">{$page}</div>
+    <br class="clear">
+    <!--分页 end-->
+</div>
+
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    $(function(){
+        //跳转页
+        $('#jump').blur(function(){
+            var url=$('.jumpnum').attr("href");
+            //var strs=url.substr(0,25);
+            var strs=url;
+            var value=this.value;
+            var all=$('.all').attr("title");
+            var i=parseFloat(all);//将字符转化成数字
+            if(value<=i && !isNaN(value) && value>0){
+                value=Math.ceil(value);
+            }else{
+                value='';
+            }
+            var newurl=strs+value;
+            $('.jumpnum').attr("href",newurl);
+        });
+    });
+
+    var flag0=true;
+    function _withdrawok(obj,id){
+        layer.confirm('确定通过提现审核吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            if(flag0){
+                //flag0=false;
+                $.ajax({
+                    url:'{:url("SupplierWithdraw/supplier_withdraw_action")}?action=yes&id='+id+'&dealtype='+$('#dealtype_'+id).val(),
+                    type:"GET",
+                    dataType:"json",
+                    success: function(data) {
+                        location.href=location.href;
+                        layer.msg(data.msg,{icon:1,time:1000});
+                    }
+                });
+            }else{
+                layer.msg('请不要重复提交',{icon:1,time:1000});
+            }
+        });
+    }
+
+    var flag1=true;
+    function _withdrawno(obj,id){
+        layer.confirm('确定取消提现审核吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            if(flag1){
+                //flag0=false;
+                $.ajax({
+                    url:'{:url("SupplierWithdraw/supplier_withdraw_action")}?action=no&id='+id,
+                    type:"GET",
+                    dataType:"json",
+                    success: function(data) {
+                        location.href=location.href;
+                        layer.msg(data.msg,{icon:1,time:1000});
+                    }
+                });
+            }else{
+                layer.msg('请不要重复提交',{icon:1,time:1000});
+            }
+        });
+    }
+</script>
+</body>
+</html>

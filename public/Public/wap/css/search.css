@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+.ser_main{ width:100%; height:auto; background:#f2f2f2; overflow:hidden;}
+.search{width:100%; height:auto; overflow:hidden; background-color:#fff; padding-bottom:10px;}
+.ser_box{ width:88%; height:40px; overflow:hidden; margin:10px auto 0; position:relative; }
+.ser_box input.ser{ border:none; width:100%; height:40px; background:#f2f2f2; font-size:16px; padding-left:20px; line-height:40px; outline:medium;}
+.ser_box .ser_btn{ display:block; width:20px; height:20px; background:url(../images/search/icon_ser.png) no-repeat center; position:absolute; right:18px; top:11px;}
+
+.main_box{ width:100%; overflow:hidden; position:relative;}
+.main_ban{ width:100%; height:70px; border-bottom:#e35f13 solid 1px;position:relative;background-color:#fff;}
+.main_ban span{position:absolute; bottom:-5px; right:20px; display:block;}
+.main_ban p{width:34px; height:34px; float:left; margin:18px 0 0 2%;}
+.main_ban .main_name{ width:200px; height:70px; line-height:70px; font-size:22px; color:#333; text-align:left; margin-left:10px; float:left; }
+
+.qjnx_btn{ width:100%;overflow:hidden; background-color:#fff;}
+.qjnx_btn a{ width:50%; height:60px; font-size:16px;  float:left; color:#666; border-top:solid 1px #d3d3d3;  border-bottom:solid 1px #d3d3d3; border-right:solid 1px #d3d3d3;margin-top:-1px; margin-left:-1px; }
+
+.qjnx_btn a:hover{color:#e35f13;}

@@ -1,0 +1,38 @@
+.top{width: 100%;background: #f9f9f9;border-bottom: 1px solid #dddddd;}
+.top .zhuangtai{width: 100%;height: 0.2rem;}
+.top .neirong{width: 100%;height: 0.88rem;text-align: center;font-size:0.3rem;color:#333;line-height: 0.88rem; margin-top:-10px;font-family: "微软雅黑";font-size: 0.35rem;}
+.top .neirong a#fanhui{width: 0.18rem;height: 0.33rem;float: left;margin-left: 0.2rem;}
+
+img#logo{width: 1.52rem;height: 1.52rem;margin:auto; margin-top:50px;display: block;}
+
+form{text-align: center; margin-top:10px; position:relative;}
+form input{width: 5.5rem;height: 0.5rem;margin: auto; border:none; border-bottom: 1px #ddd solid;display: inline-block;font-family: "微软雅黑";font-size: 0.33rem;color:#bfbfbf;}
+form input#mima{}
+form button{width: 6rem;height: 0.9rem;border-radius: 0.45rem;background: #28bebc; border:none;font-family: "微软雅黑";font-size: 0.33rem;color:#fff;display: block;margin: -0.4rem auto;}
+form a{margin-top: 0.2rem;font-family: "微软雅黑";font-size: 0.24rem;color:#28bebc;display: block;float: right;margin-right: 0.2rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

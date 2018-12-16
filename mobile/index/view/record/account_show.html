@@ -1,0 +1,110 @@
+{include file="./public/Public/meta.html" /}
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta charset="utf-8">
+<link href="<?php echo CSS_PATH;?>wap/css/common.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo CSS_PATH;?>wap/css/search.css" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/MobileSlider.js"></script>
+<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+<style>
+    body,ul,li{ margin:0; padding:0; font-family:微软雅黑;	font-style:normal; background-color:
+
+            #FFF;}
+    a {border:0; text-decoration:none; color:#303030;}
+
+    img{ width:100%; border:0;}
+    input{
+        background:transparent;
+    }
+
+    .leftcss{
+        color:#19A97B;
+        text-align: left;
+        width: 40%;
+        line-height: 30px;
+    }
+    .rightcss{
+        color:#303030;
+        text-align: right;
+        width: 60%;
+    }
+
+</style>
+<title>消费联盟</title>
+</head>
+
+<body style='height: 100%' ng-app="scroll" ng-controller="Record" ng-cloak>
+<div id="fixed" when-scrolled="loadMore()">
+
+<!---页头--->
+<div style=" width:100%; height:50px; background-color:red;">
+    <!---分类--->
+    <div style="padding-top:3px; padding-left:2%; float:left; line-height:50px;">
+        <div style="width:25px; float:left; margin-top:-3px;"><a href='javascript:history.back(-1);'><img src="<?php echo CSS_PATH;?>wap/images/zjt.png"></a></div>
+    </div>
+    <!--标题-->
+    <div style=" width:25%; margin-left:30%;  color:#FFF; font-size:17px; line-height:50px; float:left;">记录详情</div>
+    <!---信息--->
+</div>
+<div style="clear:both;"></div>
+<!---内容--->
+        <div style="width: 100%;">
+            <table style='text-align: center;width: 90%;margin-left:5%;'>
+                <tr style='margin-bottom: 10px;'>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">交易金额：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.amount}}</span></td>
+                </tr>
+                <tr>
+                    <td style='text-align: center;' colspan="2"></td>
+                </tr>
+                <tr>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">交易类型：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.flowtype}}</span></td>
+                </tr>
+                <tr>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">交易方账户：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.fromwho}}({{account.fromwhoname}})</span></td>
+                </tr>
+                <tr>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">账户余额：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.balance}}</span></td>
+                </tr>
+                <tr>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">备注：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.memo}}</span></td>
+                </tr>
+                <tr>
+                    <td class="leftcss"><span style="font-size:15px;color:#5eb95e;">交易时间：</span></td>
+                    <td class="rightcss"><span style="font-size:15px;">{{account.adddate}}</span></td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+
+
+</div>
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('scroll', []);
+    scroll.controller('Record',['$scope','$http',
+        function ($scope, $http) {
+            // 默认第一次加载数据
+            $http.get("/api.php/record/account?id={$Request.param.id}")
+                .success(function(response) {
+                    $scope.account = response.data;
+                });
+
+        }]);
+</script>
+</body>
+</html>

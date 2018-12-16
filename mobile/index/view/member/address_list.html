@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>收货地址</title>
+	<link rel="stylesheet" href="/public/qdd/css/tjdz.css">
+	<link rel="stylesheet" href="/public/qdd/css/iconfont.css">
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+	<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+</head>
+<body ng-app="addressApp" ng-controller="addressCtrl" ng-cloak>
+<header>
+	<a href="javascript:history.go(-1);" id="tjdzfh">
+		<img src="/public/qdd/img/juxing3.png" alt="">
+	</a>
+	<p>选择收货地址</p>
+</header>
+<section when-scrolled="loadMore()">
+	<ul class="dzList" id="addresids">
+		<li ng-repeat="(key,val) in items">
+			<a href="#" class="dzxz" ng-click="confirm(val.id,val.receivename,val.province,val.city,val.county,val.address,val.mobile)">
+				<!--<input type="radio"  style="display: none" name="adresid" value="{{val.id}}" id="id_{{val.id}}" ng-if="val.isdefault == 0">-->
+				<!--<input type="radio"  style="display: none" name="adresid" value="{{val.id}}" id="id_{{val.id}}" ng-if="val.isdefault == 1" checked="checked">-->
+				<!--<img src="/public/qdd/img/xingzhuang2.png"  alt="" data-ng-click="select(val.id)" id="img_{{val.id}}" name="image[]" ng-if="val.isdefault == 1">-->
+				<img ng-if="val.isdefault == '1'" src="/public/qdd/img/xingzhuang2.png"  alt="" >
+				<img ng-if="val.isdefault == '0'" src="/public/qdd/img/tuoyuan2.png"  alt="" >
+			</a>
+			<div>
+				<strong >{{val.receivename}}</strong>
+				<span>{{val.mobile}}</span>
+				<img src="/public/qdd/img/mrdz.png" alt="" ng-if="val.isdefault==1">
+				<p>{{val.province}}{{val.city}}{{val.county}}{{val.address}}</p>
+
+			</div>
+			<!--<a href="/mobile.php/member/address?type=edit&id={{val.id}}" class="dzxg">-->
+			<a href="javascript:;" ng-click="mesShow('修改收货地址','/mobile.php/member/address?type=edit&id='+val.id)" class="dzxg">
+				<img src="/public/qdd/img/xg.png" alt="">
+			</a>
+		</li>
+	</ul>
+	<div class="xjdzBtn">
+		<a href="javascript:;" onclick="mesShow('添加收货地址','/mobile.php/member/address?type=add')"  style="    background: #ff6501;width: 80%;height: 40px;line-height: 40px;text-align: center;color: white;border-radius: 10px;"> 添加收货地址</a>
+	</div>
+</section>
+<!--<footer>-->
+	<!--<a href="#" ng-click="confirm()">确认收货地址</a>-->
+<!--</footer>-->
+</body>
+</html>
+<script type="text/javascript">
+    // 定义模块
+    var scroll = angular.module('addressApp', []);
+    // 定义滚动指令
+    scroll.directive('whenScrolled', function() {
+        return function(scope, elm, attr) {
+            // body窗口的滚动加载--需要Jquery
+            $(window).scroll(function () {
+                //滚动条距离顶部的距离
+                var scrollTop = $(window).scrollTop();
+                //滚动条的高度
+                var scrollHeight = $(document).height();
+                //窗口的高度
+                var windowHeight = $(window).height();
+                if (scrollTop + windowHeight >= scrollHeight) {
+                    scope.$apply(attr.whenScrolled);
+                }
+            });
+        };
+    });
+
+    scroll.controller('addressCtrl', ['$scope','$http',
+        function ($scope, $http) {
+            // 当前页数
+            $scope.currentPage = 0;
+            // 总页数
+            $scope.totalPages = 1;
+            // 防止重复加载
+            $scope.busy = false;
+            // 存放数据
+            $scope.items = [];
+            // 请求数据方法
+            $scope.loadMore = function() {
+                if ($scope.currentPage < $scope.totalPages) {
+                    $scope.currentPage++;
+                    if ($scope.busy) {
+                        return false;
+                    }
+//                    $scope.busy = true;
+                    // 请求后台服务器
+                    $http.get("/api.php/member/address_list?p="+$scope.currentPage)
+                        .success(function(response) {
+                            $scope.busy = false;
+                            //组织数据
+                            for (var i in response.data.addresslist) {
+                                $scope.items.push(response.data.addresslist[i]);
+                            }
+                            $scope.totalPages = response.data.total;
+                        });
+                }
+            };
+            $scope.select=function(id){
+				$('#addresids li .dzxz img').attr('src','/public/qdd/img/tuoyuan2.png');
+				$('#img_'+id).attr('src','/public/qdd/img/xingzhuang2.png');
+                $('#addresids li a input').removeAttr('checked');
+				$('#id_'+id).attr('checked','checked');
+
+            };
+            //设置默认首页
+            $scope.setDefault=function(key,id){
+                $http.get("/api.php/member/address_action?type=set_default&id="+id)
+                    .success(function(response) {
+                        layer.msg(response.msg);
+                        location.href=location.href;
+                    });
+            };
+            $scope.confirm=function(id,receivename,province,city,county,address,mobile){
+                var type="{$Request.param.return}";
+                if(type=='nowbuy'){
+                    location.href='{$url}&id='+id+'&receivename='+receivename+'&address='+province+city+county+address+'&mobile='+mobile;
+                }else{
+                    location.href='{$url}?id='+id+'&receivename='+receivename+'&address='+province+city+county+address+'&mobile='+mobile;
+                }
+            };
+            $scope.mesShow=function(title,url){
+                var index = layer.open({
+                    type: 2,
+                    content: url,
+                    title:title
+                });
+                layer.full(index);
+            };
+            $scope.delAddress=function (key,id) {
+                layer.confirm('确认要删除吗？',function(){
+                    $http.get("/api.php/member/address_action?type=del_default&id="+id)
+                        .success(function(response) {
+                            layer.msg(response.msg);
+                            location.href=location.href;
+                        });
+                });
+            };
+            // 默认第一次加载数据
+            $scope.loadMore();
+        }]);
+    function mesShow(title,url,id,w,h){
+        var index = layer.open({
+            type: 2,
+            content: url,
+            title:title
+        });
+        layer.full(index);
+    }
+</script>

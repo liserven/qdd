@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户认证</title>
+    <link rel="stylesheet" href="/public/qdd/css/qiyexinxi.css">
+    <link rel="stylesheet" href="/public/qdd/css/iconfont.css">
+</head>
+<body>
+<header>
+    <a href="#">
+        <i class="iconfont icon-zuojiantou" id="rzfh"></i>
+    </a>
+    <span>用户认证</span>
+</header>
+<section>
+    <div class="rzxz">
+        <div class="qyrzxz">
+            <img src="/public/qdd/img/认证.png" alt="">
+            <span>企业用户认证</span>
+            <a href="#">
+                <!-- <input type="radio"> -->
+                <img src="/public/qdd/img/形状2.png" alt="">
+            </a>
+        </div>
+        <div class="grrzxz">
+            <img src="/public/qdd/img/认证.png" alt="">
+            <span>个人用户认证</span>
+            <a href="#">
+                <!-- <input type="radio"> -->
+                <img src="/public/qdd/img/椭圆1拷贝.png" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="rzxx">
+        <div class="rzxxTit">
+            <img src="/public/qdd/img/形状3.png" alt="">
+            <p>请填写企业用户认证信息</p>
+            <img src="/public/qdd/img/形状3.png" alt="">
+        </div>
+
+        <p style="color:#999;">信息必须真实有效以方便审核通过</p>
+        <form action="" id="formdata">
+            <div class="zjlx formStyle">
+                <span><i class="red">*</i> &nbsp;证件类型</span>
+                <div class="">
+                    <select>
+                       <!--  <option>请选择</option> -->
+                        <option selected>身份证</option>
+                    </select>
+                </div>
+            </div>
+            <div class="zjr formStyle">
+                <span><i class="red">*</i> &nbsp;证件人</span>
+
+                <input type="text" placeholder="法人姓名(必填)" value="{$userinfo['TrueName']}" name="TrueName" id="zjxm" style="margin-left: 38px;">
+            </div>
+            <div class="zjhm formStyle">
+                <span><i class="red">*</i> &nbsp;证件号码</span>
+                <input type="text" placeholder="法人身份证号(必填)" value="{$userinfo['IdCardNo']}" name="IdCardNo" id="">
+            </div>
+            <div class="qyzj formStyle">
+                    <span>证件类型</span>
+                    <p>营业执照</p>
+            </div>
+            <div class="gsmc formStyle">
+                <span><i class="red">*</i> &nbsp;公司名称</span>
+                <input type="text" placeholder="公司名称(必填)" value="{$userinfo['company_name']}" name="company_name" id="">
+            </div>
+            <div class="gsyyzz formStyle">
+                <span><i class="red">*</i> &nbsp;证件号码</span>
+                <input type="text" placeholder="营业执照号(必填)" value="{$userinfo['company_license']}" name="company_license" id="">
+            </div>
+        </form>
+    </div>
+    <div class="xyb">
+        <a href="javascript:void()" id="" onclick="update_userinfo()" ></a>
+    </div>
+</section>
+</body>
+
+{include file="./public/Public/js_script.html" /}
+<script>	
+	function update_userinfo(){
+		// 所有数据不得为空
+		console.log($('input[name=TrueName]'))
+		if($('input[name=TrueName]').val() == ''){
+			layer.msg('证件人不得为空',{time:2000});
+			return;
+		}
+		if($('input[name=IdCardNo]').val() == ''){
+			layer.msg('证件号码不得为空',{time:2000});
+			return;
+		}
+		if($('input[name=company_name]').val() == ''){
+			layer.msg('公司名称不得为空',{time:2000});
+			return;
+		}
+		if($('input[name=company_license]').val() == ''){
+			layer.msg('营业执照号不得为空',{time:2000});
+			return;
+		}
+		$.post(
+			'/mobile.php/member/add_userinfo_one',
+			$('#formdata').serialize(),
+			function(data){
+				if(data.status == 1){
+					location.href = '/mobile.php/member/add_userinfo_two';
+				}else{
+					layer.msg(data.msg);
+				}
+			}
+		)
+	}
+</script>
+</html>

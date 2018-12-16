@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>添加地址</title>
+	<link rel="stylesheet" href="/public/qdd/css/xjdz.css">
+	<script src="<?php echo CSS_PATH;?>mobile/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo CSS_PATH;?>mobile/js/angular.min.js"></script>
+	<script type="text/javascript" src="<?php echo CSS_PATH;?>lib/layer/2.1/layer.js"></script>
+</head>
+<body>
+<header>
+	<a href="javascript:history.go(-1);" id="xjdzfh">
+		<img src="/public/qdd/img/juxing.png" alt="">
+	</a>
+	<p>添加地址</p>
+</header>
+<form method="post" class="form form-horizontal" id="form-addres-add">
+<section>
+	<div class="shrxx">
+		<span>收货人：</span>
+		<input type="text" placeholder="请输入收货人姓名" id="selectReceiveName" name="receivename">
+	</div>
+	<div class="shrxx">
+		<span>手机号码：</span>
+		<input type="text" placeholder="收货人手机号码" id="selectMobile" name="mobile">
+	</div>
+	<div class="xjdizhi">
+		<span>地址：</span>
+		<div>
+			<select  id="province1" name="province">
+				{volist name="province" id="vo"} <!--循环第一级别-->
+				<option value="{$vo.Code}">{$vo.AreaName}</option>
+				{/volist}
+
+			</select>
+			<select name="city" id="city1">
+				<option value="">请选择</option>
+			</select>
+			<select name="county" id="county1">
+				<option value="">请选择</option>
+			</select>
+		</div>
+	</div>
+	<div class="jddz">
+		<span>街道：</span>
+		<textarea placeholder="街道详细地址" id="selectAddress" name="address"></textarea>
+	</div>
+	<div class="mrdz">
+		<p>设置为默认收货地址</p>
+		<span>
+                <input type="checkbox" id="defaultAddress" name="isdefault" value="1">
+            </span>
+	</div>
+	<div>
+		<a href="#" id="qrBtn" onclick="addressSubmit()">确认</a>
+	</div>
+</section>
+</form>
+</body>
+</html>
+{include file="./public/Public/js_script.html" /}
+<script>
+    $('.skin-minimal input').iCheck({
+        checkboxClass: 'icheckbox-blue',
+        radioClass: 'iradio-blue',
+        increaseArea: '20%'
+    });
+
+    $("#form-addres-add").validate({
+        rules:{
+            province:true,
+            city:true,
+            county:true,
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form){
+            var form=new FormData(document.getElementById("form-addres-add"));
+            $.ajax({
+                url: '/api.php/member/address_add',
+                type: "post",
+                dataType:"json",
+                data: form,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if(data.status==1){
+                        layer.msg(data.msg,{},function(){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg('操作成功！'); //父页面显示提示
+                            parent.location.reload(); //刷新父页面
+                            parent.layer.close(index); //关闭layer
+                        });
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        }
+    });
+    function addressSubmit(){
+        $("#form-addres-add").submit();
+    }
+</script>
+<script>
+    $('#province1').change(function () {
+        var code=$('#province1').val();
+        $.ajax({
+            url: '/api.php/index/getcity',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#city1').empty();
+                    $('#city1').append(' <option value="">请选择</option>');
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#city1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+    $('#city1').change(function () {
+        var code=$('#city1').val();
+        $.ajax({
+            url: '/api.php/index/getcity',
+            type: "POST",
+            data: 'code='+code,
+            success: function (data) {
+                if(data.status==0){
+                    layer.msg(data.msg);
+                }else{
+                    $('#county1').empty();
+                    $('#county1').append(' <option value="">请选择</option>');
+                    var list=data.data;
+                    $.each(list,function (n,val) {
+                        $('#county1').append('<option value="'+val.Code+'">'+val.AreaName+'</option>');
+                    });
+
+                }
+            }
+        });
+    });
+</script>

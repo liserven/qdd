@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+/*列表*/
+.news_box h1.title{ font-size:24px;font-weight:400; margin:15px auto 20px; color:#333; text-align:center}
+.news_box h2.title_tip{ font-size:12px; margin:0 auto 20px; padding-bottom:10px; color:#999; text-align:center; border-bottom:1px #F2F2F2 solid}
+
+.news_list { margin:0 20px; font-size:14px; color:#666}
+.news_list ul li { line-height:35px; font-size:14px; list-style:disc; border-bottom:1px #e5e5e5 dotted}
+.news_show {font-size:14px; color:#757575; line-height:24px}
+

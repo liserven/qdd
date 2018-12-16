@@ -1,0 +1,167 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>商家 - 商家管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form name="memsearch" id="memsearch" method="post" action="{:\\think\\Url::build($Request.action)}">
+   	<div class="bk-gray">
+    	<div class="col-80">商家ID：</div>
+        <div class="col-200"><input type="text" class="input-text" style="width:150px" placeholder="输入商家ID" id="supid" name="supid" value="{$Request.param.supid}"></div>
+        <div class="col-90">商家名称：</div>
+        <div class="col-300"><input type="text" class="input-text" style="width:240px" placeholder="输入商家名称" id="supname" name="supname" value="{$Request.param.supname}"></div>
+        <div class="col-80">日期范围：</div>
+		<div class="col-300">
+            <input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" id="datemin" name="datemin" value="{$Request.param.datemin}" class="input-text Wdate" placeholder="" style="width:120px;">
+            -
+            <input type="text" onfocus="WdatePicker({minDate:'',maxDate:'%y-%M-%d'})" id="datemax" name="datemax" value="{$Request.param.datemax}" class="input-text Wdate" placeholder="" style="width:120px;">
+        </div>
+		<div class="f-r mt-5"><button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>&ensp;<button name="" id="" class="btn btn-success" type="submit" onclick="javascript:$('input:text').val('')"><i class="Hui-iconfont">&#xe609;</i> 清空</button>&ensp;</div>
+	</div>
+    </form>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="{:url('Supplier/supplierAdd',['act'=>'show'])}" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加商家</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg">
+		<thead>
+			<tr class="text-c">
+				<th width="50">ID</th>
+				<th>商家名称</th>
+				<th>手机</th>
+                <th>银行账号</th>
+				<th width="60">开户人</th>
+				<th>开户行</th>
+            <!--    <th>引荐人</th>	-->
+                <th width="350">经营范围</th>
+				<th width="150">添加时间</th>
+				<th>状态</th>
+				<th width="60">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="list" id="vo"}
+            <tr class="text-c">
+				<td>{$vo.id}</td>
+				<td class="text-l"><u style="cursor:pointer" class="text-primary c-blue" onclick="_show('查看商家详细信息','{:url('Supplier/supplierShow')}?supid={$vo.id}','')">{$vo.name}</u></td>
+				<td>{$vo.mobile}</td>
+                <td>{$vo.bankname}<br>{$vo.bankaccount}</td>
+				<td>{$vo.banksupname}</td>
+                <td>{$vo.bankinfo}</td>
+				<td class="text-l">
+                {volist name="vo['voo']" id="von"}
+                {:getpcnamebyid($von['pcateid'])}、
+                {/volist}
+                <a style="text-decoration:none" class="ml-5" onClick="_edit('经营范围','{:url('Supplier/supplierStyle',['supsid'=>$vo['id']])}','','','')" href="javascript:;" title="设置经营范围"><span class="label label-warning radius">设置</span></a></td>
+				<td>{$vo.adddate|strtotime|date="Y-m-d H:i:s",###}</td>
+				<td class="td-status">
+                {if condition="$vo['isaudit'] eq 0"}
+                	<a style="text-decoration:none" onClick="_stop(this,{$vo['id']})" href="javascript:;" title="停用"><span class="label label-success radius">合作中</span></a>
+                {else /}
+                	<a style="text-decoration:none" onClick="_start(this,{$vo['id']})" href="javascript:;" title="启用"><span class="label label-defaunt radius">已停用</span></a>
+                {/if}
+                </td>
+				<td><a title="编辑" href="{:url('Supplier/supplierEdit',['act'=>'show','id'=>$vo['id']])}" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="_password('修改密码','{:url('Supplier/supplierChangePassword',['supid'=>$vo['id']])}','','','510')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> <a title="删除" href="javascript:;" onClick="_del(this,'{$vo.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+			</tr>
+            {/volist}
+		</tbody>
+	</table>
+	</div>
+
+	<!--分页 begin-->
+	<div class="page-bootstrap">{$page}</div>
+	<br class="clear">
+	<!--分页 end-->
+</div>
+
+{include file="./public/Public/js_script.html" /}
+<script type="text/javascript">
+$(function(){
+	//跳转页
+	$('#jump').blur(function(){
+		var url=$('.jumpnum').attr("href");
+		//var strs=url.substr(0,25);
+		var strs=url;
+		var value=this.value;
+		var all=$('.all').attr("title");
+		var i=parseFloat(all);//将字符转化成数字
+		if(value<=i && !isNaN(value) && value>0){
+			value=Math.ceil(value);
+		}else{
+			value='';
+		}
+		var newurl=strs+value;
+		$('.jumpnum').attr("href",newurl);
+	});
+});
+/*-添加*/
+function _add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*-查看*/
+function _show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-充值*/
+function _recharge(title,url,id,w,h){
+	layer_show(title,url,w,h);	
+}
+/*-停用*/
+function _stop(obj,id){
+	layer.confirm('确认要停止合作吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'{:url("Supplier/supplierCooperate")}?status=stop&supid='+id,
+			type:"GET",
+            dataType:"json",
+			success: function(data) {
+				location.href=location.href;
+				layer.msg(data.msg, {icon: 6,time:1000});
+			}
+		});
+	});
+}
+/*-启用*/
+function _start(obj,id){
+	layer.confirm('确认要启用吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'{:url("Supplier/supplierCooperate")}?status=yes&supid='+id,
+			type:"GET",
+            dataType:"json",
+			success: function(data) {
+				location.href=location.href;
+				layer.msg(data.msg, {icon: 6,time:1000});
+			}
+		});
+	});
+}
+/*-编辑*/
+function _edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*-修改*/
+function _password(title,url,id,w,h){
+	layer_show(title,url,w,h);	
+}
+/*-删除*/
+function _del(obj,id){
+	layer.confirm('确认要删除吗？删除商家后，其下的所有产品也将全部删除！',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$.ajax({
+			url:'{:url("Supplier/supplierDelete")}?supid='+id,
+			type:"GET",
+            dataType:"json",
+			//data:$('#form-admin-add').serialize(),
+			success: function(data) {
+				location.href=location.href;
+				layer.msg(data.msg,{icon:1,time:1000});
+			}
+			});
+		
+	});
+}
+
+</script> 
+</body>
+</html>

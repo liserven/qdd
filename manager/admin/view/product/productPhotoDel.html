@@ -1,0 +1,26 @@
+{include file="./public/Public/meta.html" /}
+
+<meta charset="utf-8">
+<title>添加商家 - 商家管理</title>
+<link href="<?php echo CSS_PATH;?>lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+{volist name="listhornor" id="voh"}
+<div class="maskWraper" style=" float:left; width:150px; height:150px; border:solid 1px #ddd; padding:2px; margin:0 10px 10px 0">  
+    <img src="{$voh.img}" width="150" height="150">
+    <div class="maskBar text-c"><a href="{:url('Product/productPhotoDel',['action'=>'delimg','id'=>$voh['id'],'sid'=>$voh['proid']])}" class="c-white">删除</a></div>
+</div>
+{/volist}
+
+{include file="./public/Public/js_script.html" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+//图片遮罩条
+$(function(){
+  $.Huihover('.maskWraper');
+});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei",微软雅黑;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.zxlbBox{
+    width: 100%;
+    height: 173px;
+    position: relative;
+}
+/* .zxlbBox>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+} */
+.zxlb{
+    width: 100%;
+    height: 173px;
+}
+.zxcg{
+    width: 100%;
+    height: 110px;
+}
+.zxMain{
+    width: 100%;
+    margin-bottom: 50px;
+}
+/* .zxlb img{
+    width: 100%;
+    height: 173px;
+} */
+
+
+.zxtjList li{
+    height: 125px;
+    border-bottom: 1px solid #f9f9f9;
+}
+.zxtjList li a{
+    display: flex;
+    align-items: center;
+}
+.zxtjList li a img{
+    /* float: left; */
+    margin-right: 20px;
+    width: 111px;
+    height: 107px;
+}
+.zxtjList li a div p{
+    width: 185px;
+    /* height: 35px; */
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
+.zxtjList li a div span{
+    display: block;
+    width: 130px;
+    height: 25px;
+    background: #efece5;
+    color: rgb(143, 123, 82);
+    font-size: 12px;
+    line-height: 25px;
+    text-align: center;
+    margin: 5px 0;
+    border-radius: 15px;
+    text-decoration: line-through;
+}
+.zxtjList li a div strong{
+    font-weight: 500;
+    color: rgb(143, 123, 82);
+}
+
+
+
+footer{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    z-index: 3;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #cecece;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+footer>a{
+    margin-top: 3px;
+    width: 53px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
