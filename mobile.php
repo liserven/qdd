@@ -82,6 +82,8 @@
 //    exit();
 //}
 // 定义应用目录
+//aaa
+
 define('APP_PATH', __DIR__ . '/mobile/');
 define('CSS_PATH','/public/Public/');
 // 加载框架引导文件
